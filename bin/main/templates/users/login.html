@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROTO SPACE - ユーザーログイン</title>
+    <!-- ここにCSSのリンクなどを貼ります -->
+</head>
+<body>
+
+    <!-- ヘッダー部分（構成案） -->
+    <header class="header">
+        <!-- ロゴや、ログイン・新規登録ボタンが入るエリア -->
+    </header>
+
+    <!-- メインコンテンツ -->
+    <div class="main">
+        <div class="inner">
+            <div class="form__wrapper">
+                
+                <!-- ページタイトル -->
+                <h2 class="page-heading">ユーザーログイン</h2>
+                
+                <!-- ログインフォーム（DevToolsの属性を反映） -->
+                <form action="/users/sign_in" accept-charset="UTF-8" method="post">
+                    
+                    <!-- メールアドレス入力欄 -->
+                    <div class="field">
+                        <label for="user_email">メールアドレス</label><br>
+                        <input type="email" id="user_email" name="user[email]" autofocus="autofocus" autocomplete="email">
+                    </div>
+
+                    <!-- パスワード入力欄 -->
+                    <div class="field">
+                        <label for="user_password">パスワード（6文字以上）</label><br>
+                        <input type="password" id="user_password" name="user[password]" autocomplete="current-password">
+                    </div>
+
+                    <!-- ログインボタン -->
+                    <div class="actions">
+                        <input type="submit" name="commit" value="ログイン" class="btn-primary">
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- フッター部分 -->
+    <footer class="footer">
+        <!-- フッターコンテンツ -->
+    </footer>
+
+</body>
+</html>
