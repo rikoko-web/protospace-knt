@@ -10,4 +10,4 @@ public class ProtospaceKntApplication {
 		SpringApplication.run(ProtospaceKntApplication.class, args);
 	}
 
-}aa
+}
