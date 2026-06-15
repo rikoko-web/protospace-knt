@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROTO SPACE - ユーザー新規登録</title>
+</head>
+<body>
+
+    <header class="header">
+        </header>
+
+    <div class="main">
+        <div class="inner">
+            <div class="form__wrapper">
+                
+                <h2 class="page-heading">ユーザー新規登録</h2>
+                
+                <form action="/users" accept-charset="UTF-8" method="post">
+                    
+                    <div class="field">
+                        <label for="user_email">メールアドレス</label><br>
+                        <input type="email" id="user_email" name="user[email]" autofocus="autofocus" autocomplete="email">
+                    </div>
+
+                    <div class="field">
+                        <label for="user_password">パスワード（6文字以上）</label><br>
+                        <input type="password" id="user_password" name="user[password]" autocomplete="new-password">
+                    </div>
+
+                    <div class="field">
+                        <label for="user_password_confirmation">パスワード再入力</label><br>
+                        <input type="password" id="user_password_confirmation" name="user[password_confirmation]" autocomplete="new-password">
+                    </div>
+
+                    <div class="field">
+                        <label for="user_name">ユーザー名</label><br>
+                        <input type="text" id="user_name" name="user[name]">
+                    </div>
+
+                    <div class="field">
+                        <label for="user_profile">プロフィール</label><br>
+                        <textarea id="user_profile" name="user[profile]" rows="4"></textarea>
+                    </div>
+
+                    <div class="field">
+                        <label for="user_occupation">所属</label><br>
+                        <textarea id="user_occupation" name="user[occupation]" rows="4"></textarea>
+                    </div>
+
+                    <div class="field">
+                        <label for="user_position">役職</label><br>
+                        <textarea id="user_position" name="user[position]" rows="4"></textarea>
+                    </div>
+
+                    <div class="actions">
+                        <input type="submit" name="commit" value="新規登録" class="btn-primary">
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        </footer>
+
+</body>
+</html>

@@ -1,0 +1,226 @@
+/* ==========================================================================
+   1. リセットCSS & 全体共通設定
+   （検証ツールの「Styles」に写っていた、ブラウザの邪魔な余白を消す設定）
+   ========================================================================== */
+* {
+    box-sizing: border-box; /* 枠線や内側余白によるサイズ計算のズレを防ぐ */
+}
+
+html, body, ul, li, h1, h2, p, div, form, input, textarea, header, main, footer, nav {
+    margin: 0;
+    padding: 0;
+    /* 見本の文字色（#3B4043）を適用。フォントは一旦標準のゴシック体に設定 */
+    color: #3B4043; 
+}
+
+body {
+    /* 見本の背景色：少しだけくすんだ綺麗な白 */
+    background-color: #f8f9fa; 
+}
+
+
+/* ==========================================================================
+   2. 共通ヘッダーのデザイン (header.html 用)
+   ========================================================================== */
+.site-header {
+    background-color: #f0f7fc; /* 見本の淡いブルー系の背景色 */
+    padding: 15px 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between; /* ロゴを左、ボタンを右に引き離す */
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ロゴ */
+.logo-link {
+    text-decoration: none;
+}
+.logo-sub {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #666666;
+    display: block;
+}
+.logo-main {
+    font-size: 24px;
+    margin: 0;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+.logo-highlight {
+    color: #7ab4df; /* SPACE部分の水色 */
+}
+
+/* ナビゲーションボタン */
+.header-nav {
+    display: flex;
+    align-items: center;
+}
+.nav-group-logged-in, .nav-group-logged-out {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* ボタン同士の間隔 */
+}
+.welcome-message {
+    font-size: 14px;
+    margin-right: 10px;
+}
+.nav-btn {
+    text-decoration: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+/* 「ログイン」「ログアウト」ボタン（枠線あり） */
+.btn-login, .btn-logout {
+    border: 1px solid #7ab4df;
+    color: #7ab4df;
+    background-color: #ffffff;
+}
+.btn-login:hover, .btn-logout:hover {
+    background-color: #7ab4df;
+    color: #ffffff;
+}
+
+/* 「新規登録」「New Proto」ボタン（塗りつぶし） */
+.btn-signup, .btn-new-proto {
+    background-color: #7ab4df;
+    color: #ffffff;
+    border: 1px solid #7ab4df;
+}
+.btn-signup:hover, .btn-new-proto:hover {
+    background-color: #5997c4;
+    border-color: #5997c4;
+}
+
+
+/* ==========================================================================
+   3. トップページ・プロトタイプ一覧のデザイン (index.html 用)
+   ========================================================================== */
+.main {
+    padding: 40px 0;
+}
+.inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ★検証ツールで「flex」バッジがついていた、カードを並べる親要素 */
+.card__wrapper {
+    display: flex;
+    flex-wrap: wrap;             /* 画面端にいったら自動で次の行に折り返す（超重要！） */
+    gap: 30px;                  /* カード同士の隙間 */
+    justify-content: flex-start; /* 左詰めで並べる */
+}
+
+/* 投稿されるたびに自動で増えていくカード1個あたりの設定 */
+.card {
+    width: calc((100% - 60px) / 3); /* 3列にきれいに収める計算（全体から隙間2個分を引き、3分割） */
+    background-color: #ffffff;
+    margin-bottom: 20px;
+}
+
+/* 画像 */
+.card__img-link {
+    display: block;
+}
+.card__img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover; /* 画像が引き伸ばされて歪むのを防ぎ、綺麗にトリミングする */
+    border-radius: 4px;
+}
+
+/* テキスト部分 */
+.card__body {
+    padding: 10px 0;
+}
+.card__title {
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    margin-bottom: 5px;
+}
+.card__catch-copy {
+    font-size: 14px;
+    color: #666666;
+    margin: 0 0 10px 0;
+}
+/* 投稿者名（見本通り右下に配置） */
+.card__user {
+    font-size: 12px;
+    text-decoration: underline;
+    display: block;
+    text-align: right; 
+}
+
+
+/* ==========================================================================
+   4. ユーザー管理画面用の共通フォームデザイン (registrations/new.html など用)
+   ========================================================================== */
+.form__wrapper {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.page-heading {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+}
+.field {
+    margin-bottom: 20px;
+}
+.form__label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+.form__input, .form__textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+.form__input:focus, .form__textarea:focus {
+    border-color: #7ab4df;
+    outline: none;
+}
+.form__textarea {
+    height: 100px;
+    resize: vertical; /* 縦方向だけサイズ調整可能にする */
+}
+.actions {
+    text-align: center;
+    margin-top: 30px;
+}
+.form__btn {
+    width: 100%;
+    background-color: #7ab4df;
+    color: #ffffff;
+    border: none;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.form__btn:hover {
+    background-color: #5997c4;
+}
