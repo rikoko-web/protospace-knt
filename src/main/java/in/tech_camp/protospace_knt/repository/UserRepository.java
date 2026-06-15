@@ -1,4 +1,5 @@
 package in.tech_camp.protospace_knt.repository;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -8,14 +9,15 @@ import in.tech_camp.protospace_knt.entity.UserEntity;
 @Mapper
 public interface UserRepository {
 
-    // 1. ユーザーを新しく登録する（保存する）ためのSQL
+    // 1. ユーザー登録用
     @Insert("INSERT INTO users (email, password, name, profile, occupation, position) VALUES (#{email}, #{password}, #{name}, #{profile}, #{occupation}, #{position})")
     void save(UserEntity user);
 
-    // 2. ログインや重複チェックの時、メールアドレスでユーザーを探すためのSQL
+    // 2. ログイン照合用
     @Select("SELECT * FROM users WHERE email = #{email}")
     UserEntity findByEmail(String email);
 
-    @Select("SELECT * FROM users")
+    // 3. 【追加】DBの prototypes テーブルから作品一覧を取得するSQL
+    @Select("SELECT * FROM prototypes")
     List<UserEntity> findAll();
 }
