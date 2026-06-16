@@ -1,0 +1,15 @@
+<header xmlns:th="http://www.thymeleaf.org" 
+        th:fragment="header" class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <a th:href="@{|/|}">
+        <p class="sub">SHARE THE PROTOTYPE</p>
+        <h1>PROTO SPACE</h1>
+      </a>
+    </div>
+    <nav>
+      <a th:href="@{|/login|}">ログイン</a>
+      <a th:href="@{|/users/sign_up|}">新規登録</a>
+    </nav>
+  </div>
+</header
