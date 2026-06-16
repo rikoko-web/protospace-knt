@@ -8,61 +8,58 @@
 
 <body>
 
-<div class="contents row">
+<div class="contents">
   <div class="container">
     <h2>ユーザー新規登録</h2>
-    <div class="form">
-      <div th:if="${errorMessages}" th:each="error : ${errorMessages}">
-        <div th:text="${error}"></div>
+    
+    <div th:if="${errorMessages}" th:each="error : ${errorMessages}">
+      <div th:text="${error}" style="color: red; margin-bottom: 10px;"></div>
+    </div>
+
+    <form th:action="@{/user}" th:method="post" th:object="${userForm}">
+      
+      <div class="field">
+        <div class="field-label"><label>メールアドレス</label></div>
+        <div class="field-input"><input type="email" th:field="*{email}" /></div>
       </div>
 
-      <form th:action="@{/user}" th:method="post" th:object="${userForm}" class="new_user">
-        
-        <div class="field">
-          <label for="email">メールアドレス</label><br />
-          <input type="email" id="email" th:field="*{email}" />
-        </div>
+      <div class="field">
+        <div class="field-label"><label>パスワード（6文字以上）</label></div>
+        <div class="field-input"><input type="password" th:field="*{password}" /></div>
+      </div>
 
-        <div class="field">
-          <label for="password">パスワード（6文字以上）</label><br />
-          <input type="password" id="password" th:field="*{password}" />
-        </div>
+      <div class="field">
+        <div class="field-label"><label>パスワード再入力</label></div>
+        <div class="field-input"><input type="password" th:field="*{passwordConfirmation}" /></div>
+      </div>
 
-        <div class="field">
-          <label for="password_confirmation">パスワード再入力</label><br />
-          <input type="password" id="password_confirmation" th:field="*{passwordConfirmation}" />
-        </div>
+      <div class="field">
+        <div class="field-label"><label>ユーザー名</label></div>
+        <div class="field-input"><input type="text" th:field="*{nickname}" /></div>
+      </div>
 
-        <div class="field">
-          <label for="nickname">ユーザー名</label><br />
-          <input type="text" id="nickname" th:field="*{nickname}" />
-        </div>
+      <div class="field">
+        <div class="field-label"><label>プロフィール</label></div>
+        <div class="field-input"><textarea th:field="*{profile}"></textarea></div>
+      </div>
 
-        <div class="field">
-          <label for="profile">プロフィール</label><br />
-          <textarea id="profile" th:field="*{profile}"></textarea>
-        </div>
+      <div class="field">
+        <div class="field-label"><label>所属</label></div>
+        <div class="field-input"><textarea th:field="*{affiliation}"></textarea></div>
+      </div>
 
-        <div class="field">
-          <label for="affiliation">所属</label><br />
-          <textarea id="affiliation" th:field="*{affiliation}"></textarea>
-        </div>
+      <div class="field">
+        <div class="field-label"><label>役職</label></div>
+        <div class="field-input"><textarea th:field="*{occupation}"></textarea></div>
+      </div>
 
-        <div class="field">
-          <label for="occupation">役職</label><br />
-          <textarea id="occupation" th:field="*{occupation}"></textarea>
-        </div>
+      <div class="actions">
+        <input type="submit" value="新規登録" class="btn">
+      </div>
 
-        <div class="actions">
-          <input type="submit" value="新規登録">
-        </div>
-
-      </form>
-    </div>
+    </form>
   </div>
 </div>
-
-<div th:insert="~{fragments/footer :: footer}"></div>
 
 </body>
 </html>
