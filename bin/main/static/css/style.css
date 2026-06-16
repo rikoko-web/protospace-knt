@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 /* ==========================================================================
    1. リセットCSS & 全体共通設定
    （検証ツールの「Styles」に写っていた、ブラウザの邪魔な余白を消す設定）
@@ -223,4 +225,40 @@ body {
 }
 .form__btn:hover {
     background-color: #5997c4;
+}
+
+.header {
+  padding: 20px 40px; /* 左右の余白を少し取る */
+}
+
+.inner {
+  display: flex;
+  justify-content: space-between; /* ロゴを左、ボタンを右に配置 */
+  align-items: center;
+}
+
+.logo-sub {
+  font-size: 10px;
+  color: #555;
+  margin: 0;
+}
+
+.logo-main {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+}
+
+.header-nav {
+  display: flex;
+  gap: 10px; /* ボタン同士の間隔 */
+}
+
+.header-nav a {
+  padding: 8px 16px;
+  border: 1px solid #3498db;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #3498db;
 }
