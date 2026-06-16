@@ -19,40 +19,34 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserController {
 
-    // リポジトリは userRepository 1つでOK
     private final UserRepository userRepository;
     private final UserService userService; 
 
-    // 【トップページ：プロトタイプ一覧表示】
     @GetMapping("/")
     public String index(Model model) {
-        // userRepository の中の SQL（SELECT * FROM prototypes）が実行されます！
         List<UserEntity> prototypes = userRepository.findAll();
         model.addAttribute("prototypes", prototypes);
         return "messages/index";
     }
 
-    // 【ログイン画面を表示する】
     @GetMapping("/login")
     public String showLoginForm() {
         return "users/login"; 
     }
 
-    // 【新規登録画面を表示する】
     @GetMapping("/signup")
     public String showSignupForm(Model model) {
         model.addAttribute("userEntity", new UserEntity());
-        return "users/signUp"; 
+        return "users/signup"; 
     }
 
-    // 【新規登録のボタンが押された時の処理】
     @PostMapping("/signup")
     public String registerUser(@Validated @ModelAttribute("userEntity") UserEntity user, 
                                BindingResult bindingResult, 
                                Model model) {
         
         if (bindingResult.hasErrors()) {
-            return "users/signUp";
+            return "users/signup";
         }
 
         userService.registerUser(user);
