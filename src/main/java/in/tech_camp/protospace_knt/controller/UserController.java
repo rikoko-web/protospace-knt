@@ -1,7 +1,5 @@
 package in.tech_camp.protospace_knt.controller;
 
-import java.util.List;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,8 +23,8 @@ public class UserController {
 
     @GetMapping("/")
     public String index(Model model) {
-        List<UserEntity> prototypes = userRepository.findAll();
-        model.addAttribute("prototypes", prototypes);
+        // List<UserEntity> prototypes = userRepository.findAll();
+       model.addAttribute("prototypes", java.util.Collections.emptyList());
         return "messages/index";
     }
 
@@ -36,14 +34,14 @@ public class UserController {
     }
 
     // 💡 1. 画面のボタンに合わせて、URLを「/user/new」に変更します
-    @GetMapping("/user/new")
+    @GetMapping("/signUp")
     public String showSignupForm(Model model) {
         model.addAttribute("userForm", new UserForm());
         return "users/signUp"; // 表示するHTMLは「signUp.html」のままで100%正解です
     }
 
     // 💡 2. 送信先のURLも「/user/new」に変更します
-    @PostMapping("/user/new")
+    @PostMapping("/signUp")
     public String registerUser(@Validated @ModelAttribute("userForm") UserForm userForm, 
                                BindingResult bindingResult, 
                                Model model) {

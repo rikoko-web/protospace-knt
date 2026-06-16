@@ -17,7 +17,7 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(auth -> auth
                 // 💡 "/user/new" を許可リストに含めることで、未ログインでも新規登録画面が開くようになります
-                .requestMatchers("/", "/login", "/user/new", "/css/**", "/images/**").permitAll() 
+                .requestMatchers("/", "/login", "/signUp", "/css/**", "/images/**").permitAll() 
                 .anyRequest().authenticated() // それ以外はログイン必須
             )
             .formLogin(form -> form
