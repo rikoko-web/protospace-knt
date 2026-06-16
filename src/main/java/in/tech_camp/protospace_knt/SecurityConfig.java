@@ -21,6 +21,9 @@ public class SecurityConfig {
             )
             .formLogin(form -> form
                 .loginPage("/login") // 自作ログイン画面のURL
+                .loginProcessingUrl("/login") // 💡 フォームの送信先URL
+                .usernameParameter("email")   // 💡 ログインIDに「email」を使う
+                .passwordParameter("password") // 💡 パスワードは「password」
                 .defaultSuccessUrl("/", true) // ログイン成功後の飛び先
                 .permitAll()
             )
