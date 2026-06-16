@@ -1,122 +1,159 @@
+@charset "UTF-8";
+
 /* ==========================================================================
    1. 全体設定
    ========================================================================== */
-* { box-sizing: border-box; }
-body { margin: 0; padding: 0; background-color: #f8f9fa; font-family: sans-serif; color: #333; }
-.inner { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
-/* ==========================================================================
-   2. ヘッダーのデザイン
-   ========================================================================== */
-.header { background-color: #fff; border-bottom: 1px solid #ddd; padding: 15px 0; }
-.header .inner { display: flex; justify-content: space-between; align-items: center; }
-.header__logo { font-size: 24px; font-weight: bold; text-decoration: none; color: #333; }
-.header__nav { display: flex; gap: 20px; }
-.nav__link { text-decoration: none; color: #555; font-size: 14px; }
-
-/* ==========================================================================
-   3. フォームコンテナ（他の画面用：残す）
-   ========================================================================== */
-.container {
-  max-width: 600px;
-  margin: 60px auto;
-  padding: 40px;
-  background-color: #ffffff;
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+* { 
+  box-sizing: border-box; 
 }
 
-.container h2 {
-  font-size: 28px;
-  text-align: center;
-  margin-bottom: 30px;
-  font-weight: bold;
+body { 
+  margin: 0; 
+  padding: 0; 
+  background-color: #ffffff; 
+  font-family: sans-serif; 
+  color: #333; 
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* フッターを常に画面最下部に固定する魔法のコード */
+}
+
+/* 中央寄せにするためのコンテナ */
+.inner { 
+  max-width: 1200px; 
+  margin: 0 auto; 
+  padding: 0 20px; 
+  width: 100%;
 }
 
 /* ==========================================================================
-   4. ログインフォーム用（今回のHTMLに合わせて追加）
+   2. ヘッダーのデザイン（クラス名を.nav__linkに合わせて修正）
    ========================================================================== */
+.header { 
+  background-color: #f2f7fa; /* 薄い爽やかな水色の背景 */
+  border-bottom: 1px solid #e5eaf0; 
+  padding: 18px 0; 
+}
+
+.header .inner { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+}
+
+.header__logo { 
+  font-size: 22px; 
+  font-weight: 700; 
+  text-decoration: none; 
+  color: #2b3a4a; 
+  letter-spacing: 1.5px;
+}
+
+.header__nav { 
+  display: flex; 
+  gap: 10px; 
+}
+
+/* ★ここを .nav__link に変更しました */
+.nav__link { 
+  text-decoration: none; 
+  color: #7ab4df;            /* 水色の文字 */
+  font-size: 14px; 
+  border: 1px solid #7ab4df; /* 水色の細い枠線 */
+  padding: 8px 24px;         /* ボタンの程よい余白 */
+  border-radius: 4px;        /* 綺麗な角丸 */
+  background-color: #ffffff; /* 中身は白 */
+  display: inline-block;
+  transition: all 0.2s ease; 
+}
+
+/* ボタンにマウスを乗せたとき */
+.nav__link:hover {
+  background-color: #7ab4df; 
+  color: #ffffff;            
+}
+
+/* ==========================================================================
+   3. メインコンテンツ（中央寄せとフォームの横幅制限）
+   ========================================================================== */
+.main { 
+  flex: 1; /* フッターを下に押し出すための設定 */
+  display: flex;
+  align-items: center; /* 上下中央寄せ */
+  padding: 40px 0;
+}
+
+/* ログインフォームを中央に寄せて、適切な幅にする */
 .form__wrapper {
-  max-width: 450px; /* ログイン画面用に少しスマートな幅に調整 */
-  margin: 60px auto;
-  padding: 40px;
-  background-color: #ffffff;
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  max-width: 450px; 
+  margin: 0 auto; /* 横方向の中央寄せ */
+  padding: 20px;
 }
 
 .page-heading {
   font-size: 28px;
-  text-align: center;
   margin-bottom: 30px;
   font-weight: bold;
 }
 
 /* ==========================================================================
-   5. フィールドと入力欄
+   4. フィールドと入力欄
    ========================================================================== */
-.field { margin-bottom: 20px; }
-
-/* 他の画面用（残す） */
-.field-label { font-size: 14px; font-weight: bold; margin-bottom: 8px; }
-.field-input input,
-.field-input textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-  box-sizing: border-box;
+.field { 
+  margin-bottom: 20px; 
 }
-.field-input textarea { height: 100px; resize: vertical; }
 
-/* ログイン画面用（今回のHTMLに合わせて追加） */
-.field label {
-  font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 8px;
-  display: inline-block;
+.field label { 
+  font-size: 14px; 
+  font-weight: bold; 
+  margin-bottom: 8px; 
+  display: block; 
 }
+
+/* 入力欄（スクショのように横いっぱいに広げる） */
 .field input[type="email"],
 .field input[type="password"] {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 8px;
+  border: 1px solid #a3a3a3;
+  border-radius: 2px;
   font-size: 16px;
-  box-sizing: border-box;
 }
 
 /* ==========================================================================
-   6. 送信ボタン
+   5. 送信ボタン（スクショの水色）
    ========================================================================== */
-/* 他の画面用（残す） */
-.btn {
-  width: 100%;
-  padding: 12px;
-  background-color: #7ab4df;
-  color: #ffffff;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
+.actions {
+  margin-top: 25px;
 }
-.btn:hover { background-color: #5997c4; }
 
-/* ログイン画面用（既存のボタンの綺麗な水色に統一して追加） */
 .btn-primary {
-  width: 100%;
-  padding: 12px;
-  background-color: #7ab4df;
+  padding: 10px 24px;
+  background-color: #38bdf8; /* スクショの鮮やかな水色 */
   color: #ffffff;
   border: none;
   border-radius: 4px;
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 14px;
   cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   transition: background-color 0.2s;
 }
-.btn-primary:hover {
-  background-color: #5997c4;
+
+.btn-primary:hover { 
+  background-color: #0ea5e9; /* ホバー時に少し濃い水色にする */
+}
+
+/* ==========================================================================
+   6. フッターのデザイン（スクショのグレー）
+   ========================================================================== */
+.footer { 
+  background-color: #8c8c8c; /* スクショの濃いグレー */
+  color: #ffffff;
+  text-align: center; 
+  padding: 12px 0; 
+  font-size: 12px; 
+}
+
+.footer p {
+  margin: 0;
 }
