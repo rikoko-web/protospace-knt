@@ -3,9 +3,19 @@
    ========================================================================== */
 * { box-sizing: border-box; }
 body { margin: 0; padding: 0; background-color: #f8f9fa; font-family: sans-serif; color: #333; }
+.inner { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
 /* ==========================================================================
-   2. フォームコンテナ（カードのデザイン）
+   2. ヘッダーのデザイン
+   ========================================================================== */
+.header { background-color: #fff; border-bottom: 1px solid #ddd; padding: 15px 0; }
+.header .inner { display: flex; justify-content: space-between; align-items: center; }
+.header__logo { font-size: 24px; font-weight: bold; text-decoration: none; color: #333; }
+.header__nav { display: flex; gap: 20px; }
+.nav__link { text-decoration: none; color: #555; font-size: 14px; }
+
+/* ==========================================================================
+   3. フォームコンテナ（他の画面用：残す）
    ========================================================================== */
 .container {
   max-width: 600px;
@@ -24,11 +34,31 @@ body { margin: 0; padding: 0; background-color: #f8f9fa; font-family: sans-serif
 }
 
 /* ==========================================================================
-   3. フィールドと入力欄
+   4. ログインフォーム用（今回のHTMLに合わせて追加）
+   ========================================================================== */
+.form__wrapper {
+  max-width: 450px; /* ログイン画面用に少しスマートな幅に調整 */
+  margin: 60px auto;
+  padding: 40px;
+  background-color: #ffffff;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.page-heading {
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+
+/* ==========================================================================
+   5. フィールドと入力欄
    ========================================================================== */
 .field { margin-bottom: 20px; }
-.field-label { font-size: 14px; font-weight: bold; margin-bottom: 8px; }
 
+/* 他の画面用（残す） */
+.field-label { font-size: 14px; font-weight: bold; margin-bottom: 8px; }
 .field-input input,
 .field-input textarea {
   width: 100%;
@@ -38,15 +68,29 @@ body { margin: 0; padding: 0; background-color: #f8f9fa; font-family: sans-serif
   font-size: 16px;
   box-sizing: border-box;
 }
+.field-input textarea { height: 100px; resize: vertical; }
 
-.field-input textarea {
-  height: 100px;
-  resize: vertical;
+/* ログイン画面用（今回のHTMLに合わせて追加） */
+.field label {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+.field input[type="email"],
+.field input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
 }
 
 /* ==========================================================================
-   4. 送信ボタン
+   6. 送信ボタン
    ========================================================================== */
+/* 他の画面用（残す） */
 .btn {
   width: 100%;
   padding: 12px;
@@ -58,18 +102,21 @@ body { margin: 0; padding: 0; background-color: #f8f9fa; font-family: sans-serif
   font-weight: bold;
   cursor: pointer;
 }
+.btn:hover { background-color: #5997c4; }
 
-.btn:hover {
+/* ログイン画面用（既存のボタンの綺麗な水色に統一して追加） */
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+  background-color: #7ab4df;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.btn-primary:hover {
   background-color: #5997c4;
 }
-
-/* style.css */
-body { margin: 0; padding: 0; font-family: sans-serif; background-color: #f8f9fa; }
-.inner { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
-/* ヘッダーのデザイン */
-.header { background-color: #fff; border-bottom: 1px solid #ddd; padding: 15px 0; }
-.header .inner { display: flex; justify-content: space-between; align-items: center; }
-.header__logo { font-size: 24px; font-weight: bold; text-decoration: none; color: #333; }
-.header__nav { display: flex; gap: 20px; }
-.nav__link { text-decoration: none; color: #555; font-size: 14px; }
