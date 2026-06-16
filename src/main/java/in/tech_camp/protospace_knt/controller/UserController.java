@@ -34,19 +34,19 @@ public class UserController {
         return "users/login"; 
     }
 
-    @GetMapping("/signup")
+    @GetMapping("/signUp")
     public String showSignupForm(Model model) {
         model.addAttribute("userEntity", new UserEntity());
-        return "users/signup"; 
+        return "users/signUp"; 
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/signUp")
     public String registerUser(@Validated @ModelAttribute("userEntity") UserEntity user, 
                                BindingResult bindingResult, 
                                Model model) {
         
         if (bindingResult.hasErrors()) {
-            return "users/signup";
+            return "users/signUp";
         }
 
         userService.registerUser(user);
