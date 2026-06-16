@@ -10,16 +10,34 @@
     <header class="header">
         <div class="inner">
             <a href="/" class="header__logo">PROTO SPACE</a>
+            
             <div class="header__nav">
-                <a href="/login" class="nav__link">ログイン</a>
-                <a href="/user/new" class="nav__link">新規登録</a>
+                <div class="user-nav" th:if="${session.loginUser != null}">
+                    <p>こんにちは、<span th:text="${session.loginUser.name}">ユーザー</span>さん</p>
+                    <a href="/logout">ログアウト</a>
+                </div>
+                
+                <div class="guest-nav" th:unless="${session.loginUser != null}">
+                    <a href="/login" class="nav__link">ログイン</a>
+                    <a href="/user/new" class="nav__link">新規登録</a>
+                </div>
             </div>
         </div>
     </header>
 
     <main class="main">
         <div class="inner">
-            <h1></h1>
+            <div class="card__wrapper">
+                <div class="card" th:each="prototype : ${prototypes}">
+                    <a th:href="@{/prototypes/{id}(id=${prototype.id})}">
+                        <img th:src="${prototype.imagePath}" class="card__img" alt="プロトタイプ画像">
+                    </a>
+                    <div class="card__body">
+                        <h3 th:text="${prototype.title}">タイトル</h3>
+                        <p th:text="${prototype.catchCopy}">キャッチコピー</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
