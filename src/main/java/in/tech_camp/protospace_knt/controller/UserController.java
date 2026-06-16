@@ -52,7 +52,7 @@ public class UserController {
                                Model model) {
         
         if (bindingResult.hasErrors()) {
-            return "users/signUp";
+            return "users/signup";
         }
 
         userService.registerUser(user);
