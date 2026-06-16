@@ -16,7 +16,7 @@
         <div th:text="${error}"></div>
       </div>
 
-      <form th:action="@{/user}" th:method="post" th:object="${userForm}" class="new_user">
+      <form th:action="@{/user/new}" th:method="post" th:object="${userForm}" class="new_user">
         
         <div class="field">
           <label for="email">メールアドレス</label><br />
@@ -33,10 +33,9 @@
           <input type="password" id="password_confirmation" th:field="*{passwordConfirmation}" />
         </div>
 
-        <div class="field">
+       <div class="field">
           <label for="nickname">ユーザー名</label><br />
-          <input type="text" id="nickname" th:field="*{nickname}" />
-        </div>
+          <input type="text" id="nickname" th:field="*{name}" /> </div>
 
         <div class="field">
           <label for="profile">プロフィール</label><br />
@@ -45,13 +44,11 @@
 
         <div class="field">
           <label for="affiliation">所属</label><br />
-          <textarea id="affiliation" th:field="*{affiliation}"></textarea>
-        </div>
+          <textarea id="affiliation" th:field="*{occupation}"></textarea> </div>
 
         <div class="field">
           <label for="occupation">役職</label><br />
-          <textarea id="occupation" th:field="*{occupation}"></textarea>
-        </div>
+          <textarea id="occupation" th:field="*{position}"></textarea> </div>
 
         <div class="actions">
           <input type="submit" value="新規登録">
@@ -62,7 +59,7 @@
   </div>
 </div>
 
-<div th:insert="~{fragments/footer :: footer}"></div>
+<div th:insert="~{footer :: footer}"></div>
 
 </body>
 </html>

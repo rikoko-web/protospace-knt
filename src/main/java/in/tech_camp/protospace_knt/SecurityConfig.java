@@ -16,14 +16,15 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/login", "/signUp", "/css/**", "/images/**").permitAll() // ログイン不要なページ
+                // 💡 "/user/new" を許可リストに含めることで、未ログインでも新規登録画面が開くようになります
+                .requestMatchers("/", "/login", "/user/new", "/css/**", "/images/**").permitAll() 
                 .anyRequest().authenticated() // それ以外はログイン必須
             )
             .formLogin(form -> form
                 .loginPage("/login") // 自作ログイン画面のURL
-                .loginProcessingUrl("/login") // 💡 フォームの送信先URL
-                .usernameParameter("email")   // 💡 ログインIDに「email」を使う
-                .passwordParameter("password") // 💡 パスワードは「password」
+                .loginProcessingUrl("/login") // フォームの送信先URL
+                .usernameParameter("email")   // ログインIDに「email」を使う
+                .passwordParameter("password") // パスワードは「password」
                 .defaultSuccessUrl("/", true) // ログイン成功後の飛び先
                 .permitAll()
             )
