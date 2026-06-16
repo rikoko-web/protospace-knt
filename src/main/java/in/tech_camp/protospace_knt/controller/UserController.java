@@ -40,7 +40,7 @@ public class UserController {
     @GetMapping("/signup")
     public String showSignupForm(Model model) {
         model.addAttribute("userEntity", new UserEntity());
-        return "users/signup"; 
+        return "users/signUp"; 
     }
 
     // 【新規登録のボタンが押された時の処理】
