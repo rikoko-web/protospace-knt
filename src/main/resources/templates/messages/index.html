@@ -18,8 +18,8 @@
                 </div>
                 
                 <div class="guest-nav" th:unless="${session.loginUser != null}">
-                    <a href="/login" class="nav__link">ログイン</a>
-                    <a th:href="/signUp" class="nav__link">新規登録</a>
+                    <a th:href="@{/login}" class="nav__link">ログイン</a>
+                    <a th:href="@{/signUp}" class="nav__link">新規登録</a>
                 </div>
             </div>
         </div>
