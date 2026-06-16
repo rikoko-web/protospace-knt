@@ -10,15 +10,15 @@
 body { 
   margin: 0; 
   padding: 0; 
-  background-color: #ffffff; 
-  font-family: sans-serif; 
+  background-color: #f4f7f9; /* 見本のカード型を引き立てる薄い背景色 */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: #333; 
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* フッターを常に画面最下部に固定する魔法のコード */
+  min-height: 100vh; /* フッターを画面の一番下に固定する */
 }
 
-/* 中央寄せにするためのコンテナ */
+/* 中央寄せにするための全体の道幅制限 */
 .inner { 
   max-width: 1200px; 
   margin: 0 auto; 
@@ -27,10 +27,10 @@ body {
 }
 
 /* ==========================================================================
-   2. ヘッダーのデザイン（クラス名を.nav__linkに合わせて修正）
+   2. ヘッダーのデザイン（見本のボタンを再現）
    ========================================================================== */
 .header { 
-  background-color: #f2f7fa; /* 薄い爽やかな水色の背景 */
+  background-color: #ffffff; 
   border-bottom: 1px solid #e5eaf0; 
   padding: 18px 0; 
 }
@@ -54,104 +54,139 @@ body {
   gap: 10px; 
 }
 
-/* ★ここを .nav__link に変更しました */
+/* 見本画像のような水色の枠線ボタン */
 .nav__link { 
   text-decoration: none; 
-  color: #7ab4df;            /* 水色の文字 */
+  color: #7ab4df;            
   font-size: 14px; 
-  border: 1px solid #7ab4df; /* 水色の細い枠線 */
-  padding: 8px 24px;         /* ボタンの程よい余白 */
-  border-radius: 4px;        /* 綺麗な角丸 */
-  background-color: #ffffff; /* 中身は白 */
+  border: 1px solid #7ab4df; 
+  padding: 8px 24px;         
+  border-radius: 4px;        
+  background-color: #ffffff; 
   display: inline-block;
   transition: all 0.2s ease; 
 }
 
-/* ボタンにマウスを乗せたとき */
 .nav__link:hover {
   background-color: #7ab4df; 
   color: #ffffff;            
 }
 
 /* ==========================================================================
-   3. メインコンテンツ（中央寄せとフォームの横幅制限）
+   3. メインコンテンツと白いカードデザイン（ここが肝！）
    ========================================================================== */
 .main { 
-  flex: 1; /* フッターを下に押し出すための設定 */
+  flex: 1; 
   display: flex;
-  align-items: center; /* 上下中央寄せ */
-  padding: 40px 0;
+  align-items: center; /* 縦方向の中央寄せ */
+  padding: 60px 0;
 }
 
-/* ログインフォームを中央に寄せて、適切な幅にする */
+/* フォームを画面中央に白い箱（カード）として浮かせる */
 .form__wrapper {
-  max-width: 450px; 
+  width: 100%;
+  max-width: 600px; /* 新規登録は項目が多いので少し広めの横幅に設定 */
   margin: 0 auto; /* 横方向の中央寄せ */
-  padding: 20px;
+  padding: 40px;
+  background-color: #ffffff;
+  border-radius: 8px; 
+  box-shadow: 0 10px 25px rgba(43, 58, 74, 0.05); /* 綺麗な影をプラス */
 }
 
 .page-heading {
-  font-size: 28px;
-  margin-bottom: 30px;
+  font-size: 26px;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 35px;
   font-weight: bold;
+  color: #2b3a4a;
 }
 
 /* ==========================================================================
    4. フィールドと入力欄
    ========================================================================== */
 .field { 
-  margin-bottom: 20px; 
+  margin-bottom: 24px; 
 }
 
-.field label { 
+.field-label { 
   font-size: 14px; 
-  font-weight: bold; 
-  margin-bottom: 8px; 
+  font-weight: 600; 
+  margin-bottom: 10px; 
   display: block; 
+  color: #555;
 }
 
-/* 入力欄（スクショのように横いっぱいに広げる） */
-.field input[type="email"],
-.field input[type="password"] {
+/* 一行の入力欄（メール・パスワードなど） */
+.field-input input {
   width: 100%;
-  padding: 8px;
-  border: 1px solid #a3a3a3;
-  border-radius: 2px;
+  padding: 12px;
+  border: 1px solid #ccd4dc;
+  border-radius: 6px;
   font-size: 16px;
+  transition: all 0.2s ease;
+  background-color: #fafbfc;
+}
+
+/* 複数行の入力欄（プロフィール・所属・役職） */
+.field-input textarea {
+  width: 100%;
+  height: 100px; /* しっかり高さを確保 */
+  padding: 12px;
+  border: 1px solid #ccd4dc;
+  border-radius: 6px;
+  font-size: 16px;
+  resize: vertical; /* ユーザーが縦方向にだけサイズ変更できるようにする */
+  transition: all 0.2s ease;
+  background-color: #fafbfc;
+}
+
+/* 入力欄をクリックしたとき（フワッと水色に光る効果） */
+.field-input input:focus,
+.field-input textarea:focus {
+  outline: none;
+  border-color: #7ab4df;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(122, 180, 223, 0.2); 
 }
 
 /* ==========================================================================
-   5. 送信ボタン（スクショの水色）
+   5. 送信ボタン
    ========================================================================== */
 .actions {
-  margin-top: 25px;
+  margin-top: 30px;
 }
 
 .btn-primary {
-  padding: 10px 24px;
-  background-color: #38bdf8; /* スクショの鮮やかな水色 */
+  width: 100%; 
+  padding: 14px;
+  background-color: #7ab4df; /* 見本の綺麗な水色 */
   color: #ffffff;
   border: none;
-  border-radius: 4px;
-  font-size: 14px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: background-color 0.2s;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .btn-primary:hover { 
-  background-color: #0ea5e9; /* ホバー時に少し濃い水色にする */
+  background-color: #5997c4; 
+}
+
+.btn-primary:active {
+  transform: scale(0.98); /* 押した時に少しへこむ */
 }
 
 /* ==========================================================================
-   6. フッターのデザイン（スクショのグレー）
+   6. フッターのデザイン
    ========================================================================== */
 .footer { 
-  background-color: #8c8c8c; /* スクショの濃いグレー */
+  background-color: #8c8c8c; /* 見本通りのグレー */
   color: #ffffff;
   text-align: center; 
-  padding: 12px 0; 
-  font-size: 12px; 
+  padding: 16px 0; 
+  font-size: 13px; 
 }
 
 .footer p {
