@@ -1,38 +1,27 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>ProtoSpace</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>PROTO SPACE</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
 
+    <header class="header">
+        <div class="inner">
+            <a href="/" class="header__logo">PROTO SPACE</a>
+            <div class="header__nav">
+                <a href="/login" class="nav__link">ログイン</a>
+                <a href="/user/new" class="nav__link">新規登録</a>
+            </div>
+        </div>
+    </header>
+
     <main class="main">
         <div class="inner">
-            
-            <div class="card__wrapper">
-                
-                <div class="card" th:each="prototype : ${prototypes}">
-                    
-                    <a th:href="@{/prototypes/{id}(id=${prototype.id})}" class="card__img-link">
-                        <img th:src="${prototype.imagePath}" th:alt="${prototype.title}" class="card__img" />
-                    </a>
-                    
-                    <div class="card__body">
-                        <a th:href="@{/prototypes/{id}(id=${prototype.id})}" class="card__title" th:text="${prototype.title}">
-                            プロトタイプ名称
-                        </a>
-                        
-                        <p class="card__catch-copy" th:text="${prototype.catchCopy}">
-                            キャッチコピー
-                        </p>
-                        
-                        <a th:href="@{/users/{id}(id=${prototype.user.id})}" class="card__user" th:text="'by ' + ${prototype.user.name}">
-                            by 投稿者名
-                        </a>
-                    </div>
-
-                </div></div></div></main>
+            <h1></h1>
+        </div>
+    </main>
 
 </body>
 </html>
