@@ -52,20 +52,25 @@
                 <div class="prototype__comments" style="background: #fff; padding: 30px; border-radius: 8px; border: 1px solid #e5eaf0; text-align: left;">
                     <h3 style="font-size: 18px; margin-bottom: 20px; color: #2b3a4a;">コメント</h3>
                     
-                    <form style="margin-bottom: 30px;">
+                    <form th:action="@{/protos/{id}/comments(id=${prototype.id})}" th:object="${commentForm}" method="post" style="margin-bottom: 30px;">
                         <div class="field" style="margin-bottom: 15px;">
                             <label for="comment_text" class="field-label" style="font-size: 14px; color: #666;">コメントを投稿する</label>
                             <div class="field-input">
-                                <input type="text" id="comment_text" name="commentText" placeholder="コメントを入力してください" required style="width: 100%; padding: 10px; border: 1px solid #e5eaf0; border-radius: 4px;" />
+                                <input type="text" id="comment_text" th:field="*{commentText}" placeholder="コメントを入力してください" required style="width: 100%; padding: 10px; border: 1px solid #e5eaf0; border-radius: 4px;" />
                             </div>
                         </div>
                         <div class="actions">
-                            <input type="button" value="送信する" class="btn-primary" style="max-width: 120px; font-size: 14px; padding: 8px 0; background-color: #00a0e9; border: none; color: white; border-radius: 4px;">
+                            <input type="submit" value="送信する" class="btn-primary" style="max-width: 120px; font-size: 14px; padding: 8px 0; background-color: #00a0e9; border: none; color: white; border-radius: 4px;">
                         </div>
                     </form>
 
                     <ul class="comments_list" style="list-style: none; padding: 0;">
-                        <li style="color: #999; font-size: 14px;">現在、コメントはありません。</li>
+                        <li th:each="comment : ${comments}" style="margin-bottom: 15px; font-size: 14px; line-height: 1.5; padding-bottom: 10px; border-bottom: 1px dashed #eee;">
+                            <span th:text="${comment.commentText}" style="color: #333;">コメント内容が入ります</span>
+                            <a th:href="@{/users/{id}(id=${comment.user.id})}" th:text="'（' + ${comment.user.name} + '）'" style="color: #00a0e9; text-decoration: underline; margin-left: 5px;">（ユーザー名）</a>
+                        </li>
+                        
+                        <li th:if="${#lists.isEmpty(comments)}" style="color: #999; font-size: 14px;">現在、コメントはありません。</li>
                     </ul>
                 </div>
 
