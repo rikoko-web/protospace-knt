@@ -3,23 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< Updated upstream
     <title>PROTO SPACE</title>
+=======
+    <title>PROTO SPACE - ユーザーログイン</title>
+>>>>>>> Stashed changes
     <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
 
     <header class="header">
         <div class="inner">
+<<<<<<< Updated upstream
             <a href="/login" class="header__logo">PROTO SPACE</a>
+=======
+            <a th:href="@{/}" class="header__logo">PROTO SPACE</a>
+>>>>>>> Stashed changes
             <div class="header__nav">
-                <a th:href="@{/logout}" class="nav__link">ログアウト</a>
-                <a th:href="@{/protos/new}" class="nav__link">New Proto</a>
+                <a th:href="@{/login}" class="nav__link">ログイン</a>
+                <a th:href="@{/signUp}" class="nav__link">新規登録</a>
             </div>
         </div>
     </header>
 
     <main class="main">
         <div class="inner">
+<<<<<<< Updated upstream
             
             <div class="user-welcome">
                 こんにちは、<a href="#" th:text="${username}"></a> さん
@@ -40,11 +49,33 @@
                     </div>
                 </div>
                 </div>
+=======
+            <div class="form__wrapper">
+                <h2 class="page-heading">ユーザーログイン</h2>
+                <form th:action="@{/login}" method="post">
+                    <div class="field">
+                        <label for="user_email" class="field-label">メールアドレス</label>
+                        <div class="field-input">
+                            <input type="email" id="user_email" name="username" autofocus="autofocus" autocomplete="email" required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="user_password" class="field-label">パスワード（6文字以上）</label>
+                        <div class="field-input">
+                            <input type="password" id="user_password" name="password" autocomplete="current-password" required>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <input type="submit" value="ログイン" class="btn-primary">
+                    </div>
+                </form>
+            </div>
+>>>>>>> Stashed changes
         </div>
     </main>
 
     <footer class="footer">
-        <p>© 2026 PROTO SPACE Inc. All rights reserved.</p>
+        <p>Copyright © PROTO SPACE All rights reserved.</p>
     </footer>
 
 </body>

@@ -27,7 +27,7 @@ body {
 }
 
 /* ==========================================================================
-   2. ヘッダーのデザイン（見本のボタンを再現）
+   2. ヘッダーのデザイン
    ========================================================================== */
 .header { 
   background-color: #ffffff; 
@@ -54,7 +54,7 @@ body {
   gap: 10px; 
 }
 
-/* 見本画像のような水色の枠線ボタン */
+/* 水色の枠線ボタン */
 .nav__link { 
   text-decoration: none; 
   color: #7ab4df;            
@@ -73,24 +73,26 @@ body {
 }
 
 /* ==========================================================================
-   3. メインコンテンツと白いカードデザイン（ここが肝！）
+   3. メインコンテンツと白いカードデザイン（ログイン画面用）
    ========================================================================== */
 .main { 
   flex: 1; 
   display: flex;
   align-items: center; /* 縦方向の中央寄せ */
+  justify-content: center; /* 横方向の中央寄せ */
   padding: 60px 0;
 }
 
 /* フォームを画面中央に白い箱（カード）として浮かせる */
 .form__wrapper {
   width: 100%;
-  max-width: 600px; /* 新規登録は項目が多いので少し広めの横幅に設定 */
-  margin: 0 auto; /* 横方向の中央寄せ */
+  max-width: 500px; /* ログインに最適なスッキリした横幅に調整 */
+  margin: 0 auto; 
   padding: 40px;
   background-color: #ffffff;
   border-radius: 8px; 
   box-shadow: 0 10px 25px rgba(43, 58, 74, 0.05); /* 綺麗な影をプラス */
+  border: 1px solid #e5eaf0;
 }
 
 .page-heading {
@@ -107,6 +109,7 @@ body {
    ========================================================================== */
 .field { 
   margin-bottom: 24px; 
+  width: 100%;
 }
 
 .field-label { 
@@ -117,7 +120,7 @@ body {
   color: #555;
 }
 
-/* 一行の入力欄（メール・パスワードなど） */
+/* 一行の入力欄 */
 .field-input input {
   width: 100%;
   padding: 12px;
@@ -128,20 +131,19 @@ body {
   background-color: #fafbfc;
 }
 
-/* 複数行の入力欄（プロフィール・所属・役職） */
+/* 複数行の入力欄 */
 .field-input textarea {
   width: 100%;
-  height: 100px; /* しっかり高さを確保 */
+  height: 100px; 
   padding: 12px;
   border: 1px solid #ccd4dc;
   border-radius: 6px;
   font-size: 16px;
-  resize: vertical; /* ユーザーが縦方向にだけサイズ変更できるようにする */
+  resize: vertical; 
   transition: all 0.2s ease;
   background-color: #fafbfc;
 }
 
-/* 入力欄をクリックしたとき（フワッと水色に光る効果） */
 .field-input input:focus,
 .field-input textarea:focus {
   outline: none;
@@ -155,12 +157,13 @@ body {
    ========================================================================== */
 .actions {
   margin-top: 30px;
+  width: 100%;
 }
 
 .btn-primary {
   width: 100%; 
   padding: 14px;
-  background-color: #7ab4df; /* 見本の綺麗な水色 */
+  background-color: #7ab4df; 
   color: #ffffff;
   border: none;
   border-radius: 6px;
@@ -175,14 +178,100 @@ body {
 }
 
 .btn-primary:active {
-  transform: scale(0.98); /* 押した時に少しへこむ */
+  transform: scale(0.98); 
 }
 
 /* ==========================================================================
-   6. フッターのデザイン
+   6. ログイン後トップページ（タイムライン）用の追加デザイン
+   ========================================================================== */
+.user-welcome {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  font-size: 16px;
+  color: #333;
+  width: 100%;
+}
+
+.user-welcome a {
+  color: #2b3a4a;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+/* カードを横並びにするグリッド設定 */
+.card__wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+/* プロトタイプカード本体 */
+.prototype-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(43, 58, 74, 0.05);
+  border: 1px solid #e5eaf0;
+  transition: transform 0.2s ease;
+}
+
+.prototype-card:hover {
+  transform: translateY(-5px); /* ホバー時に少し浮く */
+}
+
+.card__img {
+  background-color: #fafbfc;
+  border-bottom: 1px solid #e5eaf0;
+  text-align: center;
+  height: 200px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card__img img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.card__body {
+  padding: 20px;
+}
+
+.card__title {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  color: #2b3a4a;
+  font-weight: bold;
+}
+
+.card__catchphrase {
+  margin: 0 0 20px 0;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.4;
+}
+
+.card__user {
+  font-size: 12px;
+  color: #888;
+  text-align: right;
+}
+
+.card__user a {
+  color: #7ab4df;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   7. フッターのデザイン
    ========================================================================== */
 .footer { 
-  background-color: #8c8c8c; /* 見本通りのグレー */
+  background-color: #8c8c8c; 
   color: #ffffff;
   text-align: center; 
   padding: 16px 0; 
