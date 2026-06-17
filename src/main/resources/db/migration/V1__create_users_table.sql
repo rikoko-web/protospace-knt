@@ -5,5 +5,6 @@ CREATE TABLE prototypes (
     concept TEXT,
     image VARCHAR(256),
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    user_id BIGINT NOT NULL,
     PRIMARY KEY (id)
 );

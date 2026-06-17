@@ -7,7 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping; // 追加
+import org.springframework.web.bind.annotation.PostMapping;
 
 import in.tech_camp.protospace_knt.entity.UserEntity;
 import in.tech_camp.protospace_knt.form.UserForm;
@@ -35,12 +35,18 @@ public class UserController {
         return "users/login"; 
     }
 
-    // ★追加：ログイン成功後に遷移するページを表示するメソッド
+    // ★修正済み：ログイン成功後にユーザー名を表示するメソッド
     @GetMapping("/afterlogin")
     public String showAfterLogin(Model model, Authentication auth) {
-        // Spring Securityからログイン中のユーザー名（メールアドレス）を取得
         if (auth != null && auth.isAuthenticated()) {
-            model.addAttribute("username", auth.getName());
+            // ログイン中のメールアドレスを取得
+            String email = auth.getName();
+            // データベースからユーザー情報を取得
+            UserEntity user = userRepository.findByEmail(email);
+            // ユーザー名を表示用にモデルへセット
+            if (user != null) {
+                model.addAttribute("username", user.getName());
+            }
         }
         return "afterlogin"; 
     }
