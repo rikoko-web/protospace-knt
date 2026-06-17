@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+    <title>KCS PROTO SPACE - 新規プロトタイプ投稿</title>
+</head>
+<body>
+
+    <header class="header">
+        <div class="inner">
+            <a th:href="@{/}" class="header__logo">KCS PROTO SPACE</a>
+            <div class="header__nav">
+                <a th:href="@{/logout}" class="nav__link">ログアウト</a>
+                <a th:href="@{/protos/new}" class="nav__link">New Proto</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="main" style="align-items: flex-start; padding: 40px 0;">
+        <div class="inner">
+            
+            <div class="form__wrapper" style="max-width: 800px;">
+                
+                <h2 class="page-heading" style="text-align: left; margin-bottom: 30px;">新規プロトタイプ投稿</h2>
+                
+                <form th:action="@{/protos/new}" th:method="post" th:object="${prototypeForm}" enctype="multipart/form-data">
+                    
+                    <div class="field">
+                        <label for="prototype_title" class="field-label">プロトタイプの名称</label>
+                        <div class="field-input">
+                            <input type="text" id="prototype_title" th:field="*{title}" required />
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="prototype_catch_copy" class="field-label">キャッチコピー</label>
+                        <div class="field-input">
+                            <textarea id="prototype_catch_copy" th:field="*{catchCopy}" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="prototype_concept" class="field-label">コンセプト</label>
+                        <div class="field-input">
+                            <textarea id="prototype_concept" th:field="*{concept}" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="prototype_image" class="field-label">プロトタイプの画像</label>
+                        <div class="field-input-file">
+                            <input type="file" id="prototype_image" name="imageFile" accept="image/*" required />
+                        </div>
+                    </div>
+
+                    <div class="actions" style="margin-top: 40px;">
+                        <input type="submit" value="保存する" class="btn-primary" style="max-width: 150px; font-size: 14px; padding: 10px 0;">
+                    </div>
+
+                </form>
+                
+            </div></div>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 KCS PROTO SPACE Inc. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

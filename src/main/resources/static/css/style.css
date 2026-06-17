@@ -1,75 +1,420 @@
+@charset "UTF-8";
+
 /* ==========================================================================
    1. 全体設定
    ========================================================================== */
-* { box-sizing: border-box; }
-body { margin: 0; padding: 0; background-color: #f8f9fa; font-family: sans-serif; color: #333; }
+* { 
+  box-sizing: border-box; 
+}
+
+body { 
+  margin: 0; 
+  padding: 0; 
+  background-color: #f4f7f9; /* 見本のカード型を引き立てる薄い背景色 */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #333; 
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* フッターを画面の一番下に固定する */
+}
+
+/* 中央寄せにするための全体の道幅制限 */
+.inner { 
+  max-width: 1200px; 
+  margin: 0 auto; 
+  padding: 0 20px; 
+  width: 100%;
+}
 
 /* ==========================================================================
-   2. フォームコンテナ（カードのデザイン）
+   2. ヘッダーのデザイン
    ========================================================================== */
-.container {
-  max-width: 600px;
-  margin: 60px auto;
+.header { 
+  background-color: #ffffff; 
+  border-bottom: 1px solid #e5eaf0; 
+  padding: 18px 0; 
+}
+
+.header .inner { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+}
+
+.header__logo { 
+  font-size: 22px; 
+  font-weight: 700; 
+  text-decoration: none; 
+  color: #2b3a4a; 
+  letter-spacing: 1.5px;
+}
+
+.header__nav { 
+  display: flex; 
+  gap: 10px; 
+}
+
+/* 水色の枠線ボタン */
+.nav__link { 
+  text-decoration: none; 
+  color: #7ab4df;            
+  font-size: 14px; 
+  border: 1px solid #7ab4df; 
+  padding: 8px 24px;         
+  border-radius: 4px;        
+  background-color: #ffffff; 
+  display: inline-block;
+  transition: all 0.2s ease; 
+}
+
+.nav__link:hover {
+  background-color: #7ab4df; 
+  color: #ffffff;            
+}
+
+/* ==========================================================================
+   3. メインコンテンツと白いカードデザイン（ログイン画面用）
+   ========================================================================== */
+.main { 
+  flex: 1; 
+  display: flex;
+  align-items: center; /* 縦方向の中央寄せ */
+  justify-content: center; /* 横方向の中央寄せ */
+  padding: 60px 0;
+}
+
+/* フォームを画面中央に白い箱（カード）として浮かせる */
+.form__wrapper {
+  width: 100%;
+  max-width: 500px; /* ログインに最適なスッキリした横幅に調整 */
+  margin: 0 auto; 
   padding: 40px;
   background-color: #ffffff;
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border-radius: 8px; 
+  box-shadow: 0 10px 25px rgba(43, 58, 74, 0.05); /* 綺麗な影をプラス */
+  border: 1px solid #e5eaf0;
 }
 
-.container h2 {
-  font-size: 28px;
+.page-heading {
+  font-size: 26px;
   text-align: center;
-  margin-bottom: 30px;
+  margin-top: 0;
+  margin-bottom: 35px;
   font-weight: bold;
+  color: #2b3a4a;
 }
 
 /* ==========================================================================
-   3. フィールドと入力欄
+   4. フィールドと入力欄
    ========================================================================== */
-.field { margin-bottom: 20px; }
-.field-label { font-size: 14px; font-weight: bold; margin-bottom: 8px; }
-
-.field-input input,
-.field-input textarea {
+.field { 
+  margin-bottom: 24px; 
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-  box-sizing: border-box;
 }
 
-.field-input textarea {
-  height: 100px;
-  resize: vertical;
+.field-label { 
+  font-size: 14px; 
+  font-weight: 600; 
+  margin-bottom: 10px; 
+  display: block; 
+  color: #555;
 }
 
-/* ==========================================================================
-   4. 送信ボタン
-   ========================================================================== */
-.btn {
+/* 一行の入力欄 */
+.field-input input {
   width: 100%;
   padding: 12px;
-  background-color: #7ab4df;
+  border: 1px solid #ccd4dc;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  background-color: #fafbfc;
+}
+
+/* 複数行の入力欄 */
+.field-input textarea {
+  width: 100%;
+  height: 100px; 
+  padding: 12px;
+  border: 1px solid #ccd4dc;
+  border-radius: 6px;
+  font-size: 16px;
+  resize: vertical; 
+  transition: all 0.2s ease;
+  background-color: #fafbfc;
+}
+
+.field-input input:focus,
+.field-input textarea:focus {
+  outline: none;
+  border-color: #7ab4df;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(122, 180, 223, 0.2); 
+}
+
+/* ==========================================================================
+   5. 送信ボタン
+   ========================================================================== */
+.actions {
+  margin-top: 30px;
+  width: 100%;
+}
+
+.btn-primary {
+  width: 100%; 
+  padding: 14px;
+  background-color: #7ab4df; 
   color: #ffffff;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
-.btn:hover {
-  background-color: #5997c4;
+.btn-primary:hover { 
+  background-color: #5997c4; 
 }
 
-/* style.css */
-body { margin: 0; padding: 0; font-family: sans-serif; background-color: #f8f9fa; }
-.inner { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.btn-primary:active {
+  transform: scale(0.98); 
+}
 
-/* ヘッダーのデザイン */
-.header { background-color: #fff; border-bottom: 1px solid #ddd; padding: 15px 0; }
-.header .inner { display: flex; justify-content: space-between; align-items: center; }
-.header__logo { font-size: 24px; font-weight: bold; text-decoration: none; color: #333; }
-.header__nav { display: flex; gap: 20px; }
-.nav__link { text-decoration: none; color: #555; font-size: 14px; }
+/* ==========================================================================
+   6. ログイン後トップページ（タイムライン）用の追加デザイン
+   ========================================================================== */
+.user-welcome {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  font-size: 16px;
+  color: #333;
+  width: 100%;
+}
+
+.user-welcome a {
+  color: #2b3a4a;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+/* カードを横並びにするグリッド設定 */
+.card__wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+/* プロトタイプカード本体 */
+.prototype-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(43, 58, 74, 0.05);
+  border: 1px solid #e5eaf0;
+  transition: transform 0.2s ease;
+}
+
+.prototype-card:hover {
+  transform: translateY(-5px); /* ホバー時に少し浮く */
+}
+
+.card__img {
+  background-color: #fafbfc;
+  border-bottom: 1px solid #e5eaf0;
+  text-align: center;
+  height: 200px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card__img img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.card__body {
+  padding: 20px;
+}
+
+.card__title {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  color: #2b3a4a;
+  font-weight: bold;
+}
+
+.card__catchphrase {
+  margin: 0 0 20px 0;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.4;
+}
+
+.card__user {
+  font-size: 12px;
+  color: #888;
+  text-align: right;
+}
+
+.card__user a {
+  color: #7ab4df;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   7. フッターのデザイン
+   ========================================================================== */
+.footer { 
+  background-color: #8c8c8c; 
+  color: #ffffff;
+  text-align: center; 
+  padding: 16px 0; 
+  font-size: 13px; 
+}
+
+.footer p {
+  margin: 0;
+}
+
+/* ==========================================================================
+   7. ログイン後トップページ（タイムライン）用の追加デザイン
+   ========================================================================== */
+
+/* ユーザー名表示のスタイル */
+.user-welcome {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  font-size: 16px;
+  color: #333;
+}
+
+.user-welcome a {
+  color: #2b3a4a;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+/* カードを並べるグリッド（横並びにする設定） */
+.card__wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+/* 1つの白いプロトタイプカード */
+.prototype-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(43, 58, 74, 0.05);
+  border: 1px solid #e5eaf0;
+  transition: transform 0.2s ease;
+}
+
+.prototype-card:hover {
+  transform: translateY(-5px); /* マウスを乗せると少し浮き上がる */
+}
+
+/* カードの画像エリア */
+.card__img {
+  background-color: #fafbfc;
+  border-bottom: 1px solid #e5eaf0;
+  text-align: center;
+  padding: 0;
+  height: 200px; /* 高さを統一 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card__img img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* カードのテキスト部分 */
+.card__body {
+  padding: 20px;
+}
+
+.card__title {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  color: #2b3a4a;
+  font-weight: bold;
+}
+
+.card__catchphrase {
+  margin: 0 0 20px 0;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.4;
+}
+
+.card__user {
+  font-size: 12px;
+  color: #888;
+  text-align: right;
+}
+
+.card__user a {
+  color: #7ab4df;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.card__user a:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   8. ユーザー詳細（マイページ）用のテーブルデザイン
+   ========================================================================== */
+.table {
+  width: 100%;
+  max-width: 600px;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: #ffffff;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(43, 58, 74, 0.02);
+  border: 1px solid #e5eaf0;
+}
+
+.table th, .table td {
+  padding: 16px 20px;
+  text-align: left;
+  border-bottom: 1px solid #e5eaf0;
+}
+
+.table th {
+  background-color: #fafbfc;
+  width: 30%;
+  font-weight: bold;
+  color: #2b3a4a;
+}
+
+/* 一番下の行だけ、下の線（境界線）を消して角を綺麗に見せる */
+.table tr:last-child th, 
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+/* ==========================================================================
+   9. プロトタイプ投稿（ファイル選択）用のデザイン
+   ========================================================================== */
+.field-input-file input[type="file"] {
+  display: block;
+  font-size: 14px;
+  color: #333;
+  padding: 5px 0;
+}

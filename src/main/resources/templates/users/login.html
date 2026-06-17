@@ -1,62 +1,53 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PROTO SPACE - ユーザーログイン</title>
-    <!-- ここにCSSのリンクなどを貼ります -->
+    <title>KCS PROTO SPACE - ユーザーログイン</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
 
-    <!-- ヘッダー部分（構成案） -->
     <header class="header">
-        <!-- ロゴや、ログイン・新規登録ボタンが入るエリア -->
+        <div class="inner">
+            <a th:href="@{/}" class="header__logo">KCS PROTO SPACE</a>
+            <div class="header__nav">
+                <a th:href="@{/login}" class="nav__link">ログイン</a>
+                <a th:href="@{/signUp}" class="nav__link">新規登録</a>
+            </div>
+        </div>
     </header>
 
-    <!-- メインコンテンツ -->
-    <div class="main">
+    <main class="main">
         <div class="inner">
             <div class="form__wrapper">
-                
-                <!-- ページタイトル -->
                 <h2 class="page-heading">ユーザーログイン</h2>
-                
-                <!-- ログインフォーム（DevToolsの属性を反映） -->
-                <form action="/users/sign_in" accept-charset="UTF-8" method="post">
-                    
-                    <!-- メールアドレス入力欄 -->
+                <form th:action="@{/login}" method="post">
                     <div class="field">
-<<<<<<< Updated upstream
-                        <label for="user_email">メールアドレス</label><br>
-                        <input type="email" id="user_email" name="user[email]" autofocus="autofocus" autocomplete="email">
-=======
+
                         <label for="user_email" class="field-label">メールアドレス</label>
                         <div class="field-input">
                           <input type="email" id="user_email" name="email" autofocus="autofocus" autocomplete="email" required>  
                         </div>
->>>>>>> Stashed changes
-                    </div>
 
-                    <!-- パスワード入力欄 -->
+
+                    </div>
                     <div class="field">
-                        <label for="user_password">パスワード（6文字以上）</label><br>
-                        <input type="password" id="user_password" name="user[password]" autocomplete="current-password">
+                        <label for="user_password" class="field-label">パスワード（6文字以上）</label>
+                        <div class="field-input">
+                            <input type="password" id="user_password" name="password" autocomplete="current-password" required>
+                        </div>
                     </div>
-
-                    <!-- ログインボタン -->
                     <div class="actions">
-                        <input type="submit" name="commit" value="ログイン" class="btn-primary">
+                        <input type="submit" value="ログイン" class="btn-primary">
                     </div>
-
                 </form>
-
             </div>
         </div>
-    </div>
+    </main>
 
-    <!-- フッター部分 -->
     <footer class="footer">
-        <!-- フッターコンテンツ -->
+        <p>Copyright © PROTO SPACE All rights reserved.</p>
     </footer>
 
 </body>
