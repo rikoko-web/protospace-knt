@@ -3,22 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< Updated upstream
-    <title>PROTO SPACE</title>
-=======
     <title>PROTO SPACE - ユーザーログイン</title>
->>>>>>> Stashed changes
     <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
 
     <header class="header">
         <div class="inner">
-<<<<<<< Updated upstream
-            <a href="/login" class="header__logo">PROTO SPACE</a>
-=======
             <a th:href="@{/}" class="header__logo">PROTO SPACE</a>
->>>>>>> Stashed changes
             <div class="header__nav">
                 <a th:href="@{/login}" class="nav__link">ログイン</a>
                 <a th:href="@{/signUp}" class="nav__link">新規登録</a>
@@ -28,28 +20,6 @@
 
     <main class="main">
         <div class="inner">
-<<<<<<< Updated upstream
-            
-            <div class="user-welcome">
-                こんにちは、<a href="#" th:text="${username}"></a> さん
-            </div>
-
-            <div class="card__wrapper">
-                
-                <div class="prototype-card">
-                    <div class="card__img">
-                        <img th:src="@{/images/logo.png}" src="logo.png" alt="プロトタイプ画像">
-                    </div>
-                    <div class="card__body">
-                        <h3 class="card__title">プロトタイプの名称</h3>
-                        <p class="card__catchphrase">キャッチコピー</p>
-                        <div class="card__user">
-                            by <a href="#" th:text="${username}"></a>
-                        </div>
-                    </div>
-                </div>
-                </div>
-=======
             <div class="form__wrapper">
                 <h2 class="page-heading">ユーザーログイン</h2>
                 <form th:action="@{/login}" method="post">
@@ -70,7 +40,6 @@
                     </div>
                 </form>
             </div>
->>>>>>> Stashed changes
         </div>
     </main>
 
