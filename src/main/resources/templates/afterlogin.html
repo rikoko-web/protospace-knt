@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROTO SPACE</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="inner">
+            <a th:href="@{/}" class="header__logo">PROTO SPACE</a>
+            <div class="header__nav">
+                <a th:href="@{/logout}" class="nav__link">ログアウト</a>
+                <a th:href="@{/protos/new}" class="nav__link">New Proto</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="main" style="align-items: flex-start; padding: 40px 0;">
+        <div class="inner">
+            
+            <div class="user-welcome">
+                こんにちは、<a href="#" th:text="${username}"></a>さん
+            </div>
+
+            <div class="card__wrapper">
+                <div class="prototype-card">
+                    <div class="card__img">
+                        <img th:src="@{/images/logo.png}" alt="">
+                    </div>
+                    <div class="card__body">
+                        <h3 class="card__title">プロトタイプの名称</h3>
+                        <p class="card__catchphrase">キャッチコピー</p>
+                        <div class="card__user">
+                            by <a href="#" th:text="${username}"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 PROTO SPACE Inc. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
