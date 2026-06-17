@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import in.tech_camp.protospace_knt.entity.UserEntity;
 import in.tech_camp.protospace_knt.form.UserForm;
@@ -21,42 +22,55 @@ public class UserController {
     private final UserRepository userRepository;
     private final UserService userService; 
 
+    // --- トップページ ---
     @GetMapping("/")
     public String index(Model model) {
-        // List<UserEntity> prototypes = userRepository.findAll();
        model.addAttribute("prototypes", java.util.Collections.emptyList());
-        return "messages/index";
+       return "messages/index";
     }
 
+    // --- ログイン画面表示 ---
     @GetMapping("/login")
     public String showLoginForm() {
         return "users/login"; 
     }
 
-    // 💡 1. 画面のボタンに合わせて、URLを「/user/new」に変更します
+    // --- 【追加】ログイン処理 ---
+    @PostMapping("/login")
+    public String login(@RequestParam("email") String email, 
+                        @RequestParam("password") String password, 
+                        Model model) {
+        
+        // ★本来はここでUserServiceを使ってDBと照合します
+        // 今回は動作確認のため、名前をセットして画面遷移させます
+        String username = "テックキャンプ太郎"; 
+        model.addAttribute("username", username);
+        
+        // ログイン成功後に表示する画面を指定
+        return "afterlogin";
+    }
+
+    // --- 新規登録画面表示 ---
     @GetMapping("/signUp")
     public String showSignupForm(Model model) {
         model.addAttribute("userForm", new UserForm());
-        return "users/signUp"; // 表示するHTMLは「signUp.html」のままで100%正解です
+        return "users/signUp";
     }
 
-    // 💡 2. 送信先のURLも「/user/new」に変更します
+    // --- 新規登録実行 ---
     @PostMapping("/signUp")
     public String registerUser(@Validated @ModelAttribute("userForm") UserForm userForm, 
                                BindingResult bindingResult, 
                                Model model) {
         
-        // 💡 3. 要件定義の「パスワード確認用一致」のチェックを追加します
         if (userForm.getPassword() != null && !userForm.getPassword().equals(userForm.getPasswordConfirmation())) {
             bindingResult.rejectValue("passwordConfirmation", "error.passwordConfirmation", "パスワードと確認用パスワードが一致しません");
         }
 
-        // 入力チェック（必須や形式エラー、または上記の一致エラー）があれば新規登録画面に留まる
         if (bindingResult.hasErrors()) {
             return "users/signUp";
         }
 
-        // フォームからエンティティへの詰め替え（DBeaverの定義に完全一致）
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(userForm.getEmail());
         userEntity.setPassword(userForm.getPassword());
@@ -65,7 +79,6 @@ public class UserController {
         userEntity.setOccupation(userForm.getOccupation()); 
         userEntity.setPosition(userForm.getPosition()); 
 
-        // データベースに登録を実行
         userService.registerUser(userEntity);
         
         return "redirect:/login";
