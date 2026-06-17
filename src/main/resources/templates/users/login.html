@@ -1,55 +1,53 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PROTO SPACE - ユーザーログイン</title>
+    <title>PROTO SPACE - タイムライン</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- ヘッダー部分（構成案） -->
     <header class="header">
-        <!-- ロゴや、ログイン・新規登録ボタンが入るエリア -->
+        <div class="inner">
+            <a href="#" class="header__logo">PROTO SPACE</a>
+            <div class="header__nav">
+                <a th:href="@{/logout}" class="nav__link">ログアウト</a>
+                <a th:href="@{/protos/new}" class="nav__link">New Proto</a>
+            </div>
+        </div>
     </header>
 
-    <!-- メインコンテンツ -->
-    <div class="main">
+    <div class="main" style="align-items: flex-start; padding: 40px 0;">
         <div class="inner">
-            <div class="form__wrapper">
+            
+            <div class="user-welcome" style="margin-bottom: 40px; font-size: 16px;">
+                こんにちは、
+                <a href="#" th:text="${username}" style="color: #2b3a4a; font-weight: bold; text-decoration: underline;">a</a> さん
+            </div>
+
+            <div class="card__wrapper" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px;">
                 
-                <!-- ページタイトル -->
-                <h2 class="page-heading">ユーザーログイン</h2>
-                
-                <!-- ログインフォーム（DevToolsの属性を反映） -->
-                <form action="/users/sign_in" accept-charset="UTF-8" method="post">
-                    
-                    <!-- メールアドレス入力欄 -->
-                    <div class="field">
-                        <label for="user_email">メールアドレス</label><br>
-                        <input type="email" id="user_email" name="user[email]" autofocus="autofocus" autocomplete="email">
+                <div class="prototype-card" style="background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <div class="card__img" style="background-color: #e5eaf0; text-align: center; padding: 20px;">
+                        <img src="logo.png" th:src="@{/images/logo.png}" alt="プロトタイプ画像" style="max-width: 100%; height: auto;">
                     </div>
-
-                    <!-- パスワード入力欄 -->
-                    <div class="field">
-                        <label for="user_password">パスワード（6文字以上）</label><br>
-                        <input type="password" id="user_password" name="user[password]" autocomplete="current-password">
+                    <div class="card__body" style="padding: 20px;">
+                        <h3 class="card__title" style="margin: 0 0 10px 0; font-size: 20px; color: #2b3a4a;">プロトタイプの名称</h3>
+                        <p class="card__catchphrase" style="margin: 0 0 15px 0; font-size: 14px; color: #666;">キャッチコピー</p>
+                        <div class="card__user" style="font-size: 12px; color: #888; text-align: right;">
+                            by <a href="#" style="color: #7ab4df;">a</a>
+                        </div>
                     </div>
-
-                    <!-- ログインボタン -->
-                    <div class="actions">
-                        <input type="submit" name="commit" value="ログイン" class="btn-primary">
-                    </div>
-
-                </form>
+                </div>
 
             </div>
+
         </div>
     </div>
 
-    <!-- フッター部分 -->
     <footer class="footer">
-        <!-- フッターコンテンツ -->
+        <p>© 2026 PROTO SPACE Inc. All rights reserved.</p>
     </footer>
 
 </body>
