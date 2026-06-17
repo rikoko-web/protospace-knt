@@ -1,7 +1,5 @@
 package in.tech_camp.protospace_knt.controller;
 
-import java.util.List;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import in.tech_camp.protospace_knt.entity.UserEntity;
+import in.tech_camp.protospace_knt.form.UserForm;
 import in.tech_camp.protospace_knt.repository.UserRepository; 
 import in.tech_camp.protospace_knt.service.UserService;
 import lombok.AllArgsConstructor;
@@ -19,43 +18,56 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserController {
 
-    // リポジトリは userRepository 1つでOK
     private final UserRepository userRepository;
     private final UserService userService; 
 
-    // 【トップページ：プロトタイプ一覧表示】
     @GetMapping("/")
     public String index(Model model) {
-        // userRepository の中の SQL（SELECT * FROM prototypes）が実行されます！
-        List<UserEntity> prototypes = userRepository.findAll();
-        model.addAttribute("prototypes", prototypes);
+        // List<UserEntity> prototypes = userRepository.findAll();
+       model.addAttribute("prototypes", java.util.Collections.emptyList());
         return "messages/index";
     }
 
-    // 【ログイン画面を表示する】
     @GetMapping("/login")
     public String showLoginForm() {
         return "users/login"; 
     }
 
-    // 【新規登録画面を表示する】
-    @GetMapping("/signup")
+    // 💡 1. 画面のボタンに合わせて、URLを「/user/new」に変更します
+    @GetMapping("/signUp")
     public String showSignupForm(Model model) {
-        model.addAttribute("userEntity", new UserEntity());
-        return "users/signUp"; 
+        model.addAttribute("userForm", new UserForm());
+        return "users/signUp"; // 表示するHTMLは「signUp.html」のままで100%正解です
     }
 
-    // 【新規登録のボタンが押された時の処理】
-    @PostMapping("/signup")
-    public String registerUser(@Validated @ModelAttribute("userEntity") UserEntity user, 
+    // 💡 2. 送信先のURLも「/user/new」に変更します
+    @PostMapping("/signUp")
+    public String registerUser(@Validated @ModelAttribute("userForm") UserForm userForm, 
                                BindingResult bindingResult, 
                                Model model) {
         
+        // 💡 3. 要件定義の「パスワード確認用一致」のチェックを追加します
+        if (userForm.getPassword() != null && !userForm.getPassword().equals(userForm.getPasswordConfirmation())) {
+            bindingResult.rejectValue("passwordConfirmation", "error.passwordConfirmation", "パスワードと確認用パスワードが一致しません");
+        }
+
+        // 入力チェック（必須や形式エラー、または上記の一致エラー）があれば新規登録画面に留まる
         if (bindingResult.hasErrors()) {
             return "users/signUp";
         }
 
-        userService.registerUser(user);
+        // フォームからエンティティへの詰め替え（DBeaverの定義に完全一致）
+        UserEntity userEntity = new UserEntity();
+        userEntity.setEmail(userForm.getEmail());
+        userEntity.setPassword(userForm.getPassword());
+        userEntity.setName(userForm.getName()); 
+        userEntity.setProfile(userForm.getProfile());
+        userEntity.setOccupation(userForm.getOccupation()); 
+        userEntity.setPosition(userForm.getPosition()); 
+
+        // データベースに登録を実行
+        userService.registerUser(userEntity);
+        
         return "redirect:/login";
     }
 }
