@@ -2,7 +2,7 @@ package in.tech_camp.protospace_knt;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod; // ★これの追加が必要です
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,24 +17,24 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                // 💡 新規登録（/signUp）やログイン画面、画像などは未ログインでもアクセスOK
+                // 新規登録やログイン画面などは未ログインでもアクセスOK
                 .requestMatchers("/", "/login", "/signUp", "/css/**", "/images/**").permitAll() 
                 
-                // ★追加：プロトタイプ詳細やユーザー詳細（マイページ）の「見るだけ（GET）」なら未ログインでもアクセスOKにする
+                // プロトタイプ詳細などのGETアクセスは未ログインでもOK
                 .requestMatchers(HttpMethod.GET, "/prototypes/**", "/users/**").permitAll() 
                 
-                .anyRequest().authenticated() // それ以外（マイページへの遷移中継や投稿など）はログイン必須
+                .anyRequest().authenticated() 
             )
             .formLogin(form -> form
-                .loginPage("/login") // 自作ログイン画面のURL
-                .loginProcessingUrl("/login") // フォームの送信先URL
-                .usernameParameter("email")   // ログインIDに「email」を使う
-                .passwordParameter("password") // パスワードは「password」
-                .defaultSuccessUrl("/", true) // ログイン成功後はトップページへ
+                .loginPage("/login") 
+                .loginProcessingUrl("/login") 
+                .usernameParameter("email")   // login.htmlの name="email" と合わせる
+                .passwordParameter("password") 
+                .defaultSuccessUrl("/afterlogin", true) // ★ここを "/afterlogin" に変更しました
                 .permitAll()
             )
             .logout(logout -> logout
-                .logoutSuccessUrl("/") // ログアウト後はトップページへ
+                .logoutSuccessUrl("/") 
                 .permitAll()
             );
         return http.build();
