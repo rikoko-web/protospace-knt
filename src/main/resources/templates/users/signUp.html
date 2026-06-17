@@ -2,67 +2,96 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
-    <title>KCS PROTO SPACE</title>
+    <title>KCS PROTO SPACE - 新規登録</title>
 </head>
 
 <body>
 
-<div class="contents row">
-  <div class="container">
-    <h2>ユーザー新規登録</h2>
-    <div class="form">
-      <div th:if="${errorMessages}" th:each="error : ${errorMessages}">
-        <div th:text="${error}"></div>
-      </div>
-
-      <form th:action="@{/user}" th:method="post" th:object="${userForm}" class="new_user">
-        
-        <div class="field">
-          <label for="email">メールアドレス</label><br />
-          <input type="email" id="email" th:field="*{email}" />
+<header class="header">
+    <div class="inner">
+        <a th:href="@{/}" class="header__logo">PROTO SPACE</a>
+        <div class="header__nav">
+            <a th:href="@{/login}" class="nav__link">ログイン</a>
+            <a th:href="@{/signUp}" class="nav__link">新規登録</a>
         </div>
-
-        <div class="field">
-          <label for="password">パスワード（6文字以上）</label><br />
-          <input type="password" id="password" th:field="*{password}" />
-        </div>
-
-        <div class="field">
-          <label for="password_confirmation">パスワード再入力</label><br />
-          <input type="password" id="password_confirmation" th:field="*{passwordConfirmation}" />
-        </div>
-
-        <div class="field">
-          <label for="nickname">ユーザー名</label><br />
-          <input type="text" id="nickname" th:field="*{nickname}" />
-        </div>
-
-        <div class="field">
-          <label for="profile">プロフィール</label><br />
-          <textarea id="profile" th:field="*{profile}"></textarea>
-        </div>
-
-        <div class="field">
-          <label for="affiliation">所属</label><br />
-          <textarea id="affiliation" th:field="*{affiliation}"></textarea>
-        </div>
-
-        <div class="field">
-          <label for="occupation">役職</label><br />
-          <textarea id="occupation" th:field="*{occupation}"></textarea>
-        </div>
-
-        <div class="actions">
-          <input type="submit" value="新規登録">
-        </div>
-
-      </form>
     </div>
-  </div>
-</div>
+</header>
 
-<div th:insert="~{fragments/footer :: footer}"></div>
+<main class="main">
+    <div class="inner">
+        <div class="form__wrapper">
+            
+            <h2 class="page-heading">ユーザー新規登録</h2>
+            
+            <div th:if="${errorMessages}" th:each="error : ${errorMessages}" style="color: #ff4d4d; margin-bottom: 15px; font-size: 14px;">
+                <div th:text="${error}"></div>
+            </div>
+
+            <form th:action="@{/signUp}" th:method="post" th:object="${userForm}">
+                
+                <div class="field">
+                    <label for="email" class="field-label">メールアドレス</label>
+                    <div class="field-input">
+                        <input type="email" id="email" th:field="*{email}" required />
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="password" class="field-label">パスワード（6文字以上）</label>
+                    <div class="field-input">
+                        <input type="password" id="password" th:field="*{password}" required />
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="password_confirmation" class="field-label">パスワード再入力</label>
+                    <div class="field-input">
+                        <input type="password" id="password_confirmation" th:field="*{passwordConfirmation}" required />
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="name" class="field-label">ユーザー名</label>
+                    <div class="field-input">
+                        <input type="text" id="name" th:field="*{name}" required />
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="profile" class="field-label">プロフィール</label>
+                    <div class="field-input">
+                        <textarea id="profile" th:field="*{profile}"></textarea>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="occupation" class="field-label">所属</label>
+                    <div class="field-input">
+                        <textarea id="occupation" th:field="*{occupation}"></textarea>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="position" class="field-label">役職</label>
+                    <div class="field-input">
+                        <textarea id="position" th:field="*{position}"></textarea>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <input type="submit" value="新規登録" class="btn-primary">
+                </div>
+
+            </form>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <p>© 2026 KCS PROTO SPACE Inc. All rights reserved.</p>
+</footer>
 
 </body>
 </html>
