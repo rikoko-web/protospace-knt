@@ -10,7 +10,7 @@
 body { 
   margin: 0; 
   padding: 0; 
-  background-color: #f4f7f9; /* 見本のカード型を引き立てる薄い背景色 */
+  background-color: #f5f4f9; /* ほんのり紫がかった、カードを引き立てる薄い背景色 */
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: #333; 
   display: flex;
@@ -31,7 +31,7 @@ body {
    ========================================================================== */
 .header { 
   background-color: #ffffff; 
-  border-bottom: 1px solid #e5eaf0; 
+  border-bottom: 1px solid #ebdff0; /* 境界線もほんのり紫に */
   padding: 18px 0; 
 }
 
@@ -45,7 +45,7 @@ body {
   font-size: 22px; 
   font-weight: 700; 
   text-decoration: none; 
-  color: #2b3a4a; 
+  color: #3a2b4a; /* ロゴの色を深い紫寄りにチェンジ */
   letter-spacing: 1.5px;
 }
 
@@ -54,12 +54,12 @@ body {
   gap: 10px; 
 }
 
-/* 水色の枠線ボタン */
+/* 紫色の枠線ボタン */
 .nav__link { 
   text-decoration: none; 
-  color: #7ab4df;            
+  color: #8a73be;            /* 水色からオシャレな紫に変更 */
   font-size: 14px; 
-  border: 1px solid #7ab4df; 
+  border: 1px solid #8a73be; /* 紫の線 */
   padding: 8px 24px;         
   border-radius: 4px;        
   background-color: #ffffff; 
@@ -68,7 +68,7 @@ body {
 }
 
 .nav__link:hover {
-  background-color: #7ab4df; 
+  background-color: #8a73be; /* ホバーで紫に染まる */
   color: #ffffff;            
 }
 
@@ -91,8 +91,8 @@ body {
   padding: 40px;
   background-color: #ffffff;
   border-radius: 8px; 
-  box-shadow: 0 10px 25px rgba(43, 58, 74, 0.05); /* 綺麗な影をプラス */
-  border: 1px solid #e5eaf0;
+  box-shadow: 0 10px 25px rgba(58, 43, 74, 0.05); /* 綺麗な影をプラス */
+  border: 1px solid #ebdff0;
 }
 
 .page-heading {
@@ -101,7 +101,7 @@ body {
   margin-top: 0;
   margin-bottom: 35px;
   font-weight: bold;
-  color: #2b3a4a;
+  color: #3a2b4a; /* 深い紫 */
 }
 
 /* ==========================================================================
@@ -147,9 +147,9 @@ body {
 .field-input input:focus,
 .field-input textarea:focus {
   outline: none;
-  border-color: #7ab4df;
+  border-color: #8a73be; /* 選択した時に紫に光る */
   background-color: #ffffff;
-  box-shadow: 0 0 0 3px rgba(122, 180, 223, 0.2); 
+  box-shadow: 0 0 0 3px rgba(138, 115, 190, 0.2); 
 }
 
 /* ==========================================================================
@@ -163,7 +163,7 @@ body {
 .btn-primary {
   width: 100%; 
   padding: 14px;
-  background-color: #7ab4df; 
+  background-color: #8a73be; /* メインの紫色のボタン */
   color: #ffffff;
   border: none;
   border-radius: 6px;
@@ -174,7 +174,7 @@ body {
 }
 
 .btn-primary:hover { 
-  background-color: #5997c4; 
+  background-color: #6c56a3; /* ホバー時は少し濃い紫に */
 }
 
 .btn-primary:active {
@@ -184,107 +184,6 @@ body {
 /* ==========================================================================
    6. ログイン後トップページ（タイムライン）用の追加デザイン
    ========================================================================== */
-.user-welcome {
-  margin-top: 20px;
-  margin-bottom: 30px;
-  font-size: 16px;
-  color: #333;
-  width: 100%;
-}
-
-.user-welcome a {
-  color: #2b3a4a;
-  font-weight: bold;
-  text-decoration: underline;
-}
-
-/* カードを横並びにするグリッド設定 */
-.card__wrapper {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 30px;
-  margin-bottom: 40px;
-  width: 100%;
-}
-
-/* プロトタイプカード本体 */
-.prototype-card {
-  background-color: #ffffff;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(43, 58, 74, 0.05);
-  border: 1px solid #e5eaf0;
-  transition: transform 0.2s ease;
-}
-
-.prototype-card:hover {
-  transform: translateY(-5px); /* ホバー時に少し浮く */
-}
-
-.card__img {
-  background-color: #fafbfc;
-  border-bottom: 1px solid #e5eaf0;
-  text-align: center;
-  height: 200px; 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.card__img img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-
-.card__body {
-  padding: 20px;
-}
-
-.card__title {
-  margin: 0 0 8px 0;
-  font-size: 18px;
-  color: #2b3a4a;
-  font-weight: bold;
-}
-
-.card__catchphrase {
-  margin: 0 0 20px 0;
-  font-size: 14px;
-  color: #666;
-  line-height: 1.4;
-}
-
-.card__user {
-  font-size: 12px;
-  color: #888;
-  text-align: right;
-}
-
-.card__user a {
-  color: #7ab4df;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-/* ==========================================================================
-   7. フッターのデザイン
-   ========================================================================== */
-.footer { 
-  background-color: #8c8c8c; 
-  color: #ffffff;
-  text-align: center; 
-  padding: 16px 0; 
-  font-size: 13px; 
-}
-
-.footer p {
-  margin: 0;
-}
-
-/* ==========================================================================
-   7. ログイン後トップページ（タイムライン）用の追加デザイン
-   ========================================================================== */
 
 /* ユーザー名表示のスタイル */
 .user-welcome {
@@ -292,10 +191,11 @@ body {
   margin-bottom: 30px;
   font-size: 16px;
   color: #333;
+  width: 100%;
 }
 
 .user-welcome a {
-  color: #2b3a4a;
+  color: #3a2b4a;
   font-weight: bold;
   text-decoration: underline;
 }
@@ -306,6 +206,7 @@ body {
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 30px;
   margin-bottom: 40px;
+  width: 100%;
 }
 
 /* 1つの白いプロトタイプカード */
@@ -313,8 +214,8 @@ body {
   background-color: #ffffff;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 15px rgba(43, 58, 74, 0.05);
-  border: 1px solid #e5eaf0;
+  box-shadow: 0 4px 15px rgba(58, 43, 74, 0.05);
+  border: 1px solid #ebdff0;
   transition: transform 0.2s ease;
 }
 
@@ -325,7 +226,7 @@ body {
 /* カードの画像エリア */
 .card__img {
   background-color: #fafbfc;
-  border-bottom: 1px solid #e5eaf0;
+  border-bottom: 1px solid #ebdff0;
   text-align: center;
   padding: 0;
   height: 200px; /* 高さを統一 */
@@ -348,7 +249,7 @@ body {
 .card__title {
   margin: 0 0 8px 0;
   font-size: 18px;
-  color: #2b3a4a;
+  color: #3a2b4a;
   font-weight: bold;
 }
 
@@ -366,13 +267,28 @@ body {
 }
 
 .card__user a {
-  color: #7ab4df;
+  color: #8a73be; /* 投稿者名も紫に */
   text-decoration: none;
   font-weight: 600;
 }
 
 .card__user a:hover {
   text-decoration: underline;
+}
+
+/* ==========================================================================
+   7. フッターのデザイン
+   ========================================================================== */
+.footer { 
+  background-color: #726c7d; /* フッターのグレーもほんのり紫に馴染ませて高級感をアップ */
+  color: #ffffff;
+  text-align: center; 
+  padding: 16px 0; 
+  font-size: 13px; 
+}
+
+.footer p {
+  margin: 0;
 }
 
 /* ==========================================================================
@@ -386,21 +302,21 @@ body {
   background: #ffffff;
   border-radius: 6px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(43, 58, 74, 0.02);
-  border: 1px solid #e5eaf0;
+  box-shadow: 0 4px 12px rgba(58, 43, 74, 0.02);
+  border: 1px solid #ebdff0;
 }
 
 .table th, .table td {
   padding: 16px 20px;
   text-align: left;
-  border-bottom: 1px solid #e5eaf0;
+  border-bottom: 1px solid #ebdff0;
 }
 
 .table th {
   background-color: #fafbfc;
   width: 30%;
   font-weight: bold;
-  color: #2b3a4a;
+  color: #3a2b4a;
 }
 
 /* 一番下の行だけ、下の線（境界線）を消して角を綺麗に見せる */

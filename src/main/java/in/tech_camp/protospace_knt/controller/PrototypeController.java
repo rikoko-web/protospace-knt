@@ -1,16 +1,20 @@
 package in.tech_camp.protospace_knt.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.UUID;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-<<<<<<< Updated upstream
-=======
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
->>>>>>> Stashed changes
 
 import in.tech_camp.protospace_knt.entity.PrototypeEntity;
 import in.tech_camp.protospace_knt.entity.UserEntity;
@@ -46,29 +50,11 @@ public class PrototypeController {
     @GetMapping("/protos/new")
     public String showNewPrototype(Model model) {
         model.addAttribute("prototypeForm", new PrototypeForm());
-<<<<<<< Updated upstream
-        return "prototypes/new"; // templates/prototypes/new.html が必要です
-=======
         return "protos/new";
->>>>>>> Stashed changes
     }
 
     // 3. 投稿内容の保存処理
     @PostMapping("/protos/new")
-<<<<<<< Updated upstream
-    public String createPrototype(@ModelAttribute("prototypeForm") PrototypeForm prototypeForm, 
-                                  Authentication auth) {
-        
-        // ログイン中のユーザー情報を取得
-        String email = auth.getName();
-        
-        // 【今後ここに追加】
-        // 1. Service層を使ってDBに保存する処理
-        // 2. prototypeFormとemail（ユーザーID）を渡して保存
-        
-        System.out.println("タイトル: " + prototypeForm.getTitle());
-        System.out.println("投稿者: " + email);
-=======
     public String createPrototype(
             @ModelAttribute("prototypeForm") PrototypeForm form, 
             @RequestParam("imageFile") MultipartFile imageFile,
@@ -100,7 +86,6 @@ public class PrototypeController {
         prototype.setConcept(form.getConcept());
         prototype.setImage(imageWebPath);
         prototype.setUserId(user.getId());
->>>>>>> Stashed changes
         
         prototypeRepository.insert(prototype);
         

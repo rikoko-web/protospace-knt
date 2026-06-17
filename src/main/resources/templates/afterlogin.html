@@ -27,21 +27,28 @@
                 こんにちは、<a th:href="@{/users/{id}(id=${userId})}" th:text="${username}">ユーザー名</a>さん
             </div>
 
-            <div class="card__wrapper">
-                <div class="prototype-card">
+            <div class="card__wrapper" th:if="${prototypes != null && !prototypes.isEmpty()}">
+                
+                <div class="prototype-card" th:each="prototype : ${prototypes}">
+                    
                     <div class="card__img">
-                        <img th:src="@{/images/logo.png}" alt="">
+                        <img th:src="${prototype.image != null} ? @{${prototype.image}} : @{/images/logo.png}" alt="プロトタイプ画像">
                     </div>
+                    
                     <div class="card__body">
-                        <h3 class="card__title">プロトタイプの名称</h3>
-                        <p class="card__catchphrase">キャッチコピー</p>
+                        <h3 class="card__title">
+                            <a th:href="@{/prototypes/{id}(id=${prototype.id})}" th:text="${prototype.title}">プロトタイプの名称</a>
+                        </h3>
+                        
+                        <p class="card__catchphrase" th:text="${prototype.catchCopy}">キャッチコピー</p>
+                        
                         <div class="card__user">
-<<<<<<< Updated upstream
+
                             by <a href="#" th:text="${username}"></a>
                         </div>
                     </div>
                 </div>
-=======
+
                             by <span th:text="${prototype.user.name}">投稿者名</span>
                         </div>
                     </div>
@@ -51,7 +58,8 @@
             
             <div th:if="${prototypes == null || prototypes.isEmpty()}" style="text-align: center; color: #888; padding: 60px 0; font-size: 16px;">
                 <p>現在、投稿されたプロトタイプはありません。</p>
->>>>>>> Stashed changes
+
+
             </div>
 
         </div>
