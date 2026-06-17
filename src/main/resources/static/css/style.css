@@ -374,3 +374,37 @@ body {
 .card__user a:hover {
   text-decoration: underline;
 }
+
+/* ==========================================================================
+   8. ユーザー詳細（マイページ）用のテーブルデザイン
+   ========================================================================== */
+.table {
+  width: 100%;
+  max-width: 600px;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: #ffffff;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(43, 58, 74, 0.02);
+  border: 1px solid #e5eaf0;
+}
+
+.table th, .table td {
+  padding: 16px 20px;
+  text-align: left;
+  border-bottom: 1px solid #e5eaf0;
+}
+
+.table th {
+  background-color: #fafbfc;
+  width: 30%;
+  font-weight: bold;
+  color: #2b3a4a;
+}
+
+/* 一番下の行だけ、下の線（境界線）を消して角を綺麗に見せる */
+.table tr:last-child th, 
+.table tr:last-child td {
+  border-bottom: none;
+}
