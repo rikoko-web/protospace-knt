@@ -192,3 +192,96 @@ body {
 .footer p {
   margin: 0;
 }
+
+/* ==========================================================================
+   7. ログイン後トップページ（タイムライン）用の追加デザイン
+   ========================================================================== */
+
+/* ユーザー名表示のスタイル */
+.user-welcome {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  font-size: 16px;
+  color: #333;
+}
+
+.user-welcome a {
+  color: #2b3a4a;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+/* カードを並べるグリッド（横並びにする設定） */
+.card__wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+/* 1つの白いプロトタイプカード */
+.prototype-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(43, 58, 74, 0.05);
+  border: 1px solid #e5eaf0;
+  transition: transform 0.2s ease;
+}
+
+.prototype-card:hover {
+  transform: translateY(-5px); /* マウスを乗せると少し浮き上がる */
+}
+
+/* カードの画像エリア */
+.card__img {
+  background-color: #fafbfc;
+  border-bottom: 1px solid #e5eaf0;
+  text-align: center;
+  padding: 0;
+  height: 200px; /* 高さを統一 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card__img img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* カードのテキスト部分 */
+.card__body {
+  padding: 20px;
+}
+
+.card__title {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  color: #2b3a4a;
+  font-weight: bold;
+}
+
+.card__catchphrase {
+  margin: 0 0 20px 0;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.4;
+}
+
+.card__user {
+  font-size: 12px;
+  color: #888;
+  text-align: right;
+}
+
+.card__user a {
+  color: #7ab4df;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.card__user a:hover {
+  text-decoration: underline;
+}

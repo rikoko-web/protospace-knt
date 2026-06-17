@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PROTO SPACE - タイムライン</title>
-    <link rel="stylesheet" href="style.css">
+    <title>PROTO SPACE</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
 
     <header class="header">
         <div class="inner">
-            <a href="#" class="header__logo">PROTO SPACE</a>
+            <a href="/login" class="header__logo">PROTO SPACE</a>
             <div class="header__nav">
                 <a th:href="@{/logout}" class="nav__link">ログアウト</a>
                 <a th:href="@{/protos/new}" class="nav__link">New Proto</a>
@@ -18,33 +18,30 @@
         </div>
     </header>
 
-    <div class="main" style="align-items: flex-start; padding: 40px 0;">
+    <main class="main">
         <div class="inner">
             
-            <div class="user-welcome" style="margin-bottom: 40px; font-size: 16px;">
-                こんにちは、
-                <a href="#" th:text="${username}" style="color: #2b3a4a; font-weight: bold; text-decoration: underline;">a</a> さん
+            <div class="user-welcome">
+                こんにちは、<a href="#" th:text="${username}"></a> さん
             </div>
 
-            <div class="card__wrapper" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px;">
+            <div class="card__wrapper">
                 
-                <div class="prototype-card" style="background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-                    <div class="card__img" style="background-color: #e5eaf0; text-align: center; padding: 20px;">
-                        <img src="logo.png" th:src="@{/images/logo.png}" alt="プロトタイプ画像" style="max-width: 100%; height: auto;">
+                <div class="prototype-card">
+                    <div class="card__img">
+                        <img th:src="@{/images/logo.png}" src="logo.png" alt="プロトタイプ画像">
                     </div>
-                    <div class="card__body" style="padding: 20px;">
-                        <h3 class="card__title" style="margin: 0 0 10px 0; font-size: 20px; color: #2b3a4a;">プロトタイプの名称</h3>
-                        <p class="card__catchphrase" style="margin: 0 0 15px 0; font-size: 14px; color: #666;">キャッチコピー</p>
-                        <div class="card__user" style="font-size: 12px; color: #888; text-align: right;">
-                            by <a href="#" style="color: #7ab4df;">a</a>
+                    <div class="card__body">
+                        <h3 class="card__title">プロトタイプの名称</h3>
+                        <p class="card__catchphrase">キャッチコピー</p>
+                        <div class="card__user">
+                            by <a href="#" th:text="${username}"></a>
                         </div>
                     </div>
                 </div>
-
-            </div>
-
+                </div>
         </div>
-    </div>
+    </main>
 
     <footer class="footer">
         <p>© 2026 PROTO SPACE Inc. All rights reserved.</p>
