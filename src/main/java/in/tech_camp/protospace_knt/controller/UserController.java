@@ -35,18 +35,17 @@ public class UserController {
         return "users/login"; 
     }
 
-    // --- 【追加】ログイン処理 ---
+    // --- 【修正済み】ログイン処理 ---
+    // HTMLの name="username" と name="password" に合わせて引数を修正しました
     @PostMapping("/login")
-    public String login(@RequestParam("email") String email, 
+    public String login(@RequestParam("username") String username, 
                         @RequestParam("password") String password, 
                         Model model) {
         
-        // ★本来はここでUserServiceを使ってDBと照合します
-        // 今回は動作確認のため、名前をセットして画面遷移させます
-        String username = "テックキャンプ太郎"; 
+        // 動作確認：ログイン後の名前をセット
         model.addAttribute("username", username);
         
-        // ログイン成功後に表示する画面を指定
+        // ログイン成功後に表示する画面へ遷移
         return "afterlogin";
     }
 
