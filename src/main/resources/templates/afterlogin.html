@@ -12,7 +12,9 @@
         <div class="inner">
             <a th:href="@{/}" class="header__logo">KSC PROTO SPACE</a>
             <div class="header__nav">
-                <a th:href="@{/logout}" class="nav__link">ログアウト</a>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="nav__link" style="border:none; background:none; cursor:pointer; font-size:16px;">ログアウト</button>
+                </form>
                 <a th:href="@{/protos/new}" class="nav__link">New Proto</a>
             </div>
         </div>
