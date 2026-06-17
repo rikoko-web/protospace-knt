@@ -24,7 +24,7 @@
         <div class="inner">
             
             <div class="user-welcome">
-                こんにちは、<a href="#" th:text="${username}"></a>さん
+                こんにちは、<a th:href="@{/users/{id}(id=${userId})}" th:text="${username}">ユーザー名</a>さん
             </div>
 
             <div class="card__wrapper" th:if="${prototypes != null && !prototypes.isEmpty()}">
@@ -43,12 +43,23 @@
                         <p class="card__catchphrase" th:text="${prototype.catchCopy}">キャッチコピー</p>
                         
                         <div class="card__user">
-                            by <a th:href="@{/users/{id}(id=${prototype.user.id})}" th:text="${prototype.user.name}">投稿者名</a>
+
+                            by <a href="#" th:text="${username}"></a>
+                        </div>
+                    </div>
+                </div>
+
+                            by <span th:text="${prototype.user.name}">投稿者名</span>
                         </div>
                     </div>
                     
-                </div></div><div th:if="${prototypes == null || prototypes.isEmpty()}" style="text-align: center; color: #888; padding: 60px 0; font-size: 16px;">
+                </div>
+            </div>
+            
+            <div th:if="${prototypes == null || prototypes.isEmpty()}" style="text-align: center; color: #888; padding: 60px 0; font-size: 16px;">
                 <p>現在、投稿されたプロトタイプはありません。</p>
+
+
             </div>
 
         </div>

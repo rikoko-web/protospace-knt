@@ -7,5 +7,5 @@ public class PrototypeForm {
     private String title;
     private String catchCopy;
     private String concept;
-    // 必要に応じて画像ファイル用のフィールドなどもここに追加します
+    private String image; // 💡 追加：画像パス（またはファイル名）を保持する場所
 }
