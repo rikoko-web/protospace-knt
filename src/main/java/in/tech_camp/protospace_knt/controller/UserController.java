@@ -1,5 +1,7 @@
 package in.tech_camp.protospace_knt.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,8 +11,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import in.tech_camp.protospace_knt.entity.PrototypeEntity;
 import in.tech_camp.protospace_knt.entity.UserEntity;
 import in.tech_camp.protospace_knt.form.UserForm;
+import in.tech_camp.protospace_knt.repository.PrototypeRepository; // 追加
 import in.tech_camp.protospace_knt.repository.UserRepository;
 import in.tech_camp.protospace_knt.service.UserService;
 import lombok.AllArgsConstructor;
@@ -21,6 +25,7 @@ public class UserController {
 
     private final UserRepository userRepository;
     private final UserService userService;
+    private final PrototypeRepository prototypeRepository; // 追加
 
     // --- トップページ ---
     @GetMapping("/")
@@ -36,12 +41,16 @@ public class UserController {
     }
 
     // --- ユーザー詳細画面表示 ---
-    // IDの型を Long に修正しました
     @GetMapping("/users/{id}")
     public String show(@PathVariable("id") Long id, Model model) {
         // IDでユーザーを検索
         UserEntity user = userRepository.findById(id);
         model.addAttribute("user", user);
+
+        // ★ HTMLの ${userPrototypes} と名前を一致させてデータを送る
+        List<PrototypeEntity> userPrototypes = prototypeRepository.findByUserId(id);
+        model.addAttribute("userPrototypes", userPrototypes);
+
         return "users/show";
     }
 
