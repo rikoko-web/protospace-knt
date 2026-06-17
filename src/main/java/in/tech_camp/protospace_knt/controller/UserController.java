@@ -1,5 +1,6 @@
 package in.tech_camp.protospace_knt.controller;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,42 +22,56 @@ public class UserController {
     private final UserRepository userRepository;
     private final UserService userService; 
 
+    // --- トップページ ---
     @GetMapping("/")
     public String index(Model model) {
-        // List<UserEntity> prototypes = userRepository.findAll();
        model.addAttribute("prototypes", java.util.Collections.emptyList());
-        return "messages/index";
+       return "messages/index";
     }
 
+    // --- ログイン画面表示 ---
     @GetMapping("/login")
     public String showLoginForm() {
         return "users/login"; 
     }
 
-    // 💡 1. 画面のボタンに合わせて、URLを「/user/new」に変更します
+    // ★修正済み：ログイン成功後にユーザー名を表示するメソッド
+    @GetMapping("/afterlogin")
+    public String showAfterLogin(Model model, Authentication auth) {
+        if (auth != null && auth.isAuthenticated()) {
+            // ログイン中のメールアドレスを取得
+            String email = auth.getName();
+            // データベースからユーザー情報を取得
+            UserEntity user = userRepository.findByEmail(email);
+            // ユーザー名を表示用にモデルへセット
+            if (user != null) {
+                model.addAttribute("username", user.getName());
+            }
+        }
+        return "afterlogin"; 
+    }
+
+    // --- 新規登録画面表示 ---
     @GetMapping("/signUp")
     public String showSignupForm(Model model) {
         model.addAttribute("userForm", new UserForm());
-        return "users/signUp"; // 表示するHTMLは「signUp.html」のままで100%正解です
+        return "users/signUp";
     }
 
-    // 💡 2. 送信先のURLも「/user/new」に変更します
+    // --- 新規登録実行 ---
     @PostMapping("/signUp")
     public String registerUser(@Validated @ModelAttribute("userForm") UserForm userForm, 
                                BindingResult bindingResult, 
                                Model model) {
         
-        // 💡 3. 要件定義の「パスワード確認用一致」のチェックを追加します
         if (userForm.getPassword() != null && !userForm.getPassword().equals(userForm.getPasswordConfirmation())) {
             bindingResult.rejectValue("passwordConfirmation", "error.passwordConfirmation", "パスワードと確認用パスワードが一致しません");
         }
 
-        // 入力チェック（必須や形式エラー、または上記の一致エラー）があれば新規登録画面に留まる
         if (bindingResult.hasErrors()) {
             return "users/signUp";
         }
 
-        // フォームからエンティティへの詰め替え（DBeaverの定義に完全一致）
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(userForm.getEmail());
         userEntity.setPassword(userForm.getPassword());
@@ -65,7 +80,6 @@ public class UserController {
         userEntity.setOccupation(userForm.getOccupation()); 
         userEntity.setPosition(userForm.getPosition()); 
 
-        // データベースに登録を実行
         userService.registerUser(userEntity);
         
         return "redirect:/login";
