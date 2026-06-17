@@ -6,12 +6,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable; // 追加
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import in.tech_camp.protospace_knt.entity.UserEntity;
 import in.tech_camp.protospace_knt.form.UserForm;
-import in.tech_camp.protospace_knt.repository.UserRepository; 
+import in.tech_camp.protospace_knt.repository.UserRepository;
 import in.tech_camp.protospace_knt.service.UserService;
 import lombok.AllArgsConstructor;
 
@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
 public class UserController {
 
     private final UserRepository userRepository;
-    private final UserService userService; 
+    private final UserService userService;
 
     // --- トップページ ---
     @GetMapping("/")
@@ -32,7 +32,7 @@ public class UserController {
     // --- ログイン画面表示 ---
     @GetMapping("/login")
     public String showLoginForm() {
-        return "users/login"; 
+        return "users/login";
     }
 
     // --- ユーザー詳細画面表示 ---
@@ -42,7 +42,7 @@ public class UserController {
         // IDでユーザーを検索
         UserEntity user = userRepository.findById(id);
         model.addAttribute("user", user);
-        return "users/show"; 
+        return "users/show";
     }
 
     // --- 新規登録画面表示 ---
@@ -54,8 +54,8 @@ public class UserController {
 
     // --- 新規登録実行 ---
     @PostMapping("/signUp")
-    public String registerUser(@Validated @ModelAttribute("userForm") UserForm userForm, 
-                               BindingResult bindingResult, 
+    public String registerUser(@Validated @ModelAttribute("userForm") UserForm userForm,
+                               BindingResult bindingResult,
                                Model model) {
         
         if (userForm.getPassword() != null && !userForm.getPassword().equals(userForm.getPasswordConfirmation())) {
@@ -69,10 +69,10 @@ public class UserController {
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(userForm.getEmail());
         userEntity.setPassword(userForm.getPassword());
-        userEntity.setName(userForm.getName()); 
+        userEntity.setName(userForm.getName());
         userEntity.setProfile(userForm.getProfile());
-        userEntity.setOccupation(userForm.getOccupation()); 
-        userEntity.setPosition(userForm.getPosition()); 
+        userEntity.setOccupation(userForm.getOccupation());
+        userEntity.setPosition(userForm.getPosition());
 
         userService.registerUser(userEntity);
         
