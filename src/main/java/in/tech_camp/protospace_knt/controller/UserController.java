@@ -1,13 +1,13 @@
 package in.tech_camp.protospace_knt.controller;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping; // 追加
 
 import in.tech_camp.protospace_knt.entity.UserEntity;
 import in.tech_camp.protospace_knt.form.UserForm;
@@ -35,18 +35,14 @@ public class UserController {
         return "users/login"; 
     }
 
-    // --- 【修正済み】ログイン処理 ---
-    // HTMLの name="username" と name="password" に合わせて引数を修正しました
-    @PostMapping("/login")
-    public String login(@RequestParam("username") String username, 
-                        @RequestParam("password") String password, 
-                        Model model) {
-        
-        // 動作確認：ログイン後の名前をセット
-        model.addAttribute("username", username);
-        
-        // ログイン成功後に表示する画面へ遷移
-        return "afterlogin";
+    // ★追加：ログイン成功後に遷移するページを表示するメソッド
+    @GetMapping("/afterlogin")
+    public String showAfterLogin(Model model, Authentication auth) {
+        // Spring Securityからログイン中のユーザー名（メールアドレス）を取得
+        if (auth != null && auth.isAuthenticated()) {
+            model.addAttribute("username", auth.getName());
+        }
+        return "afterlogin"; 
     }
 
     // --- 新規登録画面表示 ---

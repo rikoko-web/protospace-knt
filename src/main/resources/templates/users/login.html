@@ -24,10 +24,13 @@
                 <h2 class="page-heading">ユーザーログイン</h2>
                 <form th:action="@{/login}" method="post">
                     <div class="field">
+
                         <label for="user_email" class="field-label">メールアドレス</label>
                         <div class="field-input">
-                            <input type="email" id="user_email" name="username" autofocus="autofocus" autocomplete="email" required>
+                          <input type="email" id="user_email" name="email" autofocus="autofocus" autocomplete="email" required>  
                         </div>
+
+
                     </div>
                     <div class="field">
                         <label for="user_password" class="field-label">パスワード（6文字以上）</label>
