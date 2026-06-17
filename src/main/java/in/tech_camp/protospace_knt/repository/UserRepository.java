@@ -11,7 +11,7 @@ import in.tech_camp.protospace_knt.entity.UserEntity;
 @Mapper
 public interface UserRepository {
 
-    // 1. ユーザー登録用（MyBatisの自動連番挿入に対応）
+    // 1. ユーザー登録用
     @Insert("INSERT INTO users (email, password, name, profile, occupation, position) " +
             "VALUES (#{email}, #{password}, #{name}, #{profile}, #{occupation}, #{position})")
     void save(UserEntity user);
@@ -20,7 +20,11 @@ public interface UserRepository {
     @Select("SELECT * FROM users WHERE email = #{email}")
     UserEntity findByEmail(String email);
 
-    // 3. ユーザー一覧を取得する場合（※もし作品一覧なら別のPrototypeEntity等になりますが、型をUserEntityに合わせます）
+    // 3. ユーザー一覧を取得する場合
     @Select("SELECT * FROM users")
     List<UserEntity> findAll();
+
+    // ★追加：マイページ（詳細画面）を表示するときに、IDからユーザーを特定する用
+    @Select("SELECT * FROM users WHERE id = #{id}")
+    UserEntity findById(Long id);
 }
