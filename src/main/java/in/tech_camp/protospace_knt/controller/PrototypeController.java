@@ -63,7 +63,7 @@ public class PrototypeController {
         String imageWebPath = null;
         if (!imageFile.isEmpty()) {
             try {
-                Path uploadPath = Paths.get("src/main/resources/static/uploads/").toAbsolutePath().normalize();
+                Path uploadPath = Paths.get("build/resources/main/static/uploads/").toAbsolutePath().normalize();
                 if (!Files.exists(uploadPath)) { Files.createDirectories(uploadPath); }
                 
                 String originalFileName = imageFile.getOriginalFilename();
