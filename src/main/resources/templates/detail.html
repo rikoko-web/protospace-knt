@@ -1,89 +1,100 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
-    <title th:text="${prototype.title}">KCS PROTO SPACE - 詳細</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+    <title th:text="${prototype.title}">KCS PROTO SPACE - 詳細</title>
 </head>
 <body>
 
-    <header class="header">
-        <div class="inner">
+    <header class="header">
+        <div class="inner">
             <a th:href="@{/}" class="header__logo">KCS PROTO SPACE</a>
-          <div class="header__nav">
-               <a th:href="@{/logout}" class="nav__link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
-               <a th:href="@{/protos/new}" class="nav__link">New Proto</a>
+ <div class="header__nav" style="display: flex; align-items: center; gap: 15px;">
+    <form th:action="@{/logout}" method="post" style="display: inline; margin: 0; padding: 0;">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <button type="submit" class="nav__link" style="background: transparent; padding: 6px 16px; font: inherit; cursor: pointer; display: inline-block; text-decoration: none; border: 1px solid #9e8cb0; border-radius: 4px; color: #9e8cb0; transition: all 0.3s;">
+            ログアウト
+        </button>
+    </form>
+    <a th:href="@{/protos/new}" class="nav__link">New Proto</a>
+</div>
+        </div>
+    </header>
+
+    <main class="main" style="align-items: flex-start; padding: 40px 0;">
+        <div class="inner">
+            
+            <div class="prototype__wrapper" style="max-width: 800px; margin: 0 auto; width: 100%;">
+                
+                <h2 class="page-heading" style="text-align: center; margin-bottom: 10px;" th:text="${prototype.title}">プロトタイプの名称</h2>
+                
+                <div style="text-align: center; margin-bottom: 20px; color: #666;">
+                    by <a th:href="@{/users/{id}(id=${prototype.user.id})}" th:text="${prototype.user.name}" style="color: #2b3a4a; font-weight: bold; text-decoration: underline;">投稿者名</a>
+                </div>
+
+      <div class="prototype__manage" style="text-align: center; margin-bottom: 30px;">
+        <a th:href="@{/protos/{id}/edit(id=${prototype.id})}" class="btn-primary" style="display: inline-block; max-width: 100px; font-size: 12px; padding: 6px 0; margin-right: 10px; background-color: #fff; color: #2b3a4a; border: 1px solid #2b3a4a;">編集する</a>
     
-              <form id="logout-form" th:action="@{/logout}" method="post" style="display: none;"></form>
-          </div>
-        </div>
-    </header>
+        <form th:action="@{/prototypes/delete}" method="post" onsubmit="return confirm('本当に削除してもよろしいですか？');" style="display: inline-block; vertical-align: middle;">
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+          <input type="hidden" name="id" th:value="${prototype.id}" />
+        
+          <button type="submit" class="btn-primary" style="display: inline-block; width: 100px; font-size: 12px; padding: 6px 0; background-color: #fff; color: red; border: 1px solid red; cursor: pointer; border-radius: 4px; font-family: inherit;">
+            削除する
+          </button>
+        </form>
+    </div>
 
-    <main class="main" style="align-items: flex-start; padding: 40px 0;">
-        <div class="inner">
+                <div class="prototype__img" style="text-align: center; margin-bottom: 40px;">
+                  <img th:src="${prototype.image} ?: @{/images/logo.png}" alt="プロトタイプ画像" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                </div>
 
-            <div class="prototype__wrapper" style="max-width: 800px; margin: 0 auto; width: 100%;">
+                <div class="prototype__body" style="background: #fff; padding: 30px; border-radius: 8px; border: 1px solid #e5eaf0; margin-bottom: 40px; text-align: left;">
+                    <div class="prototype__detail" style="margin-bottom: 30px;">
+                        <h3 style="font-size: 16px; color: #2b3a4a; margin-bottom: 10px; border-left: 4px solid #00a0e9; padding-left: 10px;">キャッチコピー</h3>
+                        <p th:text="${prototype.catchCopy}" style="font-size: 15px; color: #333; line-height: 1.6; white-space: pre-wrap;">ここに本物のキャッチコピーが入ります</p>
+                    </div>
+                    <div class="prototype__detail">
+                        <h3 style="font-size: 16px; color: #2b3a4a; margin-bottom: 10px; border-left: 4px solid #00a0e9; padding-left: 10px;">コンセプト</h3>
+                        <p th:text="${prototype.concept}" style="font-size: 15px; color: #333; line-height: 1.6; white-space: pre-wrap;">ここに本物のコンセプトが入ります</p>
+                    </div>
+                </div>
 
-                <h2 class="page-heading" style="text-align: center; margin-bottom: 10px;" th:text="${prototype.title}">プロトタイプの名称</h2>
+                <div class="prototype__comments" style="background: #fff; padding: 30px; border-radius: 8px; border: 1px solid #e5eaf0; text-align: left;">
+                    <h3 style="font-size: 18px; margin-bottom: 20px; color: #2b3a4a;">コメント</h3>
+                    
+                    <form th:action="@{/protos/{id}/comments(id=${prototype.id})}" th:object="${commentForm}" method="post" style="margin-bottom: 30px;">
+                        <div class="field" style="margin-bottom: 15px;">
+                            <label for="comment_text" class="field-label" style="font-size: 14px; color: #666;">コメントを投稿する</label>
+                            <div class="field-input">
+                                <input type="text" id="comment_text" th:field="*{commentText}" placeholder="コメントを入力してください" required style="width: 100%; padding: 10px; border: 1px solid #e5eaf0; border-radius: 4px;" />
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <input type="submit" value="送信する" class="btn-primary" style="max-width: 120px; font-size: 14px; padding: 8px 0; background-color: #00a0e9; border: none; color: white; border-radius: 4px;">
+                        </div>
+                    </form>
 
-                <div style="text-align: center; margin-bottom: 20px; color: #666;">
-                    by <a th:href="@{/users/{id}(id=${prototype.user.id})}" th:text="${prototype.user.name}" style="color: #2B3A4A; font-weight: bold; text-decoration: underline;">投稿者名</a>
-                </div>
+                    <ul class="comments_list" style="list-style: none; padding: 0;">
+                        <li th:each="comment : ${comments}" style="margin-bottom: 15px; font-size: 14px; line-height: 1.5; padding-bottom: 10px; border-bottom: 1px dashed #eee;">
+                            <span th:text="${comment.commentText}" style="color: #333;">コメント内容が入ります</span>
+                            <a th:href="@{/users/{id}(id=${comment.user.id})}" th:text="'（' + ${comment.user.name} + '）'" style="color: #00a0e9; text-decoration: underline; margin-left: 5px;">（ユーザー名）</a>
+                        </li>
+                        
+                        <li th:if="${#lists.isEmpty(comments)}" style="color: #999; font-size: 14px;">現在、コメントはありません。</li>
+                    </ul>
+                </div>
 
-                <div class="prototype__manage" style="text-align: center; margin-bottom: 30px;">
-                    <a th:href="@{/protos/{id}/edit(id=${prototype.id})}" class="btn-primary" style="display: inline-block; max-width: 100px; font-size: 12px; padding: 6px 0; margin-right: 10px; background-color: #fff; color: #2B3A4A; border: 1px solid #2B3A4A;">編集する</a>
-                    <a th:href="@{/protos/{id}/delete(id=${prototype.id})}" class="btn-primary" style="display: inline-block; max-width: 100px; font-size: 12px; padding: 6px 0; background-color: #fff; color: red; border: 1px solid red;">削除する</a>
-                </div>
+            </div>
 
-                <div class="prototype__img" style="text-align: center; margin-bottom: 40px;">
-                    <img th:src="${prototype.image != null} ? @{${prototype.image}} : @{/images/logo.png}" alt="プロトタイプ画像" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-                </div>
+        </div>
+    </main>
 
-                <div class="prototype__body" style="background: #fff; padding: 30px; border-radius: 8px; border: 1px solid #E5EAF0; margin-bottom: 40px; text-align: left;">
-                    <div class="prototype__detail" style="margin-bottom: 30px;">
-                        <h3 style="font-size: 16px; color: #2B3A4A; margin-bottom: 10px; border-left: 4px solid #00A0E9; padding-left: 10px;">キャッチコピー</h3>
-                        <p th:text="${prototype.catchCopy}" style="font-size: 15px; color: #333; line-height: 1.6; white-space: pre-wrap;">ここに本物のキャッチコピーが入ります</p>
-                    </div>
-                    <div class="prototype__detail">
-                        <h3 style="font-size: 16px; color: #2B3A4A; margin-bottom: 10px; border-left: 4px solid #00A0E9; padding-left: 10px;">コンセプト</h3>
-                        <p th:text="${prototype.concept}" style="font-size: 15px; color: #333; line-height: 1.6; white-space: pre-wrap;">ここに本物のコンセプトが入ります</p>
-                    </div>
-                </div>
-
-                <div class="prototype__comments" style="background: #fff; padding: 30px; border-radius: 8px; border: 1px solid #E5EAF0; text-align: left;">
-                    <h3 style="font-size: 18px; margin-bottom: 20px; color: #2B3A4A;">コメント</h3>
-
-                    <form th:action="@{/protos/{id}/comments(id=${prototype.id})}" th:object="${commentForm}" method="post" style="margin-bottom: 30px;">
-                        <div class="field" style="margin-bottom: 15px;">
-                            <label for="comment_text" class="field-label" style="font-size: 14px; color: #666;">コメントを投稿する</label>
-                            <div class="field-input">
-                                <input type="text" id="comment_text" th:field="*{commentText}" placeholder="コメントを入力してください" required style="width: 100%; padding: 10px; border: 1px solid #E5EAF0; border-radius: 4px;" />
-                            </div>
-                        </div>
-                        <div class="actions">
-                            <input type="submit" value="送信する" class="btn-primary" style="max-width: 120px; font-size: 14px; padding: 8px 0; background-color: #00A0E9; border: none; color: white; border-radius: 4px;">
-                        </div>
-                    </form>
-
-                    <ul class="comments_list" style="list-style: none; padding: 0;">
-                        <li th:each="comment : ${comments}" style="margin-bottom: 15px; font-size: 14px; line-height: 1.5; padding-bottom: 10px; border-bottom: 1px dashed #eee;">
-                            <span th:text="${comment.commentText}" style="color: #333;">コメント内容が入ります</span>
-                            <a th:href="@{/users/{id}(id=${comment.user.id})}" th:text="'（' + ${comment.user.name} + '）'" style="color: #00A0E9; text-decoration: underline; margin-left: 5px;">（ユーザー名）</a>
-                        </li>
-
-                        <li th:if="${#lists.isEmpty(comments)}" style="color: #999; font-size: 14px;">現在、コメントはありません。</li>
-                    </ul>
-                </div>
-
-            </div>
-
-        </div>
-    </main>
-
-    <footer class="footer">
-        <p>© 2026 KCS PROTO SPACE Inc. All rights reserved.</p>
-    </footer>
+    <footer class="footer">
+        <p>© 2026 KCS PROTO SPACE Inc. All rights reserved.</p>
+    </footer>
 
 </body>
 </html>

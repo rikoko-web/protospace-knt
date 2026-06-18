@@ -21,7 +21,8 @@ public class SecurityConfig {
                 .requestMatchers("/", "/login", "/signUp", "/css/**", "/images/**", "/uploads/**").permitAll() 
                 
                 // 2. プロトタイプの閲覧（GETのみOK）
-                .requestMatchers(HttpMethod.GET, "/prototypes/**", "/users/**").permitAll() 
+                // 💡 詳細画面のパスに合わせて「/prototypes/**」から「/protos/**」に修正しました
+                .requestMatchers(HttpMethod.GET, "/protos/**", "/users/**").permitAll() 
                 
                 // 3. その他すべてはログイン必須
                 .anyRequest().authenticated() 
