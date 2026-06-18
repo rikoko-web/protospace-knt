@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import in.tech_camp.protospace_knt.entity.CommentEntity;
 import in.tech_camp.protospace_knt.entity.PrototypeEntity;
 import in.tech_camp.protospace_knt.entity.UserEntity;
-import in.tech_camp.protospace_knt.entity.CommentEntity; // ★追加
 import in.tech_camp.protospace_knt.form.CommentForm;
 import in.tech_camp.protospace_knt.form.UserForm;
+import in.tech_camp.protospace_knt.repository.CommentRepository;
 import in.tech_camp.protospace_knt.repository.PrototypeRepository;
 import in.tech_camp.protospace_knt.repository.UserRepository;
-import in.tech_camp.protospace_knt.repository.CommentRepository; // ★追加
 import in.tech_camp.protospace_knt.service.UserService;
 import lombok.AllArgsConstructor;
 
@@ -29,7 +29,7 @@ public class UserController {
     private final UserRepository userRepository;
     private final UserService userService;
     private final PrototypeRepository prototypeRepository;
-    private final CommentRepository commentRepository; // ★追加（コメントリポジトリの登録）
+    private final CommentRepository commentRepository; 
 
     // --- トップページ ---
     @GetMapping("/")
@@ -59,29 +59,24 @@ public class UserController {
     // ★★★ プロトタイプ詳細画面表示（修正版） ★★★
     @GetMapping("/prototypes/{id}")
     public String showPrototypeDetail(@PathVariable("id") Long id, Model model) {
-        // 【修正】findByUserId ではなく、プロトタイプIDで直接1件取得する
         PrototypeEntity prototype = prototypeRepository.findById(id);
         
-        // 安全対策：もしデータが見つからなかった場合に空のオブジェクトを入れる
         if (prototype == null) {
             prototype = new PrototypeEntity();
-            prototype.setUser(new UserEntity()); // 画面での「user.id」のnullエラーを防ぐ
+            prototype.setUser(new UserEntity()); 
         }
         
         model.addAttribute("prototype", prototype);
-
-        // commentText を持った CommentForm を渡す
         model.addAttribute("commentForm", new CommentForm()); 
 
-        // コメント一覧をリポジトリから取得して画面に渡す
         try {
             List<CommentEntity> comments = commentRepository.findByPrototypeId(id);
             model.addAttribute("comments", comments);
         } catch (Exception e) {
-            // もしエラーが発生した場合は、空のリストを渡して画面エラーを防ぐ
             model.addAttribute("comments", java.util.Collections.emptyList());
         }
 
+        // 🟢 元の正しいHTMLテンプレートのパス（src/main/resources/templates/protos/detail.html）に戻しました
         return "protos/detail"; 
     }
 

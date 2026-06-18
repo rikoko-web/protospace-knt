@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,11 +37,9 @@ public class PrototypeController {
         String email = auth.getName();
         UserEntity user = userRepository.findByEmail(email);
         
-        // 修正：username と userId を両方モデルに追加
         model.addAttribute("username", user.getName());
         model.addAttribute("userId", user.getId()); 
         
-        // 全ユーザーの投稿一覧を取得
         model.addAttribute("prototypes", prototypeRepository.findAll());
         
         return "afterlogin";
@@ -58,20 +57,25 @@ public class PrototypeController {
     public String createPrototype(
             @ModelAttribute("prototypeForm") PrototypeForm form, 
             @RequestParam("imageFile") MultipartFile imageFile,
-            Authentication auth) {
+            Authentication auth,
+            Model model) { 
         
-        // 画像の保存処理
         String imageWebPath = null;
         if (!imageFile.isEmpty()) {
             try {
                 Path uploadPath = Paths.get("src/main/resources/static/uploads/").toAbsolutePath().normalize();
                 if (!Files.exists(uploadPath)) { Files.createDirectories(uploadPath); }
-                String fileName = UUID.randomUUID().toString() + "_" + imageFile.getOriginalFilename();
+                
+                String originalFileName = imageFile.getOriginalFilename();
+                String cleanFileName = originalFileName.replaceAll("\\s+", ""); 
+                String fileName = UUID.randomUUID().toString() + "_" + cleanFileName;
+                
                 Path filePath = uploadPath.resolve(fileName);
                 Files.copy(imageFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
                 imageWebPath = "/uploads/" + fileName;
             } catch (IOException e) {
                 e.printStackTrace();
+                model.addAttribute("errorMessage", "画像の保存に失敗しました。");
                 return "protos/new";
             }
         }
@@ -89,17 +93,61 @@ public class PrototypeController {
         
         prototypeRepository.insert(prototype);
         
-        // 保存後は afterlogin ページへ移動する
         return "redirect:/afterlogin";
     }
 
-    // 🛠️ 4. 【ここに新しく追加！】投稿の削除処理
+    // 4. 投稿の削除処理
     @PostMapping("/prototypes/delete")
     public String deletePrototype(@RequestParam("id") Long id) {
-        // 先ほど Repository に追加した deleteById を呼び出してデータを消す
         prototypeRepository.deleteById(id);
-        
-        // 削除が完了したら一覧画面（afterlogin）へ戻る
         return "redirect:/afterlogin";
     }
-   }
+
+    // 5. 編集画面の表示
+    @GetMapping("/protos/{id}/edit")
+    public String showEditPrototype(@PathVariable("id") Long id, Model model) {
+        PrototypeEntity prototype = prototypeRepository.findById(id);
+        model.addAttribute("prototype", prototype);
+        
+        // 🟢 実際のファイルパスに合わせて「prototype_edit」に修正しました
+        return "prototype_edit";
+    }
+// 6. 編集内容の更新保存処理
+    // 🟢 @PostMapping の中身を "/protos/{id}/edit" から "/protos/{id}/update" に変更します
+    @PostMapping("/protos/{id}/update")
+    public String updatePrototype(
+            @PathVariable("id") Long id,
+            @ModelAttribute("prototype") PrototypeEntity formEntity,
+            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile) {
+  
+        // 元のデータを取得
+        PrototypeEntity prototype = prototypeRepository.findById(id);
+
+        if (prototype != null) {
+            prototype.setTitle(formEntity.getTitle());
+            prototype.setCatchCopy(formEntity.getCatchCopy());
+            prototype.setConcept(formEntity.getConcept());
+
+            // 画像が新しくアップロードされた場合のみ更新
+            if (imageFile != null && !imageFile.isEmpty()) {
+                try {
+                    Path uploadPath = Paths.get("src/main/resources/static/uploads/").toAbsolutePath().normalize();
+                    String originalFileName = imageFile.getOriginalFilename();
+                    String cleanFileName = originalFileName.replaceAll("\\s+", ""); 
+                    String fileName = UUID.randomUUID().toString() + "_" + cleanFileName;
+                    Path filePath = uploadPath.resolve(fileName);
+                    Files.copy(imageFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+                    prototype.setImage("/uploads/" + fileName);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            
+            // リポジトリの .update() メソッドを呼び出し
+            prototypeRepository.update(prototype);
+        }
+
+        // 編集が終わったら詳細ページへリダイレクト
+        return "redirect:/prototypes/" + id;
+    }
+}

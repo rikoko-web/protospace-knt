@@ -2,12 +2,13 @@ package in.tech_camp.protospace_knt.repository;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Delete; // ★ これが足りていませんでした
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update; // 🟢 追加：UPDATE用のアノテーション
 
 import in.tech_camp.protospace_knt.entity.PrototypeEntity;
 
@@ -33,7 +34,7 @@ public interface PrototypeRepository {
     })
     List<PrototypeEntity> findAll();
 
-    // 特定のユーザーの投稿だけを絞り込んで取得するメソッド
+    // 特定েরユーザーの投稿だけを絞り込んで取得するメソッド
     @Select("SELECT p.*, u.name as user_name FROM prototypes p " +
             "JOIN users u ON p.user_id = u.id " +
             "WHERE p.user_id = #{userId}")
@@ -69,4 +70,8 @@ public interface PrototypeRepository {
         @Result(property = "user.id", column = "user_id")
     })
     PrototypeEntity findById(Long id);
+
+    // 🟢 データを更新するためのメソッドを新しく追加しました！
+    @Update("UPDATE prototypes SET title = #{title}, catch_copy = #{catchCopy}, concept = #{concept}, image = #{image} WHERE id = #{id}")
+    void update(PrototypeEntity prototype);
 }
