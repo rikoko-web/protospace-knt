@@ -8,11 +8,12 @@
 </head>
 <body>
     <main class="main">
-        
         <div class="form__wrapper">
             <h2 class="page-heading">プロトタイプ編集</h2>
             
             <form th:action="@{/protos/{id}/update(id=${prototype.id})}" th:object="${prototype}" method="post" enctype="multipart/form-data">
+                
+                <input type="hidden" th:field="*{image}">
                 
                 <div class="field">
                     <label for="title" class="field-label">プロトタイプの名称</label>
@@ -47,7 +48,6 @@
                 </div>
             </form>
         </div>
-
     </main>
 </body>
 </html>
