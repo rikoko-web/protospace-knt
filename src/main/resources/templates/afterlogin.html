@@ -12,7 +12,10 @@
         <div class="inner">
             <a th:href="@{/}" class="header__logo">KSC PROTO SPACE</a>
             <div class="header__nav">
+
                 <a th:href="@{/logout}" class="nav__link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
+
+
                 <a th:href="@{/protos/new}" class="nav__link">New Proto</a>
                 
                 <form id="logout-form" th:action="@{/logout}" method="post" style="display: none;"></form>
@@ -32,7 +35,9 @@
                 <div class="prototype-card" th:each="prototype : ${prototypes}">
                     
                     <div class="card__img">
-                        <img th:src="${prototype.image != null} ? @{${prototype.image}} : @{/images/logo.png}" alt="プロトタイプ画像">
+                        <a th:href="@{/prototypes/{id}(id=${prototype.id})}">
+                            <img th:src="${prototype.image != null} ? @{${prototype.image}} : @{/images/logo.png}" alt="プロトタイプ画像" style="display: block; width: 100%; height: auto;">
+                        </a>
                     </div>
                     
                     <div class="card__body">
