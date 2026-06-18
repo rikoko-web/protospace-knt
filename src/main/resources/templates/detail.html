@@ -12,9 +12,11 @@
         <div class="inner">
             <a th:href="@{/}" class="header__logo">KCS PROTO SPACE</a>
             <div class="header__nav">
-                <a th:href="@{/logout}" class="nav__link">ログアウト</a>
-                <a th:href="@{/protos/new}" class="nav__link">New Proto</a>
-            </div>
+              <a th:href="@{/logout}" class="nav__link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
+              <a th:href="@{/protos/new}" class="nav__link">New Proto</a>
+    
+              <form id="logout-form" th:action="@{/logout}" method="post" style="display: none;"></form>
+          </div>
         </div>
     </header>
 
