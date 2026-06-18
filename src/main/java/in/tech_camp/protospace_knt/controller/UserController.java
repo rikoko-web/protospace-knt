@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import in.tech_camp.protospace_knt.entity.PrototypeEntity;
 import in.tech_camp.protospace_knt.entity.UserEntity;
-import in.tech_camp.protospace_knt.form.UserForm;
-import in.tech_camp.protospace_knt.repository.PrototypeRepository; // 追加
+import in.tech_camp.protospace_knt.form.CommentForm;
+import in.tech_camp.protospace_knt.form.UserForm; // ★追加
+import in.tech_camp.protospace_knt.repository.PrototypeRepository;
 import in.tech_camp.protospace_knt.repository.UserRepository;
 import in.tech_camp.protospace_knt.service.UserService;
 import lombok.AllArgsConstructor;
@@ -25,7 +26,7 @@ public class UserController {
 
     private final UserRepository userRepository;
     private final UserService userService;
-    private final PrototypeRepository prototypeRepository; // 追加
+    private final PrototypeRepository prototypeRepository;
 
     // --- トップページ ---
     @GetMapping("/")
@@ -43,15 +44,29 @@ public class UserController {
     // --- ユーザー詳細画面表示 ---
     @GetMapping("/users/{id}")
     public String show(@PathVariable("id") Long id, Model model) {
-        // IDでユーザーを検索
         UserEntity user = userRepository.findById(id);
         model.addAttribute("user", user);
 
-        // ★ HTMLの ${userPrototypes} と名前を一致させてデータを送る
         List<PrototypeEntity> userPrototypes = prototypeRepository.findByUserId(id);
         model.addAttribute("userPrototypes", userPrototypes);
 
         return "users/show";
+    }
+
+    // ★★★ プロトタイプ詳細画面表示 ★★★
+    @GetMapping("/prototypes/{id}")
+    public String showPrototypeDetail(@PathVariable("id") Long id, Model model) {
+        List<PrototypeEntity> userPrototypes = prototypeRepository.findByUserId(id);
+        if (userPrototypes != null && !userPrototypes.isEmpty()) {
+            model.addAttribute("prototype", userPrototypes.get(0));
+        } else {
+            model.addAttribute("prototype", new PrototypeEntity());
+        }
+
+        // 【修正】UserForm ではなく、commentText を持った CommentForm を渡す
+        model.addAttribute("commentForm", new CommentForm()); 
+
+        return "protos/detail"; 
     }
 
     // --- 新規登録画面表示 ---

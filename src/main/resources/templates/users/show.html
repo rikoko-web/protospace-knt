@@ -49,11 +49,11 @@
             <div class="card__wrapper">
                 
                 <div class="prototype-card" th:each="prototype : ${userPrototypes}">
-                    
                     <div class="card__img">
-                        <img th:src="${prototype.image != null} ? @{${prototype.image}} : @{/images/logo.png}" alt="プロトタイプ画像">
+                        <a th:href="@{/prototypes/{id}(id=${prototype.id})}">
+                            <img th:src="${prototype.image != null} ? @{${prototype.image}} : @{/images/logo.png}" alt="プロトタイプ画像" style="display: block; width: 100%; height: auto;">
+                        </a>
                     </div>
-                    
                     <div class="card__body">
                         <h3 class="card__title">
                             <a th:href="@{/prototypes/{id}(id=${prototype.id})}" th:text="${prototype.title}">プロトタイプの名称</a>
