@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update; // 🟢 追加：UPDATE用のアノテーション
+import org.apache.ibatis.annotations.Update;
 
 import in.tech_camp.protospace_knt.entity.PrototypeEntity;
 
@@ -34,7 +34,6 @@ public interface PrototypeRepository {
     })
     List<PrototypeEntity> findAll();
 
-    // 特定েরユーザーの投稿だけを絞り込んで取得するメソッド
     @Select("SELECT p.*, u.name as user_name FROM prototypes p " +
             "JOIN users u ON p.user_id = u.id " +
             "WHERE p.user_id = #{userId}")
@@ -54,7 +53,6 @@ public interface PrototypeRepository {
     @Delete("DELETE FROM prototypes WHERE id = #{id}")
     void deleteById(Long id);
 
-    // プロトタイプのIDで1件だけ取得するメソッド
     @Select("SELECT p.*, u.name as user_name FROM prototypes p " +
             "JOIN users u ON p.user_id = u.id " +
             "WHERE p.id = #{id}")
@@ -71,7 +69,8 @@ public interface PrototypeRepository {
     })
     PrototypeEntity findById(Long id);
 
-    // 🟢 データを更新するためのメソッドを新しく追加しました！
-    @Update("UPDATE prototypes SET title = #{title}, catch_copy = #{catchCopy}, concept = #{concept}, image = #{image} WHERE id = #{id}")
+    // 🟢 COALESCEを使用して、imageがnullなら既存の値をそのまま維持するように修正
+    @Update("UPDATE prototypes SET title = #{title}, catch_copy = #{catchCopy}, concept = #{concept}, " +
+            "image = COALESCE(#{image}, image) WHERE id = #{id}")
     void update(PrototypeEntity prototype);
 }
