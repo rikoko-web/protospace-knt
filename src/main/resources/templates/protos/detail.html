@@ -29,10 +29,18 @@
                     by <a th:href="@{/users/{id}(id=${prototype.user.id})}" th:text="${prototype.user.name}" style="color: #2b3a4a; font-weight: bold; text-decoration: underline;">投稿者名</a>
                 </div>
 
-                <div class="prototype__manage" style="text-align: center; margin-bottom: 30px;">
-                    <a th:href="@{/protos/{id}/edit(id=${prototype.id})}" class="btn-primary" style="display: inline-block; max-width: 100px; font-size: 12px; padding: 6px 0; margin-right: 10px; background-color: #fff; color: #2b3a4a; border: 1px solid #2b3a4a;">編集する</a>
-                    <a th:href="@{/protos/{id}/delete(id=${prototype.id})}" class="btn-primary" style="display: inline-block; max-width: 100px; font-size: 12px; padding: 6px 0; background-color: #fff; color: red; border: 1px solid red;">削除する</a>
-                </div>
+      <div class="prototype__manage" style="text-align: center; margin-bottom: 30px;">
+        <a th:href="@{/protos/{id}/edit(id=${prototype.id})}" class="btn-primary" style="display: inline-block; max-width: 100px; font-size: 12px; padding: 6px 0; margin-right: 10px; background-color: #fff; color: #2b3a4a; border: 1px solid #2b3a4a;">編集する</a>
+    
+        <form th:action="@{/prototypes/delete}" method="post" onsubmit="return confirm('本当に削除してもよろしいですか？');" style="display: inline-block; vertical-align: middle;">
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+          <input type="hidden" name="id" th:value="${prototype.id}" />
+        
+          <button type="submit" class="btn-primary" style="display: inline-block; width: 100px; font-size: 12px; padding: 6px 0; background-color: #fff; color: red; border: 1px solid red; cursor: pointer; border-radius: 4px; font-family: inherit;">
+            削除する
+          </button>
+        </form>
+    </div>
 
                 <div class="prototype__img" style="text-align: center; margin-bottom: 40px;">
                     <img th:src="${prototype.image != null} ? @{${prototype.image}} : @{/images/logo.png}" alt="プロトタイプ画像" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
