@@ -1,4 +1,3 @@
-HTML
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
@@ -8,17 +7,10 @@ HTML
     <title>プロトタイプ編集</title>
 </head>
 <body>
-    <main>
-        <h2>プロトタイプ編集</h2>
-        
-        <form th:action="@{/protos/{id}/update(id=${prototype.id})}" th:object="${prototype}" method="post" enctype="multipart/form-data">
+    <main class="main">
+        <div class="form__wrapper">
+            <h2 class="page-heading">プロトタイプ編集</h2>
             
-<<<<<<< Updated upstream
-            <div>
-                <label for="title">プロトタイプの名称</label><br>
-                <input type="text" id="title" th:field="*{title}" required>
-            </div>
-=======
             <form th:action="@{/protos/{id}/update(id=${prototype.id})}" th:object="${prototype}" method="post" enctype="multipart/form-data">
                 
                 <input type="hidden" th:field="*{image}">
@@ -29,27 +21,33 @@ HTML
                         <input type="text" id="title" th:field="*{title}" required>
                     </div>
                 </div>
->>>>>>> Stashed changes
 
-            <div>
-                <label for="catchCopy">キャッチコピー</label><br>
-                <textarea id="catchCopy" th:field="*{catchCopy}" required></textarea>
-            </div>
+                <div class="field">
+                    <label for="catchCopy" class="field-label">キャッチコピー</label>
+                    <div class="field-input">
+                        <textarea id="catchCopy" th:field="*{catchCopy}" required></textarea>
+                    </div>
+                </div>
 
-            <div>
-                <label for="concept">コンセプト</label><br>
-                <textarea id="concept" th:field="*{concept}" required></textarea>
-            </div>
+                <div class="field">
+                    <label for="concept" class="field-label">コンセプト</label>
+                    <div class="field-input">
+                        <textarea id="concept" th:field="*{concept}" required></textarea>
+                    </div>
+                </div>
 
-            <div>
-                <label for="image">プロトタイプの画像</label><br>
-                <input type="file" id="image" name="imageFile">
-            </div>
+                <div class="field">
+                    <label for="image" class="field-label">プロトタイプの画像</label>
+                    <div class="field-input-file">
+                        <input type="file" id="image" name="imageFile">
+                    </div>
+                </div>
 
-            <div>
-                <input type="submit" value="保存する">
-            </div>
-        </form>
+                <div class="actions">
+                    <input type="submit" value="保存する" class="btn-primary">
+                </div>
+            </form>
+        </div>
     </main>
 </body>
 </html>
