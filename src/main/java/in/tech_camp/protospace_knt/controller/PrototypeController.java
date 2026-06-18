@@ -92,4 +92,14 @@ public class PrototypeController {
         // 保存後は afterlogin ページへ移動する
         return "redirect:/afterlogin";
     }
-}
+
+    // 🛠️ 4. 【ここに新しく追加！】投稿の削除処理
+    @PostMapping("/prototypes/delete")
+    public String deletePrototype(@RequestParam("id") Long id) {
+        // 先ほど Repository に追加した deleteById を呼び出してデータを消す
+        prototypeRepository.deleteById(id);
+        
+        // 削除が完了したら一覧画面（afterlogin）へ戻る
+        return "redirect:/afterlogin";
+    }
+   }

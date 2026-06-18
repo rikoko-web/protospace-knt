@@ -50,12 +50,6 @@ public interface PrototypeRepository {
     })
     List<PrototypeEntity> findByUserId(Long userId);
 
-<<<<<<< Updated upstream
-    // ★★★ 【追加】プロトタイプのIDで1件だけ取得するメソッド ★★★
-    @Select("SELECT p.*, u.name as user_name FROM prototypes p " +
-            "JOIN users u ON p.user_id = u.id " +
-            "WHERE p.id = #{id}") // ここがプロトタイプのID指定になります
-=======
     @Delete("DELETE FROM prototypes WHERE id = #{id}")
     void deleteById(Long id);
 
@@ -63,7 +57,6 @@ public interface PrototypeRepository {
     @Select("SELECT p.*, u.name as user_name FROM prototypes p " +
             "JOIN users u ON p.user_id = u.id " +
             "WHERE p.id = #{id}")
->>>>>>> Stashed changes
     @Results({
         @Result(property = "id", column = "id"),
         @Result(property = "title", column = "title"),

@@ -1,0 +1,42 @@
+HTML
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+    <title>プロトタイプ編集</title>
+</head>
+<body>
+    <main>
+        <h2>プロトタイプ編集</h2>
+        
+        <form th:action="@{/protos/{id}/update(id=${prototype.id})}" th:object="${prototype}" method="post" enctype="multipart/form-data">
+            
+            <div>
+                <label for="title">プロトタイプの名称</label><br>
+                <input type="text" id="title" th:field="*{title}" required>
+            </div>
+
+            <div>
+                <label for="catchCopy">キャッチコピー</label><br>
+                <textarea id="catchCopy" th:field="*{catchCopy}" required></textarea>
+            </div>
+
+            <div>
+                <label for="concept">コンセプト</label><br>
+                <textarea id="concept" th:field="*{concept}" required></textarea>
+            </div>
+
+            <div>
+                <label for="image">プロトタイプの画像</label><br>
+                <input type="file" id="image" name="imageFile">
+            </div>
+
+            <div>
+                <input type="submit" value="保存する">
+            </div>
+        </form>
+    </main>
+</body>
+</html>
