@@ -17,20 +17,22 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                // 新規登録やログイン画面などは未ログインでもアクセスOK
-                .requestMatchers("/", "/login", "/signUp", "/css/**", "/images/**").permitAll() 
+                // 1. 公開ページ（未ログインでもOK）
+                .requestMatchers("/", "/login", "/signUp", "/css/**", "/images/**", "/uploads/**").permitAll() 
                 
-                // プロトタイプ詳細などのGETアクセスは未ログインでもOK
+                // 2. プロトタイプの閲覧（GETのみOK）
                 .requestMatchers(HttpMethod.GET, "/prototypes/**", "/users/**").permitAll() 
                 
+                // 3. その他すべてはログイン必須
                 .anyRequest().authenticated() 
             )
             .formLogin(form -> form
                 .loginPage("/login") 
                 .loginProcessingUrl("/login") 
-                .usernameParameter("email")   // login.htmlの name="email" と合わせる
+                .usernameParameter("email")   
                 .passwordParameter("password") 
-                .defaultSuccessUrl("/afterlogin", true) // ★ここを "/afterlogin" に変更しました
+                // ログイン成功後は必ず /afterlogin へ飛ばす
+                .defaultSuccessUrl("/afterlogin", true) 
                 .permitAll()
             )
             .logout(logout -> logout

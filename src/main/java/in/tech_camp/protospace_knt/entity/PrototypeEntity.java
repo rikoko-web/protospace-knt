@@ -3,30 +3,23 @@ package in.tech_camp.protospace_knt.entity;
 import java.time.LocalDateTime;
 
 public class PrototypeEntity {
-    private Long id;
+    private Integer id;
     private String title;
     private String catchCopy;
     private String concept;
     private String image;
     private LocalDateTime createdAt;
-    private Long userId; // ★ここが今回重要です
+    private Integer userId; 
+    
+    // ★MyBatisの場合、関連付けはJava側ではなくSQL側（Mapper）で行うのが一般的です
+    private UserEntity user;
 
     // コンストラクタ
     public PrototypeEntity() {}
 
-    public PrototypeEntity(Long id, String title, String catchCopy, String concept, String image, LocalDateTime createdAt, Long userId) {
-        this.id = id;
-        this.title = title;
-        this.catchCopy = catchCopy;
-        this.concept = concept;
-        this.image = image;
-        this.createdAt = createdAt;
-        this.userId = userId;
-    }
-
     // GetterとSetter
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
@@ -43,6 +36,9 @@ public class PrototypeEntity {
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
-    public Long getUserId() { return userId; }
-    public void setUserId(Long userId) { this.userId = userId; }
+    public Integer getUserId() { return userId; }
+    public void setUserId(Integer userId) { this.userId = userId; }
+
+    public UserEntity getUser() { return user; }
+    public void setUser(UserEntity user) { this.user = user; }
 }

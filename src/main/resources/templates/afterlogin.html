@@ -12,10 +12,13 @@
         <div class="inner">
             <a th:href="@{/}" class="header__logo">KSC PROTO SPACE</a>
             <div class="header__nav">
-                <form th:action="@{/logout}" method="post">
-                    <button type="submit" class="nav__link" style="border:none; background:none; cursor:pointer; font-size:16px;">ログアウト</button>
-                </form>
+
+                <a th:href="@{/logout}" class="nav__link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
+
+
                 <a th:href="@{/protos/new}" class="nav__link">New Proto</a>
+                
+                <form id="logout-form" th:action="@{/logout}" method="post" style="display: none;"></form>
             </div>
         </div>
     </header>
@@ -24,7 +27,7 @@
         <div class="inner">
             
             <div class="user-welcome">
-                こんにちは、<a href="#" th:text="${username}"></a>さん
+                こんにちは、<a th:href="@{/users/{id}(id=${userId})}" th:text="${username}">ユーザー名</a>さん
             </div>
 
             <div class="card__wrapper" th:if="${prototypes != null && !prototypes.isEmpty()}">
@@ -32,7 +35,9 @@
                 <div class="prototype-card" th:each="prototype : ${prototypes}">
                     
                     <div class="card__img">
-                        <img th:src="${prototype.image != null} ? @{${prototype.image}} : @{/images/logo.png}" alt="プロトタイプ画像">
+                        <a th:href="@{/prototypes/{id}(id=${prototype.id})}">
+                            <img th:src="${prototype.image != null} ? @{${prototype.image}} : @{/images/logo.png}" alt="プロトタイプ画像" style="display: block; width: 100%; height: auto;">
+                        </a>
                     </div>
                     
                     <div class="card__body">
@@ -43,11 +48,14 @@
                         <p class="card__catchphrase" th:text="${prototype.catchCopy}">キャッチコピー</p>
                         
                         <div class="card__user">
-                            by <a th:href="@{/users/{id}(id=${prototype.user.id})}" th:text="${prototype.user.name}">投稿者名</a>
+                            by <span th:text="${prototype.user.name}">投稿者名</span>
                         </div>
                     </div>
                     
-                </div></div><div th:if="${prototypes == null || prototypes.isEmpty()}" style="text-align: center; color: #888; padding: 60px 0; font-size: 16px;">
+                </div>
+            </div>
+            
+            <div th:if="${prototypes == null || prototypes.isEmpty()}" style="text-align: center; color: #888; padding: 60px 0; font-size: 16px;">
                 <p>現在、投稿されたプロトタイプはありません。</p>
             </div>
 
