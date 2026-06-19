@@ -29,7 +29,7 @@ public class PrototypeEntityTest {
 
         // 3. 検証：Getter（get...）で、格納した値がそのまま返ってくるか確認
         assertEquals(1, prototype.getId());
-        assertEquals("Webサービス", prototype.getTitle());
+        assertEquals("革新的なWebサービス", prototype.getTitle());
         assertEquals("アイデア", prototype.getCatchCopy());
         assertEquals("システム", prototype.getConcept());
         assertEquals("/uploads/sample.jpg", prototype.getImage());
