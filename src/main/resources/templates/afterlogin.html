@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KCS PROTO SPACE</title>
+  <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="inner">
+      <a th:href="@{/}" class="header__logo">KCS PROTO SPACE</a>
+      <div class="header__nav">
+
+        <a th:href="@{/logout}" class="nav__link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
+
+        <a th:href="@{/protos/new}" class="nav__link">New Proto</a>
+
+        <form id="logout-form" th:action="@{/logout}" method="post" style="display: none;"></form>
+      </div>
+    </div>
+  </header>
+
+  <main class="main" style="align-items: flex-start; padding: 40px 0;">
+    <div class="inner">
+
+      <div class="user-welcome">
+        こんにちは、<a th:href="@{/users/{id}(id=${userId})}" th:text="${username}">ユーザー名</a>さん
+      </div>
+
+      <div class="card__wrapper" th:if="${prototypes != null && !prototypes.isEmpty()}">
+
+        <div class="prototype-card" th:each="prototype : ${prototypes}">
+
+          <div class="card__img">
+            <a th:href="@{/prototypes/{id}(id=${prototype.id})}">
+              <img th:src="${prototype.image != null} ? @{${prototype.image}} : @{/images/logo.png}" alt="プロトタイプ画像" style="display: block; width: 100%; height: auto;">
+            </a>
+          </div>
+
+          <div class="card__body">
+            <h3 class="card__title">
+              <a th:href="@{/prototypes/{id}(id=${prototype.id})}" th:text="${prototype.title}">プロトタイプの名称</a>
+            </h3>
+
+            <p class="card__catchphrase" th:text="${prototype.catchCopy}">キャッチコピー</p>
+
+            <div class="card__user">
+              by <span th:text="${prototype.user.name}">投稿者名</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div th:if="${prototypes == null || prototypes.isEmpty()}" style="text-align: center; color: #888; padding: 60px 0; font-size: 16px;">
+        <p>現在、投稿されたプロトタイプはありません。</p>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 KCS PROTO SPACE Inc. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

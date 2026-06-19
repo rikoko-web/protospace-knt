@@ -41,17 +41,28 @@ public class PrototypeController {
 
     // --- 1. トップページ・ログイン関連 ---
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, Authentication auth) {
         model.addAttribute("prototypes", prototypeRepository.findAll());
+        if (auth != null && auth.isAuthenticated()) {
+            UserEntity user = userRepository.findByEmail(auth.getName());
+            if (user != null) {
+                model.addAttribute("username", user.getName());
+                model.addAttribute("userId", user.getId());
+            }
+        }
         return "messages/index";
     }
 
+    // ログイン後画面の追加
     @GetMapping("/afterlogin")
     public String showAfterLogin(Model model, Authentication auth) {
-        String email = auth.getName();
-        UserEntity user = userRepository.findByEmail(email);
-        model.addAttribute("username", user.getName());
-        model.addAttribute("userId", user.getId());
+        if (auth != null && auth.isAuthenticated()) {
+            UserEntity user = userRepository.findByEmail(auth.getName());
+            if (user != null) {
+                model.addAttribute("username", user.getName());
+                model.addAttribute("userId", user.getId());
+            }
+        }
         model.addAttribute("prototypes", prototypeRepository.findAll());
         return "afterlogin";
     }
@@ -167,7 +178,6 @@ public class PrototypeController {
         return "redirect:/prototypes/" + id;
     }
 
-    // 画像保存の共通メソッド
     private String saveImage(MultipartFile imageFile) {
         try {
             Path uploadPath = Paths.get("uploads/").toAbsolutePath().normalize();
