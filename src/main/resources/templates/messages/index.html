@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KCS PROTO SPACE</title>
   <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
 </head>
@@ -28,18 +29,21 @@
   <main class="main">
     <div class="inner">
       <div class="card__wrapper">
-        <div class="card" th:each="prototype : ${prototypes}">
-          <a th:href="@{/prototypes/{id}(id=${prototype.id})}">
-            <img th:src="${prototype.image}" class="card__img" alt="プロトタイプ画像">
-          </a>
-          <div class="card__body">
-            <h3 th:text="${prototype.title}">タイトル</h3>
-            <p th:text="${prototype.catchCopy}">キャッチコピー</p>
+
+        <div class="prototype-card" th:each="prototype : ${prototypes}">
+          
+          <div class="card__img">
+            <a th:href="@{/prototypes/{id}(id=${prototype.id})}">
+              <img th:src="${prototype.image}" alt="プロトタイプ画像">
+            </a>
           </div>
-        </div>
-      </div>
-    </div>
-  </main>
+          
+          <div class="card__body">
+            <h3 class="card__title" th:text="${prototype.title}">タイトル</h3>
+            <p class="card__catchphrase" th:text="${prototype.catchCopy}">キャッチコピー</p>
+          </div>
+          
+        </div> </div> </div> </main>
 
   <footer class="footer">
     <p>© 2026 KCS PROTO SPACE Inc. All rights reserved.</p>
