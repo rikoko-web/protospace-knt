@@ -10,6 +10,8 @@ import java.util.UUID;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,9 +21,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import in.tech_camp.protospace_knt.entity.PrototypeEntity;
 import in.tech_camp.protospace_knt.entity.UserEntity;
+import in.tech_camp.protospace_knt.form.CommentForm;
 import in.tech_camp.protospace_knt.form.PrototypeForm;
+import in.tech_camp.protospace_knt.form.UserForm;
+import in.tech_camp.protospace_knt.repository.CommentRepository;
 import in.tech_camp.protospace_knt.repository.PrototypeRepository;
 import in.tech_camp.protospace_knt.repository.UserRepository;
+import in.tech_camp.protospace_knt.service.UserService;
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -30,8 +36,16 @@ public class PrototypeController {
 
     private final PrototypeRepository prototypeRepository;
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
+    private final UserService userService;
 
-    // 1. ログイン後のページ表示
+    // --- 1. トップページ・ログイン関連 ---
+    @GetMapping("/")
+    public String index(Model model) {
+        model.addAttribute("prototypes", prototypeRepository.findAll());
+        return "messages/index";
+    }
+
     @GetMapping("/afterlogin")
     public String showAfterLogin(Model model, Authentication auth) {
         String email = auth.getName();
@@ -42,28 +56,77 @@ public class PrototypeController {
         return "afterlogin";
     }
 
-    // 2. 投稿画面の表示
+    @GetMapping("/login")
+    public String showLoginForm() {
+        return "users/login";
+    }
+
+    // --- 2. ユーザー関連 ---
+    @GetMapping("/users/{id}")
+    public String showUser(@PathVariable("id") Long id, Model model) {
+        UserEntity user = userRepository.findById(id);
+        model.addAttribute("user", user);
+        model.addAttribute("userPrototypes", prototypeRepository.findByUserId(id));
+        return "users/show";
+    }
+
+    @GetMapping("/signUp")
+    public String showSignupForm(Model model) {
+        model.addAttribute("userForm", new UserForm());
+        return "users/signUp";
+    }
+
+    @PostMapping("/signUp")
+    public String registerUser(@Validated @ModelAttribute("userForm") UserForm userForm,
+                               BindingResult bindingResult, Model model) {
+        if (userForm.getPassword() != null && !userForm.getPassword().equals(userForm.getPasswordConfirmation())) {
+            bindingResult.rejectValue("passwordConfirmation", "error.passwordConfirmation", "パスワードが一致しません");
+        }
+        if (bindingResult.hasErrors()) return "users/signUp";
+
+        UserEntity userEntity = new UserEntity();
+        userEntity.setEmail(userForm.getEmail());
+        userEntity.setPassword(userForm.getPassword());
+        userEntity.setName(userForm.getName());
+        userEntity.setProfile(userForm.getProfile());
+        userEntity.setOccupation(userForm.getOccupation());
+        userEntity.setPosition(userForm.getPosition());
+
+        userService.registerUser(userEntity);
+        return "redirect:/login";
+    }
+
+    // --- 3. プロトタイプ詳細・表示・投稿・編集 ---
+    @GetMapping("/prototypes/{id}")
+    public String showPrototypeDetail(@PathVariable("id") Long id, Model model) {
+        PrototypeEntity prototype = prototypeRepository.findById(id);
+        if (prototype == null) {
+            prototype = new PrototypeEntity();
+            prototype.setUser(new UserEntity());
+        }
+        model.addAttribute("prototype", prototype);
+        model.addAttribute("commentForm", new CommentForm());
+        try {
+            model.addAttribute("comments", commentRepository.findByPrototypeId(id));
+        } catch (Exception e) {
+            model.addAttribute("comments", java.util.Collections.emptyList());
+        }
+        return "protos/detail";
+    }
+
     @GetMapping("/protos/new")
     public String showNewPrototype(Model model) {
         model.addAttribute("prototypeForm", new PrototypeForm());
         return "protos/new";
     }
 
-    // 3. 投稿内容の保存処理
     @PostMapping("/protos/new")
-    public String createPrototype(
-            @ModelAttribute("prototypeForm") PrototypeForm form,
-            @RequestParam("imageFile") MultipartFile imageFile,
-            Authentication auth, Model model) {
-
-        String imageWebPath = null;
-        if (!imageFile.isEmpty()) {
-            imageWebPath = saveImage(imageFile);
-        }
-
-        String email = auth.getName();
-        UserEntity user = userRepository.findByEmail(email);
-
+    public String createPrototype(@ModelAttribute("prototypeForm") PrototypeForm form,
+                                  @RequestParam("imageFile") MultipartFile imageFile,
+                                  Authentication auth) {
+        String imageWebPath = imageFile.isEmpty() ? null : saveImage(imageFile);
+        
+        UserEntity user = userRepository.findByEmail(auth.getName());
         PrototypeEntity prototype = new PrototypeEntity();
         prototype.setTitle(form.getTitle());
         prototype.setCatchCopy(form.getCatchCopy());
@@ -75,34 +138,27 @@ public class PrototypeController {
         return "redirect:/afterlogin";
     }
 
-    // 4. 投稿の削除処理
     @PostMapping("/prototypes/delete")
     public String deletePrototype(@RequestParam("id") Long id) {
         prototypeRepository.deleteById(id);
         return "redirect:/afterlogin";
     }
 
-    // 5. 編集画面の表示
     @GetMapping("/protos/{id}/edit")
     public String showEditPrototype(@PathVariable("id") Long id, Model model) {
         model.addAttribute("prototype", prototypeRepository.findById(id));
         return "prototype_edit";
     }
 
-    // 6. 編集内容の更新保存処理
     @PostMapping("/protos/{id}/update")
-    public String updatePrototype(
-            @PathVariable("id") Long id,
-            @ModelAttribute("prototype") PrototypeEntity formEntity,
-            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile) {
-
+    public String updatePrototype(@PathVariable("id") Long id,
+                                  @ModelAttribute("prototype") PrototypeEntity formEntity,
+                                  @RequestParam(value = "imageFile", required = false) MultipartFile imageFile) {
         PrototypeEntity prototype = prototypeRepository.findById(id);
-
         if (prototype != null) {
             prototype.setTitle(formEntity.getTitle());
             prototype.setCatchCopy(formEntity.getCatchCopy());
             prototype.setConcept(formEntity.getConcept());
-
             if (imageFile != null && !imageFile.isEmpty()) {
                 prototype.setImage(saveImage(imageFile));
             }
@@ -111,20 +167,13 @@ public class PrototypeController {
         return "redirect:/prototypes/" + id;
     }
 
-    // 🟢 修正済み：プロジェクト直下の uploads フォルダへ保存
+    // 画像保存の共通メソッド
     private String saveImage(MultipartFile imageFile) {
         try {
-            // プロジェクトルートディレクトリに "uploads" フォルダを指定
             Path uploadPath = Paths.get("uploads/").toAbsolutePath().normalize();
-            
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }
-            
+            if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
             String fileName = UUID.randomUUID().toString() + "_" + imageFile.getOriginalFilename().replaceAll("\\s+", "");
             Files.copy(imageFile.getInputStream(), uploadPath.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
-            
-            // Webアクセス用のパスを返す
             return "/uploads/" + fileName;
         } catch (IOException e) {
             e.printStackTrace();
