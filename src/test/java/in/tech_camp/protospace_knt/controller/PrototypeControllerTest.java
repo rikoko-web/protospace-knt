@@ -52,7 +52,7 @@ public class PrototypeControllerTest {
     public void setUp() {
         // ダミーユーザーの作成
         mockUser = new UserEntity();
-        mockUser.setId(1L);
+        mockUser.setId(1);
         mockUser.setName("テスト太郎");
         mockUser.setEmail("test@example.com");
 
@@ -112,7 +112,7 @@ public class PrototypeControllerTest {
     @Test
     public void testShowPrototypeDetail() throws Exception {
         PrototypeEntity mockPrototype = new PrototypeEntity();
-        mockPrototype.setId(100L);
+        mockPrototype.setId(100);
         mockPrototype.setTitle("テスト作品");
 
         when(prototypeRepository.findById(100L)).thenReturn(mockPrototype);

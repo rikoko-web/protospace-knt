@@ -12,7 +12,7 @@ public class CommentEntityTest {
         CommentEntity comment = new CommentEntity();
         UserEntity mockUser = new UserEntity();
         
-        mockUser.setId(10L);
+        mockUser.setId(10);
         mockUser.setName("テスト次郎");
 
         // 2. 実行：Setter（値をセットする命令）を使ってデータを注入
@@ -30,7 +30,7 @@ public class CommentEntityTest {
         
         // 🟢 追加されたユーザー情報の検証
         assertNotNull(comment.getUser());
-        assertEquals(10L, comment.getUser().getId());
+        assertEquals(10, comment.getUser().getId());
         assertEquals("テスト次郎", comment.getUser().getName());
     }
 }

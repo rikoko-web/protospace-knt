@@ -14,7 +14,7 @@ public class PrototypeEntityTest {
         UserEntity mockUser = new UserEntity();
         LocalDateTime now = LocalDateTime.now();
 
-        mockUser.setId(10L);
+        mockUser.setId(10);
         mockUser.setName("開発太郎");
 
         // 2. 実行：Setter（set...）を使って、値を1つずつ格納する
@@ -38,7 +38,7 @@ public class PrototypeEntityTest {
 
         // 🟢 ユーザー情報の検証
         assertNotNull(prototype.getUser());
-        assertEquals(10L, prototype.getUser().getId());
+        assertEquals(10, prototype.getUser().getId());
         assertEquals("開発太郎", prototype.getUser().getName());
     }
 }
