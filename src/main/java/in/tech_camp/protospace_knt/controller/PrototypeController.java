@@ -41,19 +41,19 @@ public class PrototypeController {
 
     // --- 1. トップページ・ログイン関連 ---
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, Authentication auth) {
+        // プロトタイプ一覧は常に取得
         model.addAttribute("prototypes", prototypeRepository.findAll());
+        
+        // ログインしている場合のみユーザー情報をモデルに追加
+        if (auth != null && auth.isAuthenticated()) {
+            UserEntity user = userRepository.findByEmail(auth.getName());
+            if (user != null) {
+                model.addAttribute("username", user.getName());
+                model.addAttribute("userId", user.getId());
+            }
+        }
         return "messages/index";
-    }
-
-    @GetMapping("/afterlogin")
-    public String showAfterLogin(Model model, Authentication auth) {
-        String email = auth.getName();
-        UserEntity user = userRepository.findByEmail(email);
-        model.addAttribute("username", user.getName());
-        model.addAttribute("userId", user.getId());
-        model.addAttribute("prototypes", prototypeRepository.findAll());
-        return "afterlogin";
     }
 
     @GetMapping("/login")
@@ -135,13 +135,13 @@ public class PrototypeController {
         prototype.setUserId(user.getId());
         prototypeRepository.insert(prototype);
 
-        return "redirect:/afterlogin";
+        return "redirect:/";
     }
 
     @PostMapping("/prototypes/delete")
     public String deletePrototype(@RequestParam("id") Long id) {
         prototypeRepository.deleteById(id);
-        return "redirect:/afterlogin";
+        return "redirect:/";
     }
 
     @GetMapping("/protos/{id}/edit")
