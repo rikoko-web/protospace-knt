@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import in.tech_camp.protospace_knt.repository.CommentRepository;
 import in.tech_camp.protospace_knt.repository.UserRepository;
 
-// 🟢 変更後：こちらもテスト時のみセキュリティ自動構成を完全に除外する
+// テスト時のみセキュリティ自動構成を完全に除外する設定
 @WebMvcTest(controllers = CommentController.class, excludeAutoConfiguration = {
     org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class
 })
@@ -29,16 +29,17 @@ public class CommentControllerTest {
 
     @Test
     public void 正常系_コメントが正しく入力されている場合_保存されて詳細ページにリダイレクトすること() throws Exception {
-        // 🟢 変更後：.with(csrf()) や .with(user()) を使わずに、直接POSTを送信します
-        mockMvc.perform(post("/prototypes/1/comments")
+        // 🟢 URLを「/prototypes/...」から「/protos/...」に修正しました
+        mockMvc.perform(post("/protos/1/comments")
                 .param("commentText", "素晴らしい作品ですね！"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/prototypes/1"));
+                .andExpect(redirectedUrl("/prototypes/1")); // リダイレクト先は/prototypes/1で合っています
     }
 
     @Test
     public void 異常系_バリデーションエラーがある場合_保存されずに詳細ページにリダイレクトすること() throws Exception {
-        mockMvc.perform(post("/prototypes/1/comments")
+        // 🟢 こちらもURLを「/protos/...」に修正しました
+        mockMvc.perform(post("/protos/1/comments")
                 .param("commentText", "")) // 空文字でエラーにする
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/prototypes/1"));
