@@ -1,8 +1,9 @@
 package in.tech_camp.protospace_knt.entity;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.time.LocalDateTime;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
 
 public class PrototypeEntityTest {
@@ -20,8 +21,8 @@ public class PrototypeEntityTest {
         // 2. 実行：Setter（set...）を使って、値を1つずつ格納する
         prototype.setId(1);
         prototype.setTitle("革新的なWebサービス");
-        prototype.setCatchCopy("世界を変えるアイデア");
-        prototype.setConcept("全自動でタスクを管理するシステム");
+        prototype.setCatchCopy("アイデア");
+        prototype.setConcept("システム");
         prototype.setImage("/uploads/sample.jpg");
         prototype.setCreatedAt(now);
         prototype.setUserId(10);
