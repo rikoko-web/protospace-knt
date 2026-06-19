@@ -42,10 +42,7 @@ public class PrototypeController {
     // --- 1. トップページ・ログイン関連 ---
     @GetMapping("/")
     public String index(Model model, Authentication auth) {
-        // プロトタイプ一覧は常に取得
         model.addAttribute("prototypes", prototypeRepository.findAll());
-        
-        // ログインしている場合のみユーザー情報をモデルに追加
         if (auth != null && auth.isAuthenticated()) {
             UserEntity user = userRepository.findByEmail(auth.getName());
             if (user != null) {
@@ -54,6 +51,20 @@ public class PrototypeController {
             }
         }
         return "messages/index";
+    }
+
+    // ログイン後画面の追加
+    @GetMapping("/afterlogin")
+    public String showAfterLogin(Model model, Authentication auth) {
+        if (auth != null && auth.isAuthenticated()) {
+            UserEntity user = userRepository.findByEmail(auth.getName());
+            if (user != null) {
+                model.addAttribute("username", user.getName());
+                model.addAttribute("userId", user.getId());
+            }
+        }
+        model.addAttribute("prototypes", prototypeRepository.findAll());
+        return "afterlogin";
     }
 
     @GetMapping("/login")
@@ -135,13 +146,13 @@ public class PrototypeController {
         prototype.setUserId(user.getId());
         prototypeRepository.insert(prototype);
 
-        return "redirect:/";
+        return "redirect:/afterlogin";
     }
 
     @PostMapping("/prototypes/delete")
     public String deletePrototype(@RequestParam("id") Long id) {
         prototypeRepository.deleteById(id);
-        return "redirect:/";
+        return "redirect:/afterlogin";
     }
 
     @GetMapping("/protos/{id}/edit")
@@ -167,7 +178,6 @@ public class PrototypeController {
         return "redirect:/prototypes/" + id;
     }
 
-    // 画像保存の共通メソッド
     private String saveImage(MultipartFile imageFile) {
         try {
             Path uploadPath = Paths.get("uploads/").toAbsolutePath().normalize();
