@@ -27,7 +27,7 @@ public class CommentRepositoryTest {
         comment.setPrototypeId(999L); // テスト対象のプロトタイプID
 
         // 2. 実行：リポジトリを使ってデータベースに保存（保存処理の名前が異なる場合は適宜変更してください）
-        commentRepository.insert(comment);
+        commentRepository.save(comment);
 
         // 3. 実行：保存したプロトタイプID（999）を指定して、データベースからコメントを取得
         List<CommentEntity> comments = commentRepository.findByPrototypeId(999L);

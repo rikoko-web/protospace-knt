@@ -13,7 +13,7 @@ public class UserEntityTest {
 
         // 2. 実行：Setter（set...）を使って、ユーザーのプロフィール情報を注入
         // ※ もしあなたのUserEntityのidが「Integer型」なら 1 、「Long型」なら 1L に書き換えてください
-        user.setId(1L); 
+        user.setId(1); 
         user.setName("テスト太郎");
         user.setEmail("test@example.com");
         user.setPassword("password123");
@@ -22,7 +22,7 @@ public class UserEntityTest {
         user.setPosition("初心者");
 
         // 3. 検証：Getter（get...）を使って、入れたデータがそのまま返ってくるか確認
-        assertEquals(1L, user.getId());
+        assertEquals(1, user.getId());
         assertEquals("テスト太郎", user.getName());
         assertEquals("test@example.com", user.getEmail());
         assertEquals("password123", user.getPassword());

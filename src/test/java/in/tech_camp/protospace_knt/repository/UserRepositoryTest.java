@@ -29,7 +29,7 @@ public class UserRepositoryTest {
 
         // 2. 実行：データベースにユーザーを保存
         // ※ もし保存用メソッド名が「save」などの場合は書き換えてください
-        userRepository.insert(user);
+        userRepository.save(user);
 
         // 3. 実行：ログイン処理をシミュレートして、メールアドレスでユーザーを検索
         UserEntity foundUser = userRepository.findByEmail("repository_test@example.com");
