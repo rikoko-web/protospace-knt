@@ -47,7 +47,7 @@ public class PrototypeControllerTest {
     @BeforeEach
     public void setUp() {
         mockUser = new UserEntity();
-        mockUser.setId(1L); 
+        mockUser.setId(1); 
         mockUser.setName("テスト太郎");
         mockUser.setEmail("test@example.com");
     }
@@ -131,5 +131,5 @@ public class PrototypeControllerTest {
                 .param("concept", "コンセプト"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/afterlogin"));
-    }
+ }
 }
