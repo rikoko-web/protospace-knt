@@ -23,6 +23,8 @@ public class PrototypeEntityTest {
         prototype.setTitle("革新的なWebサービス");
         prototype.setCatchCopy("アイデア");
         prototype.setConcept("システム");
+        prototype.setConcept("システム");
+        prototype.setConcept("システム");
         prototype.setImage("/uploads/sample.jpg");
         prototype.setCreatedAt(now);
         prototype.setUserId(10);
