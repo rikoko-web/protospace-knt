@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.core.Authentication; // 🟢 追加：Spring Securityの認証モック用
 import org.springframework.test.web.servlet.MockMvc;
 
 import in.tech_camp.protospace_knt.entity.PrototypeEntity;
@@ -21,7 +22,7 @@ import in.tech_camp.protospace_knt.repository.PrototypeRepository;
 import in.tech_camp.protospace_knt.repository.UserRepository;
 import in.tech_camp.protospace_knt.service.UserService;
 
-// 🟢 変更後：テスト時のみセキュリティ自動構成を完全に除外する
+// 🟢 セキュリティ自動構成を完全に除外する設定
 @WebMvcTest(controllers = PrototypeController.class, excludeAutoConfiguration = {
     org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class
 })
@@ -43,6 +44,7 @@ public class PrototypeControllerTest {
     private UserService userService;
 
     private UserEntity mockUser;
+    private Authentication mockAuthentication; // 🟢 PrincipalからAuthenticationに変更
 
     @BeforeEach
     public void setUp() {
@@ -50,14 +52,17 @@ public class PrototypeControllerTest {
         mockUser.setId(1); 
         mockUser.setName("テスト太郎");
         mockUser.setEmail("test@example.com");
+
+        // 🟢 コントローラーが「認証済みの型」として受け取れるモックを作成
+        mockAuthentication = mock(Authentication.class);
+        when(mockAuthentication.getName()).thenReturn("test@example.com");
+        when(mockAuthentication.getPrincipal()).thenReturn("test@example.com");
     }
 
     // 1. トップページ
     @Test
     public void testIndex_Authenticated() throws Exception {
         when(prototypeRepository.findAll()).thenReturn(new ArrayList<>());
-        // 🟢 変更後：セキュリティオフ時は、セッション等ではなくコントローラーの引数（UserEntity等）のモック化に合わせるか、
-        // ログイン状態の検証項目（usernameなど）を外すことでエラーを回避します
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("messages/index"));
@@ -90,8 +95,6 @@ public class PrototypeControllerTest {
                 .param("password", "password123")
                 .param("passwordConfirmation", "password123")
                 .param("name", "新規ユーザー"))
-                // 🟢 変更後：セキュリティオフ時はリダイレクト（3xx）せず、
-                // そのまま200 OK（成功）を返す挙動になるため、検証を status().isOk() に変更
                 .andExpect(status().isOk());
     }
 
@@ -100,16 +103,13 @@ public class PrototypeControllerTest {
     public void testShowPrototypeDetail() throws Exception {
         PrototypeEntity mockPrototype = new PrototypeEntity();
         mockPrototype.setId(100);
-        // 🟢 変更後：文字がズレていた部分を「革新的なWebサービス」に統一
         mockPrototype.setTitle("革新的なWebサービス");
         mockPrototype.setUser(mockUser);
 
         when(prototypeRepository.findById(100L)).thenReturn(mockPrototype);
         when(commentRepository.findByPrototypeId(100L)).thenReturn(new ArrayList<>());
 
-        // 🟢 変更後：画面側(detail.html)が「_csrf」というデータを要求してエラーになるのを防ぐため、
-        // テスト用のリクエスト属性に空のオブジェクトを詰めてThymeleafを安心させます
-        mockMvc.perform(get("/prototypes/100")
+        mockMvc.perform(get("/protos/100")
                 .requestAttr("_csrf", new org.springframework.security.web.csrf.DefaultCsrfToken("X-CSRF-TOKEN", "_csrf", "abc")))
                 .andExpect(status().isOk())
                 .andExpect(view().name("protos/detail"));
@@ -128,8 +128,9 @@ public class PrototypeControllerTest {
                 .file(mockFile)
                 .param("title", "革新的なWebサービス")
                 .param("catchCopy", "キャッチコピー")
-                .param("concept", "コンセプト"))
+                .param("concept", "コンセプト")
+                .principal(mockAuthentication)) // 🟢 修正：正しい認証モックオブジェクトを仕込む
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/afterlogin"));
- }
+    }
 }

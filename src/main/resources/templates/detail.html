@@ -11,15 +11,15 @@
     <header class="header">
         <div class="inner">
             <a th:href="@{/}" class="header__logo">KCS PROTO SPACE</a>
- <div class="header__nav" style="display: flex; align-items: center; gap: 15px;">
-    <form th:action="@{/logout}" method="post" style="display: inline; margin: 0; padding: 0;">
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-        <button type="submit" class="nav__link" style="background: transparent; padding: 6px 16px; font: inherit; cursor: pointer; display: inline-block; text-decoration: none; border: 1px solid #9e8cb0; border-radius: 4px; color: #9e8cb0; transition: all 0.3s;">
-            ログアウト
-        </button>
-    </form>
-    <a th:href="@{/protos/new}" class="nav__link">New Proto</a>
-</div>
+            <div class="header__nav" style="display: flex; align-items: center; gap: 15px;">
+                <form th:action="@{/logout}" method="post" style="display: inline; margin: 0; padding: 0;">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <button type="submit" class="nav__link" style="background: transparent; padding: 6px 16px; font: inherit; cursor: pointer; display: inline-block; text-decoration: none; border: 1px solid #9e8cb0; border-radius: 4px; color: #9e8cb0; transition: all 0.3s;">
+                        ログアウト
+                    </button>
+                </form>
+                <a th:href="@{/protos/new}" class="nav__link">New Proto</a>
+            </div>
         </div>
     </header>
 
@@ -34,21 +34,21 @@
                     by <a th:href="@{/users/{id}(id=${prototype.user.id})}" th:text="${prototype.user.name}" style="color: #2b3a4a; font-weight: bold; text-decoration: underline;">投稿者名</a>
                 </div>
 
-      <div class="prototype__manage" style="text-align: center; margin-bottom: 30px;">
-        <a th:href="@{/protos/{id}/edit(id=${prototype.id})}" class="btn-primary" style="display: inline-block; max-width: 100px; font-size: 12px; padding: 6px 0; margin-right: 10px; background-color: #fff; color: #2b3a4a; border: 1px solid #2b3a4a;">編集する</a>
-    
-        <form th:action="@{/prototypes/delete}" method="post" onsubmit="return confirm('本当に削除してもよろしいですか？');" style="display: inline-block; vertical-align: middle;">
-          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-          <input type="hidden" name="id" th:value="${prototype.id}" />
-        
-          <button type="submit" class="btn-primary" style="display: inline-block; width: 100px; font-size: 12px; padding: 6px 0; background-color: #fff; color: red; border: 1px solid red; cursor: pointer; border-radius: 4px; font-family: inherit;">
-            削除する
-          </button>
-        </form>
-    </div>
+                <div class="prototype__manage" style="text-align: center; margin-bottom: 30px;">
+                    <a th:href="@{/protos/{id}/edit(id=${prototype.id})}" class="btn-primary" style="display: inline-block; max-width: 100px; font-size: 12px; padding: 6px 0; margin-right: 10px; background-color: #fff; color: #2b3a4a; border: 1px solid #2b3a4a;">編集する</a>
+                
+                    <form th:action="@{/protos/delete}" method="post" onsubmit="return confirm('本当に削除してもよろしいですか？');" style="display: inline-block; vertical-align: middle;">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        <input type="hidden" name="id" th:value="${prototype.id}" />
+                    
+                        <button type="submit" class="btn-primary" style="display: inline-block; width: 100px; font-size: 12px; padding: 6px 0; background-color: #fff; color: red; border: 1px solid red; cursor: pointer; border-radius: 4px; font-family: inherit;">
+                            削除する
+                        </button>
+                    </form>
+                </div>
 
                 <div class="prototype__img" style="text-align: center; margin-bottom: 40px;">
-                  <img th:src="${prototype.image} ?: @{/images/logo.png}" alt="プロトタイプ画像" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                    <img th:src="${prototype.image} ?: @{/images/logo.png}" alt="プロトタイプ画像" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
                 </div>
 
                 <div class="prototype__body" style="background: #fff; padding: 30px; border-radius: 8px; border: 1px solid #e5eaf0; margin-bottom: 40px; text-align: left;">
@@ -93,7 +93,7 @@
     </main>
 
     <footer class="footer">
-        <p>© 2026 KCS PROTO SPACE Inc. All rights reserved.</p>
+        <p>© 2026 KCS PROTO SPACE </p>
     </footer>
 
 </body>

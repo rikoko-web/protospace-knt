@@ -37,7 +37,7 @@
       <div class="prototype__manage" style="text-align: center; margin-bottom: 30px;">
         <a th:href="@{/protos/{id}/edit(id=${prototype.id})}" class="btn-primary" style="display: inline-block; max-width: 100px; font-size: 12px; padding: 6px 0; margin-right: 10px; background-color: #fff; color: #2b3a4a; border: 1px solid #2b3a4a;">編集する</a>
     
-        <form th:action="@{/prototypes/delete}" method="post" onsubmit="return confirm('本当に削除してもよろしいですか？');" style="display: inline-block; vertical-align: middle;">
+        <form th:action="@{/protos/delete}" method="post" onsubmit="return confirm('本当に削除してもよろしいですか？');" style="display: inline-block; vertical-align: middle;">
           <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
           <input type="hidden" name="id" th:value="${prototype.id}" />
         
@@ -93,7 +93,7 @@
     </main>
 
     <footer class="footer">
-        <p>© 2026 KCS PROTO SPACE Inc. All rights reserved.</p>
+        <p>© 2026 KCS PROTO SPACE </p>
     </footer>
 
 </body>

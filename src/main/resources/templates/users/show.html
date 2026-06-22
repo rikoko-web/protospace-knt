@@ -50,13 +50,13 @@
                 
                 <div class="prototype-card" th:each="prototype : ${userPrototypes}">
                     <div class="card__img">
-                        <a th:href="@{/prototypes/{id}(id=${prototype.id})}">
+                        <a th:href="@{/protos/{id}(id=${prototype.id})}">
                             <img th:src="${prototype.image != null} ? @{${prototype.image}} : @{/images/logo.png}" alt="プロトタイプ画像" style="display: block; width: 100%; height: auto;">
                         </a>
                     </div>
                     <div class="card__body">
                         <h3 class="card__title">
-                            <a th:href="@{/prototypes/{id}(id=${prototype.id})}" th:text="${prototype.title}">プロトタイプの名称</a>
+                            <a th:href="@{/protos/{id}(id=${prototype.id})}" th:text="${prototype.title}">プロトタイプの名称</a>
                         </h3>
                         <p class="card__catchphrase" th:text="${prototype.catchCopy}">キャッチコピー</p>
                         <div class="card__user">
@@ -68,7 +68,7 @@
     </main>
 
     <footer class="footer">
-        <p>© 2026 KCS PROTO SPACE Inc. All rights reserved.</p>
+        <p>© 2026 KCS PROTO SPACE </p>
     </footer>
 
 </body>

@@ -108,7 +108,8 @@ public class PrototypeController {
     }
 
     // --- 3. プロトタイプ詳細・表示・投稿・編集 ---
-    @GetMapping("/prototypes/{id}")
+    // 💡 詳細表示のパスを /protos/{id} に修正しました
+    @GetMapping("/protos/{id}")
     public String showPrototypeDetail(@PathVariable("id") Long id, Model model) {
         PrototypeEntity prototype = prototypeRepository.findById(id);
         if (prototype == null) {
@@ -132,9 +133,15 @@ public class PrototypeController {
     }
 
     @PostMapping("/protos/new")
-    public String createPrototype(@ModelAttribute("prototypeForm") PrototypeForm form,
+    public String createPrototype(@Validated @ModelAttribute("prototypeForm") PrototypeForm form, 
+                                  BindingResult bindingResult, 
                                   @RequestParam("imageFile") MultipartFile imageFile,
                                   Authentication auth) {
+        
+        if (bindingResult.hasErrors()) {
+            return "protos/new";
+        }
+
         String imageWebPath = imageFile.isEmpty() ? null : saveImage(imageFile);
         
         UserEntity user = userRepository.findByEmail(auth.getName());
@@ -149,15 +156,39 @@ public class PrototypeController {
         return "redirect:/afterlogin";
     }
 
-    @PostMapping("/prototypes/delete")
-    public String deletePrototype(@RequestParam("id") Long id) {
+   // 💡 削除処理のパスを /protos/delete に修正しました
+    @PostMapping("/protos/delete")
+    public String deletePrototype(@RequestParam("id") Long id, Authentication auth) {
+        UserEntity user = userRepository.findByEmail(auth.getName());
+        PrototypeEntity prototype = prototypeRepository.findById(id);
+
+        if (prototype != null && user != null) {
+            if (prototype.getUserId().longValue() != user.getId().longValue()) {
+                return "redirect:/afterlogin";
+            }
+        }
+
+        // 👇 【追加】先にこのプロトタイプに紐づくコメントをすべて削除する
+        commentRepository.deleteByPrototypeId(id);
+
+        // そのあとでプロトタイプ本体を削除する
         prototypeRepository.deleteById(id);
+        
         return "redirect:/afterlogin";
     }
 
     @GetMapping("/protos/{id}/edit")
-    public String showEditPrototype(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("prototype", prototypeRepository.findById(id));
+    public String showEditPrototype(@PathVariable("id") Long id, Model model, Authentication auth) {
+        UserEntity user = userRepository.findByEmail(auth.getName());
+        PrototypeEntity prototype = prototypeRepository.findById(id);
+
+        if (prototype != null && user != null) {
+            if (prototype.getUserId().longValue() != user.getId().longValue()) {
+                return "redirect:/afterlogin";
+            }
+        }
+
+        model.addAttribute("prototype", prototype);
         return "prototype_edit";
     }
 
@@ -175,7 +206,8 @@ public class PrototypeController {
             }
             prototypeRepository.update(prototype);
         }
-        return "redirect:/prototypes/" + id;
+        // 💡 更新後のリダイレクト先を /protos/ に修正しました
+        return "redirect:/protos/" + id;
     }
 
     private String saveImage(MultipartFile imageFile) {
