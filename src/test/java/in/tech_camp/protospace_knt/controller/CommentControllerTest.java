@@ -30,7 +30,7 @@ public class CommentControllerTest {
     @Test
     public void 正常系_コメントが正しく入力されている場合_保存されて詳細ページにリダイレクトすること() throws Exception {
         // 🟢 変更後：.with(csrf()) や .with(user()) を使わずに、直接POSTを送信します
-        mockMvc.perform(post("/prototypes/1/comments")
+        mockMvc.perform(post("/protos/1/comments")
                 .param("commentText", "素晴らしい作品ですね！"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/prototypes/1"));
@@ -38,7 +38,7 @@ public class CommentControllerTest {
 
     @Test
     public void 異常系_バリデーションエラーがある場合_保存されずに詳細ページにリダイレクトすること() throws Exception {
-        mockMvc.perform(post("/prototypes/1/comments")
+        mockMvc.perform(post("/protos/1/comments")
                 .param("commentText", "")) // 空文字でエラーにする
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/prototypes/1"));
