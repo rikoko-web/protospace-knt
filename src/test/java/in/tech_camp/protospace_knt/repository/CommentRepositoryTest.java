@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import in.tech_camp.protospace_knt.entity.CommentEntity;
+import in.tech_camp.protospace_knt.entity.UserEntity;
 
 @SpringBootTest // アプリの全設定（MyBatisなど）を読み込んでテストする設定
 @Transactional  // 🟢 超重要：テストが終わったら、追加したデータを自動で消して元通りにする
@@ -24,23 +25,27 @@ public class CommentRepositoryTest {
         // 1. 準備：テスト用のコメントデータを作成
         CommentEntity comment = new CommentEntity();
         comment.setCommentText("テスト用の素晴らしいコメントです");
-        comment.setUserId(1L);        // テスト用のユーザーID（実在する、または仮のID）
-        comment.setPrototypeId(999L); // テスト対象のプロトタイプID
+        
+        // 🌟【修正】実在する可能性が高い ID: 1L に変更します
+        comment.setUserId(1L);        
+        comment.setPrototypeId(1L);   // 999L から 1L に変更！
 
-        // 2. 実行：リポジトリを使ってデータベースに保存（保存処理の名前が異なる場合は適宜変更してください）
+        // 🌟【追加】前回のエンティティ追加に伴う対策
+        comment.setUser(new UserEntity()); 
+
+        // 2. 実行：リポジトリを使ってデータベースに保存
         commentRepository.save(comment);
 
-        // 3. 実行：保存したプロトタイプID（999）を指定して、データベースからコメントを取得
-        List<CommentEntity> comments = commentRepository.findByPrototypeId(999L);
+        // 3. 実行：【修正】保存したプロトタイプID（1L）を指定して取得
+        List<CommentEntity> comments = commentRepository.findByPrototypeId(1L); // 1L に変更！
 
         // 4. 検証：正しく保存され、取り出せたかを確認
-        assertNotNull(comments); // リストが空っぽ（null）じゃないこと
-        assertFalse(comments.isEmpty()); // リストの中身が1つ以上あること
-
-        // 1つ目のコメントを取り出して、中身が一致するか確認
+        assertNotNull(comments); 
+        assertFalse(comments.isEmpty()); 
+        
         CommentEntity savedComment = comments.get(0);
         assertEquals("テスト用の素晴らしいコメントです", savedComment.getCommentText());
         assertEquals(1L, savedComment.getUserId());
-        assertEquals(999L, savedComment.getPrototypeId());
+        assertEquals(1L, savedComment.getPrototypeId()); // 🌟 1L に変更！
     }
 }
