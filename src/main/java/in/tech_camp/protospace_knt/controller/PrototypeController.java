@@ -132,9 +132,16 @@ public class PrototypeController {
     }
 
     @PostMapping("/protos/new")
-    public String createPrototype(@ModelAttribute("prototypeForm") PrototypeForm form,
+    public String createPrototype(@Validated @ModelAttribute("prototypeForm") PrototypeForm form, // ★ @Validated を追加
+                                  BindingResult bindingResult, // ★ 引数にこれを追加（Formオブジェクトの直後に配置）
                                   @RequestParam("imageFile") MultipartFile imageFile,
                                   Authentication auth) {
+        
+        // ★ バリデーションエラーがある場合、処理を中断して投稿フォームに戻る処理を追加
+        if (bindingResult.hasErrors()) {
+            return "protos/new";
+        }
+
         String imageWebPath = imageFile.isEmpty() ? null : saveImage(imageFile);
         
         UserEntity user = userRepository.findByEmail(auth.getName());
