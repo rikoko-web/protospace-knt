@@ -33,7 +33,7 @@
         <div class="prototype-card" th:each="prototype : ${prototypes}">
           
           <div class="card__img">
-            <a th:href="@{/prototypes/{id}(id=${prototype.id})}">
+            <a th:href="@{/protos/{id}(id=${prototype.id})}">
               <img th:src="${prototype.image}" alt="プロトタイプ画像">
             </a>
           </div>

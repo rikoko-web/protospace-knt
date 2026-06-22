@@ -24,7 +24,6 @@
 
   <main class="main" style="align-items: flex-start; padding: 40px 0;">
     <div class="inner">
-
       <div class="user-welcome">
         こんにちは、<a th:href="@{/users/{id}(id=${userId})}" th:text="${username}">ユーザー名</a>さん
       </div>
@@ -34,14 +33,14 @@
         <div class="prototype-card" th:each="prototype : ${prototypes}">
 
           <div class="card__img">
-            <a th:href="@{/prototypes/{id}(id=${prototype.id})}">
+            <a th:href="@{/protos/{id}(id=${prototype.id})}">
               <img th:src="${prototype.image != null} ? @{${prototype.image}} : @{/images/logo.png}" alt="プロトタイプ画像" style="display: block; width: 100%; height: auto;">
             </a>
           </div>
 
           <div class="card__body">
             <h3 class="card__title">
-              <a th:href="@{/prototypes/{id}(id=${prototype.id})}" th:text="${prototype.title}">プロトタイプの名称</a>
+              <a th:href="@{/protos/{id}(id=${prototype.id})}" th:text="${prototype.title}">プロトタイプの名称</a>
             </h3>
 
             <p class="card__catchphrase" th:text="${prototype.catchCopy}">キャッチコピー</p>

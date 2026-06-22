@@ -33,7 +33,7 @@ public class CommentControllerTest {
         mockMvc.perform(post("/protos/1/comments")
                 .param("commentText", "素晴らしい作品ですね！"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/prototypes/1")); // リダイレクト先は/prototypes/1で合っています
+                .andExpect(redirectedUrl("/protos/1")); // リダイレクト先は/prototypes/1で合っています
     }
 
     @Test
@@ -42,6 +42,6 @@ public class CommentControllerTest {
         mockMvc.perform(post("/protos/1/comments")
                 .param("commentText", "")) // 空文字でエラーにする
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/prototypes/1"));
+                .andExpect(redirectedUrl("/protos/1"));
     }
 }
