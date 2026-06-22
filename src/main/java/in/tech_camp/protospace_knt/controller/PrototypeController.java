@@ -108,7 +108,7 @@ public class PrototypeController {
     }
 
     // --- 3. プロトタイプ詳細・表示・投稿・編集 ---
-    // 【詳細表示】/prototypes/{id} から変更
+    // 💡 詳細表示のパスを /protos/{id} に修正しました
     @GetMapping("/protos/{id}")
     public String showPrototypeDetail(@PathVariable("id") Long id, Model model) {
         PrototypeEntity prototype = prototypeRepository.findById(id);
@@ -126,14 +126,12 @@ public class PrototypeController {
         return "protos/detail";
     }
 
-    // 【新規投稿画面】変更なし（もともと /protos/new）
     @GetMapping("/protos/new")
     public String showNewPrototype(Model model) {
         model.addAttribute("prototypeForm", new PrototypeForm());
         return "protos/new";
     }
 
-    // 【新規投稿処理】変更なし（もともと /protos/new）
     @PostMapping("/protos/new")
     public String createPrototype(@Validated @ModelAttribute("prototypeForm") PrototypeForm form, 
                                   BindingResult bindingResult, 
@@ -158,7 +156,7 @@ public class PrototypeController {
         return "redirect:/afterlogin";
     }
 
-    // 【削除処理】/prototypes/delete から変更
+    // 💡 削除処理のパスを /protos/delete に修正しました
     @PostMapping("/protos/delete")
     public String deletePrototype(@RequestParam("id") Long id, Authentication auth) {
         UserEntity user = userRepository.findByEmail(auth.getName());
@@ -174,7 +172,6 @@ public class PrototypeController {
         return "redirect:/afterlogin";
     }
 
-    // 【編集画面】変更なし（もともと /protos/{id}/edit）
     @GetMapping("/protos/{id}/edit")
     public String showEditPrototype(@PathVariable("id") Long id, Model model, Authentication auth) {
         UserEntity user = userRepository.findByEmail(auth.getName());
@@ -190,7 +187,6 @@ public class PrototypeController {
         return "prototype_edit";
     }
 
-    // 【更新処理】変更なし（もともと /protos/{id}/update）
     @PostMapping("/protos/{id}/update")
     public String updatePrototype(@PathVariable("id") Long id,
                                   @ModelAttribute("prototype") PrototypeEntity formEntity,
@@ -205,7 +201,7 @@ public class PrototypeController {
             }
             prototypeRepository.update(prototype);
         }
-        // 詳細表示のURL変更（/protos/{id}）に伴い、リダイレクト先も変更
+        // 💡 更新後のリダイレクト先を /protos/ に修正しました
         return "redirect:/protos/" + id;
     }
 
