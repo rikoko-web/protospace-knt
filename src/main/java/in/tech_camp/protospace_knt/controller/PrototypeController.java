@@ -149,15 +149,35 @@ public class PrototypeController {
         return "redirect:/afterlogin";
     }
 
+    // 🛠️ 画像の通りに修正・変更（削除処理）
     @PostMapping("/prototypes/delete")
-    public String deletePrototype(@RequestParam("id") Long id) {
+    public String deletePrototype(@RequestParam("id") Long id, Authentication auth) {
+        UserEntity user = userRepository.findByEmail(auth.getName());
+        PrototypeEntity prototype = prototypeRepository.findById(id);
+
+        if (prototype != null && user != null) {
+            if (prototype.getUserId().longValue() != user.getId().longValue()) {
+                return "redirect:/afterlogin";
+            }
+        }
+
         prototypeRepository.deleteById(id);
         return "redirect:/afterlogin";
     }
 
+    // 🛠️ 画像の通りに修正・変更（編集ページ表示処理）
     @GetMapping("/protos/{id}/edit")
-    public String showEditPrototype(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("prototype", prototypeRepository.findById(id));
+    public String showEditPrototype(@PathVariable("id") Long id, Model model, Authentication auth) {
+        UserEntity user = userRepository.findByEmail(auth.getName());
+        PrototypeEntity prototype = prototypeRepository.findById(id);
+
+        if (prototype != null && user != null) {
+            if (prototype.getUserId().longValue() != user.getId().longValue()) {
+                return "redirect:/afterlogin";
+            }
+        }
+
+        model.addAttribute("prototype", prototype);
         return "prototype_edit";
     }
 
