@@ -156,7 +156,7 @@ public class PrototypeController {
         return "redirect:/afterlogin";
     }
 
-    // 💡 削除処理のパスを /protos/delete に修正しました
+   // 💡 削除処理のパスを /protos/delete に修正しました
     @PostMapping("/protos/delete")
     public String deletePrototype(@RequestParam("id") Long id, Authentication auth) {
         UserEntity user = userRepository.findByEmail(auth.getName());
@@ -168,7 +168,12 @@ public class PrototypeController {
             }
         }
 
+        // 👇 【追加】先にこのプロトタイプに紐づくコメントをすべて削除する
+        commentRepository.deleteByPrototypeId(id);
+
+        // そのあとでプロトタイプ本体を削除する
         prototypeRepository.deleteById(id);
+        
         return "redirect:/afterlogin";
     }
 
