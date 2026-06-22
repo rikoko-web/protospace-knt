@@ -109,7 +109,7 @@ public class PrototypeControllerTest {
         when(prototypeRepository.findById(100L)).thenReturn(mockPrototype);
         when(commentRepository.findByPrototypeId(100L)).thenReturn(new ArrayList<>());
 
-        mockMvc.perform(get("/prototypes/100")
+        mockMvc.perform(get("/protos/100")
                 .requestAttr("_csrf", new org.springframework.security.web.csrf.DefaultCsrfToken("X-CSRF-TOKEN", "_csrf", "abc")))
                 .andExpect(status().isOk())
                 .andExpect(view().name("protos/detail"));
