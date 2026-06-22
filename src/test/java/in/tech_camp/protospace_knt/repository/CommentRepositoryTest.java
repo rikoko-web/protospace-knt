@@ -1,9 +1,10 @@
 package in.tech_camp.protospace_knt.repository;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,7 +36,7 @@ public class CommentRepositoryTest {
         // 4. 検証：正しく保存され、取り出せたかを確認
         assertNotNull(comments); // リストが空っぽ（null）じゃないこと
         assertFalse(comments.isEmpty()); // リストの中身が1つ以上あること
-        
+
         // 1つ目のコメントを取り出して、中身が一致するか確認
         CommentEntity savedComment = comments.get(0);
         assertEquals("テスト用の素晴らしいコメントです", savedComment.getCommentText());

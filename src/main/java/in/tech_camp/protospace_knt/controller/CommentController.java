@@ -30,7 +30,7 @@ public class CommentController {
                                 Authentication authentication) { // ←ここに追加しました！
 
         if (bindingResult.hasErrors()) {
-            return "redirect://protos/" + prototypeId;
+            return "redirect:/protos/" + prototypeId;
         }
 
         CommentEntity comment = new CommentEntity();
