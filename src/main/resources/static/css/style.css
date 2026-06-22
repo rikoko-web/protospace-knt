@@ -10,7 +10,7 @@
 body { 
   margin: 0; 
   padding: 0; 
-  background-color: #f5f4f9; /* ほんのり紫がかった、カードを引き立てる薄い背景色 */
+  background-color: #f2eee2; /* 【変更】画像の温かみのあるグレージュ・生成り色 */
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: #333; 
   display: flex;
@@ -30,8 +30,8 @@ body {
    2. ヘッダーのデザイン
    ========================================================================== */
 .header { 
-  background-color: #ffffff; 
-  border-bottom: 1px solid #ebdff0; /* 境界線もほんのり紫に */
+  background-color: #136c73; /* 【変更】画像と同じ深みのあるブルーグリーン */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* 境界線を上品な白透過に */
   padding: 18px 0; 
 }
 
@@ -45,7 +45,7 @@ body {
   font-size: 22px; 
   font-weight: 700; 
   text-decoration: none; 
-  color: #3a2b4a; /* ロゴの色を深い紫寄りにチェンジ */
+  color: #ffffff; 
   letter-spacing: 1.5px;
 }
 
@@ -54,22 +54,22 @@ body {
   gap: 10px; 
 }
 
-/* 紫色の枠線ボタン */
+/* 白ベースの枠線ボタン */
 .nav__link { 
   text-decoration: none; 
-  color: #8a73be;            /* 水色からオシャレな紫に変更 */
+  color: #ffffff;      
   font-size: 14px; 
-  border: 1px solid #8a73be; /* 紫の線 */
+  border: 1px solid #ffffff; 
   padding: 8px 24px;         
   border-radius: 4px;        
-  background-color: #ffffff; 
+  background-color: transparent; /* 背景を透明にしてスッキリと */
   display: inline-block;
   transition: all 0.2s ease; 
 }
 
 .nav__link:hover {
-  background-color: #8a73be; /* ホバーで紫に染まる */
-  color: #ffffff;            
+  background-color: #ffffff; /* ホバーで白背景に反転 */
+  color: #136c73;            /* 【変更】文字色をブルーグリーンに */
 }
 
 /* ==========================================================================
@@ -81,18 +81,24 @@ body {
   align-items: center; /* 縦方向の中央寄せ */
   justify-content: center; /* 横方向の中央寄せ */
   padding: 60px 0;
+
+  /* 【変更】中央エリアだけにクシャッとした紙の背景を適用 */
+  background-color: #f2eee2; /* ベースの生成り色 */
+  background-image: url('images/110129204021.jpg'); /* 📂 画像の保存先パスに合わせて変更してください */
+  background-repeat: repeat; /* 縦横に敷き詰める */
+  background-blend-mode: multiply; /* 生成り色と紙の質感をブレンドして馴染ませる */
 }
 
 /* フォームを画面中央に白い箱（カード）として浮かせる */
 .form__wrapper {
   width: 100%;
-  max-width: 500px; /* ログインに最適なスッキリした横幅に調整 */
+  max-width: 500px; 
   margin: 0 auto; 
   padding: 40px;
   background-color: #ffffff;
   border-radius: 8px; 
-  box-shadow: 0 10px 25px rgba(58, 43, 74, 0.05); /* 綺麗な影をプラス */
-  border: 1px solid #ebdff0;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); /* 生成り背景に馴染むよう、影を少し柔らかく */
+  border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
 .page-heading {
@@ -101,7 +107,7 @@ body {
   margin-top: 0;
   margin-bottom: 35px;
   font-weight: bold;
-  color: #3a2b4a; /* 深い紫 */
+  color: #333333; 
 }
 
 /* ==========================================================================
@@ -147,9 +153,9 @@ body {
 .field-input input:focus,
 .field-input textarea:focus {
   outline: none;
-  border-color: #8a73be; /* 選択した時に紫に光る */
+  border-color: #136c73; /* 【変更】選択時にブルーグリーンに光る */
   background-color: #ffffff;
-  box-shadow: 0 0 0 3px rgba(138, 115, 190, 0.2); 
+  box-shadow: 0 0 0 3px rgba(19, 108, 115, 0.2); 
 }
 
 /* ==========================================================================
@@ -163,7 +169,7 @@ body {
 .btn-primary {
   width: 100%; 
   padding: 14px;
-  background-color: #8a73be; /* メインの紫色のボタン */
+  background-color: #136c73; /* 【変更】ボタンをブルーグリーンに */
   color: #ffffff;
   border: none;
   border-radius: 6px;
@@ -174,7 +180,7 @@ body {
 }
 
 .btn-primary:hover { 
-  background-color: #6c56a3; /* ホバー時は少し濃い紫に */
+  background-color: #0e5257; /* 【変更】ホバー時は少し濃いめのブルーグリーンに */
 }
 
 .btn-primary:active {
@@ -190,12 +196,12 @@ body {
   margin-top: 20px;
   margin-bottom: 30px;
   font-size: 16px;
-  color: #333;
+  color: #333333; /* 【変更】生成り背景で見えやすいようダークグレーに */
   width: 100%;
 }
 
 .user-welcome a {
-  color: #3a2b4a;
+  color: #136c73; /* 【変更】リンクをブルーグリーンに */
   font-weight: bold;
   text-decoration: underline;
 }
@@ -214,8 +220,8 @@ body {
   background-color: #ffffff;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 15px rgba(58, 43, 74, 0.05);
-  border: 1px solid #ebdff0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* 生成り背景に合わせて影を少し上品に */
+  border: 1px solid rgba(0, 0, 0, 0.03);
   transition: transform 0.2s ease;
 }
 
@@ -225,11 +231,11 @@ body {
 
 /* カードの画像エリア */
 .card__img {
-  background-color: #fafbfc;
-  border-bottom: 1px solid #ebdff0;
+  background-color: #ffffff; /* 【変更】画像の白背景と一体化させるため白に変更 */
+  border-bottom: 1px solid #f2eee2; /* 【変更】境界線を全体の背景色と統一 */
   text-align: center;
   padding: 0;
-  height: 200px; /* 高さを統一 */
+  height: 200px; 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -249,7 +255,7 @@ body {
 .card__title {
   margin: 0 0 8px 0;
   font-size: 18px;
-  color: #3a2b4a;
+  color: #333333; 
   font-weight: bold;
 }
 
@@ -267,7 +273,7 @@ body {
 }
 
 .card__user a {
-  color: #8a73be; /* 投稿者名も紫に */
+  color: #136c73; /* 【変更】投稿者名をブルーグリーンに */
   text-decoration: none;
   font-weight: 600;
 }
@@ -280,57 +286,7 @@ body {
    7. フッターのデザイン
    ========================================================================== */
 .footer { 
-  background-color: #726c7d; /* フッターのグレーもほんのり紫に馴染ませて高級感をアップ */
+  background-color: #136c73; /* 【変更】ブルーグリーン（ヘッダーと共通） */
   color: #ffffff;
   text-align: center; 
-  padding: 16px 0; 
-  font-size: 13px; 
-}
-
-.footer p {
-  margin: 0;
-}
-
-/* ==========================================================================
-   8. ユーザー詳細（マイページ）用のテーブルデザイン
-   ========================================================================== */
-.table {
-  width: 100%;
-  max-width: 600px;
-  border-collapse: collapse;
-  margin-top: 20px;
-  background: #ffffff;
-  border-radius: 6px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(58, 43, 74, 0.02);
-  border: 1px solid #ebdff0;
-}
-
-.table th, .table td {
-  padding: 16px 20px;
-  text-align: left;
-  border-bottom: 1px solid #ebdff0;
-}
-
-.table th {
-  background-color: #fafbfc;
-  width: 30%;
-  font-weight: bold;
-  color: #3a2b4a;
-}
-
-/* 一番下の行だけ、下の線（境界線）を消して角を綺麗に見せる */
-.table tr:last-child th, 
-.table tr:last-child td {
-  border-bottom: none;
-}
-
-/* ==========================================================================
-   9. プロトタイプ投稿（ファイル選択）用のデザイン
-   ========================================================================== */
-.field-input-file input[type="file"] {
-  display: block;
-  font-size: 14px;
-  color: #333;
-  padding: 5px 0;
-}
+  padding: 16px
