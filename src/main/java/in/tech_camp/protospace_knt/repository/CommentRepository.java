@@ -1,11 +1,14 @@
 package in.tech_camp.protospace_knt.repository;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
+import org.apache.ibatis.annotations.Select;
+
 import in.tech_camp.protospace_knt.entity.CommentEntity;
 
 @Mapper
@@ -28,4 +31,7 @@ public interface CommentRepository {
         @Result(property = "user.id", column = "user_id")      // HTMLの ${comment.user.id} に紐づきます
     })
     List<CommentEntity> findByPrototypeId(Long prototypeId);
+
+    @Delete("DELETE FROM comments WHERE prototype_id = #{prototypeId}")
+    void deleteByPrototypeId(Long prototypeId);
 }
