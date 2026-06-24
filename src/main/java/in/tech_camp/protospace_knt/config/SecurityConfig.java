@@ -22,7 +22,7 @@ public class SecurityConfig {
                 
                 // 2. プロトタイプの閲覧（GETのみOK）
                 // 💡 詳細画面のパスに合わせて「/prototypes/**」から「/protos/**」に修正しました
-                .requestMatchers(HttpMethod.GET, "/protos/**", "/users/**").permitAll() 
+                .requestMatchers(HttpMethod.GET, "/users/**").permitAll() 
                 
                 // 3. その他すべてはログイン必須
                 .anyRequest().authenticated() 
