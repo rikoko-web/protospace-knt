@@ -34,29 +34,33 @@
                 <div class="field">
                     <label for="email" class="field-label">メールアドレス</label>
                     <div class="field-input">
-                        <input type="email" id="email" th:field="*{email}" required />
+                        <input type="email" id="email" th:field="*{email}"/>
                     </div>
+                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: #ff4d4d; font-size: 13px; margin-top: 5px;"></p>
                 </div>
 
                 <div class="field">
                     <label for="password" class="field-label">パスワード（6文字以上）</label>
                     <div class="field-input">
-                        <input type="password" id="password" th:field="*{password}" required />
+                        <input type="password" id="password" th:field="*{password}"/>
                     </div>
+                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: #ff4d4d; font-size: 13px; margin-top: 5px;"></p>
                 </div>
 
                 <div class="field">
                     <label for="password_confirmation" class="field-label">パスワード再入力</label>
                     <div class="field-input">
-                        <input type="password" id="password_confirmation" th:field="*{passwordConfirmation}" required />
+                        <input type="password" id="password_confirmation" th:field="*{passwordConfirmation}"/>
                     </div>
+                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: #ff4d4d; font-size: 13px; margin-top: 5px;"></p>
                 </div>
 
                 <div class="field">
                     <label for="name" class="field-label">ユーザー名</label>
                     <div class="field-input">
-                        <input type="text" id="name" th:field="*{name}" required />
+                        <input type="text" id="name" th:field="*{name}"/>
                     </div>
+                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: #ff4d4d; font-size: 13px; margin-top: 5px;"></p>
                 </div>
 
                 <div class="field">
@@ -64,6 +68,7 @@
                     <div class="field-input">
                         <textarea id="profile" th:field="*{profile}"></textarea>
                     </div>
+                    <p th:if="${#fields.hasErrors('profile')}" th:errors="*{profile}" style="color: #ff4d4d; font-size: 13px; margin-top: 5px;"></p>
                 </div>
 
                 <div class="field">
@@ -71,6 +76,7 @@
                     <div class="field-input">
                         <textarea id="occupation" th:field="*{occupation}"></textarea>
                     </div>
+                    <p th:if="${#fields.hasErrors('occupation')}" th:errors="*{occupation}" style="color: #ff4d4d; font-size: 13px; margin-top: 5px;"></p>
                 </div>
 
                 <div class="field">
@@ -78,6 +84,7 @@
                     <div class="field-input">
                         <textarea id="position" th:field="*{position}"></textarea>
                     </div>
+                    <p th:if="${#fields.hasErrors('position')}" th:errors="*{position}" style="color: #ff4d4d; font-size: 13px; margin-top: 5px;"></p>
                 </div>
 
                 <div class="actions">
